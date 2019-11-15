@@ -1,2 +1,2 @@
 # RPH
-The library of Refractory Pulmonary Hypertension
+The Refractory Pulmonary Hypertension Library
