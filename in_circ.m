@@ -1,4 +1,4 @@
-%initialization for circ
+%filename: in_circ.m  (initialization for circ)
 T =0.0125    %Duration of heartbeat (minutes)
 TS=0.0050    %Duration of systole   (minutes)
 tauS=0.0025  %CLV time constant during systole (minutes)
@@ -46,7 +46,7 @@ dt=0.01*T    %Time step duration (minutes)
 
 %This choice implies 100 timesteps per cardiac cycle.
 %klokmax=15*T/dt %Total number of timesteps 
-klokmax=60*T/dt
+klokmax=10000*T/dt
 %This choice implies simulation of 15 cardiac cycles.
 %Assign an index to each compliance vessel 
 %of the model circulation:
@@ -113,7 +113,7 @@ G(isv,isa)=1/Rs;   %no valve
 G(isv,iRV)=1/RTr;  %But G(iRV,isv)=0; (no leak)
 G(iRV,ipa)=1/RPu;  %But G(ipa,iRV)=0; (no leak)
 G(ipa,ipv)=1/Rp;   %no valve
-G(ipv,ipa)=1/Rp;   %no valve
+G(ipv,ipa)=1/Rp;   %no valv
 G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
 
 %New varaiable
@@ -188,6 +188,25 @@ iD(jvsd)=iLV;
 iU(jd)=ipa;
 iD(jd)=isa;
 
+%O2 amount
+%4*[Hb]=4*2.5=10(mmol/liter)
+
+%oxy_vec = 10
+oxy_vec = ones(N, 1) .* 10;
+
+%nvec
+
+
+%metabolism amount
+%10*0.3*5.6=16.8 (mmol/min)
+
+%mb = 16.8
+%metabolism = zeros(N,1);
+
+metabolism = zeros(size(G));
+metabolism(isa, isv) = -16.8;
+metabolism(ipa, ipv) = 0;
+ 
 %extract the conductances from the matrix G:
 Gf=zeros(Nflows,1);
 Gr=zeros(Nflows,1);
