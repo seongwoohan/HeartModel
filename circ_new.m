@@ -107,6 +107,12 @@ title('Ventricle Shunt Flow versus oxygen saturation ')
 xlabel('Shunt Flow Mean') 
 ylabel('oxygen saturation')
 
+figure(305)
+plot(vsd_vec, qAo_vsd_vecV.*oxy_sa_vsd_vecV, '-bs','linewidth', 2)
+title('oxygen delivery')
+xlabel('shunt size') 
+ylabel('moles of oxygen per unit time')
+
 end
 
 
