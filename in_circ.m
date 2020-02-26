@@ -45,8 +45,8 @@ dt=0.01*T    %Time step duration (minutes)
 %d=0
 
 %This choice implies 100 timesteps per cardiac cycle.
-%klokmax=15*T/dt %Total number of timesteps 
-klokmax=10000*T/dt
+klokmax=15*T/dt %Total number of timesteps 
+%klokmax=10000*T/dt
 %This choice implies simulation of 15 cardiac cycles.
 %Assign an index to each compliance vessel 
 %of the model circulation:
@@ -141,6 +141,7 @@ S=zeros(N,N);
 t_plot=zeros(1,klokmax);
 C_plot=zeros(N,klokmax);
 P_plot=zeros(N,klokmax);
+O2_plot=zeros(N,klokmax);
 %Other variables that we might want to plot 
 %can be found from these.
 %For self-checking in P_new, set CHECK=1.

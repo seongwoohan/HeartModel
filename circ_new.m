@@ -7,18 +7,22 @@ asd_vec = [0 ] % 0 10 100 500 800 1000 2000 3000 5000 10000
 vsd_vec = [0 ] % 0 0.5 3.5 5 7 10 13 16 20 30 50 70 80 100 500 800 1000 1500 3000
 d_vec = [0] % 0 0.1 0.3 0.5 0.7 1 3 4 6 10 30 50 70 100 500 1000
 
-ncase = 5;
-q_asd_vecA = zeros(1,ncase);
-ppa_asd_vecA = zeros(1,ncase);
-psa_asd_vecA = zeros(1,ncase);
+ncase_asd = length(asd_vec);
+q_asd_vecA = zeros(1,ncase_asd);
+qAo_asd_vecA = zeros(1,ncase_asd);
+ppa_asd_vecA = zeros(1,ncase_asd);
+psa_asd_vecA = zeros(1,ncase_asd);
+oxy_sa_asd_vecA = zeros(1,ncase_asd);
 
-q_vsd_vecV = zeros(1,ncase);
-ppa_vsd_vecV = zeros(1,ncase);
-psa_vsd_vecV = zeros(1,ncase);
+ncase_vsd = length(vsd_vec);
+q_vsd_vecV = zeros(1,ncase_vsd);
+ppa_vsd_vecV = zeros(1,ncase_vsd);
+psa_vsd_vecV = zeros(1,ncase_vsd);
 
-q_d_vecD = zeros(1,ncase);
-ppa_d_vecD = zeros(1,ncase);
-psa_d_vecD = zeros(1,ncase);
+ncase_d = length(d_vec);
+q_d_vecD = zeros(1,ncase_d);
+ppa_d_vecD = zeros(1,ncase_d);
+psa_d_vecD = zeros(1,ncase_d);
 
 %atrium conneciton & pulmonary and systemic artery pressure
 for iA = 1:length(asd_vec)
@@ -27,8 +31,10 @@ for iA = 1:length(asd_vec)
     d=0;
     circ;    
     q_asd_vecA(iA) = meanvalue(Q_plot(jasd,:), klokmax, T, dt, 10);
+    qAo_asd_vecA(iA) = meanvalue(Q_plot(jAo,:), klokmax, T, dt, 10);	
     ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, 10);
     psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, 10);
+    oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, 10);	
 end
 
 %ventricle conneciton & pulmonary and systemic artery pressure
@@ -55,20 +61,20 @@ end
 
 figure(201)
 plot(q_asd_vecA, ppa_asd_vecA, '-ro', q_asd_vecA, psa_asd_vecA, '-bs')
-title('Atirum Shunt Flow between Pulmonary Artery Pressure and Systemic Artery Pressure')
+title('Atrium Shunt Flow between Pulmonary Artery Pressure and Systemic Artery Pressure')
 legend({'Pulmonary artery P','Systemic artery P'},'Location', 'east') 
 xlabel('Shunt Flow Mean') 
 ylabel('Pressure')
 
 figure(202)
 plot(q_asd_vecA, ppa_asd_vecA, '-ro')
-title('Atirum Shunt Flow between Pulmonary Artery Pressure')
+title('Atrium Shunt Flow between Pulmonary Artery Pressure')
 xlabel('Shunt Flow Mean') 
 ylabel('Pressure')
 
 figure(203)
 plot(q_asd_vecA, psa_asd_vecA, '-bs')
-title('Atirum Shunt Flow between Systemic Artery Pressure')
+title('Atrium Shunt Flow between Systemic Artery Pressure')
 xlabel('Shunt Flow Mean') 
 ylabel('Pressure')
 
