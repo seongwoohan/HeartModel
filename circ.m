@@ -50,8 +50,10 @@ for klok=1:klokmax
       end
       oxy_vec(i) = oxy_amt(i)/V(i);
   end
-
-  % store the O2 amount at klok
+  
+  oxy_vec
+  
+  % store the O2 concentration at klok
   O2_plot(:,klok) = oxy_vec;  
   
 end
