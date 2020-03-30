@@ -45,8 +45,8 @@ dt=0.01*T    %Time step duration (minutes)
 %d=0
 
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=50*T/dt %Total number of timesteps 
-%klokmax=10000*T/dt
+klokmax=10000*T/dt %Total number of timesteps 
+
 %This choice implies simulation of 15 cardiac cycles.
 %Assign an index to each compliance vessel 
 %of the model circulation:
