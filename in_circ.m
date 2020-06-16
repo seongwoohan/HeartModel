@@ -1,29 +1,32 @@
 %filename: in_circ.m  (initialization for circ)
-T =0.0125    %Duration of heartbeat (minutes)
-TS=0.0050    %Duration of systole   (minutes)
-tauS=0.0025  %CLV time constant during systole (minutes)
-tauD=0.0075  %CLV time constant during diastole (minutes)
-Rs=17.5 %Systemic resistance  (mmHg/(liter/minute))
-Rp=1.5*Rs
+% T = 1/120 = 0.00833
+T = 0.00833    %Duration of heartbeat (minutes)
+TS= 0.4*T    %Duration of systole   (minutes)
+tauS = 0.5 * TS  %CLV time constant during systole (minutes)
+tauD = 0.5 * (T-TS)  %CLV time constant during diastole (minutes)
+Rs=10.8/0.44 %Systemic resistance  (mmHg/(liter/minute)) x m2
+% SVR = 10.8 Wood U x m2
+% Du Bois commonly used ==> 0.44 m2
+Rp=1.72*Rs
 %Rp= 1.79     %Pulmonary resistance (mmHg/(liter/minute))
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
-RMi=0.01  %mitral valve resistance (mmHg/(liter/minute))
-RAo=0.01  %aortic valve resistance (mmHg/(liter/minute))
-RTr=0.01  %tricuspid valve resistance (mmHg/(liter/minute))
-RPu=0.01  %pulmonic valve  resistance (mmHg/(liter/minute))
+RMi=0.01 * (5/0.664)  %mitral valve resistance (mmHg/(liter/minute))
+RAo=0.01 * (5/0.664)  %aortic valve resistance (mmHg/(liter/minute))
+RTr=0.01 * (5/0.664)  %tricuspid valve resistance (mmHg/(liter/minute))
+RPu=0.01 * (5/0.664)  %pulmonic valve  resistance (mmHg/(liter/minute))
 %The following values of Csa and Cpa are approximate.
 %They will need adjustment to make the systemic 
 %blood pressure be roughly 120/80 mmHg
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
-Csa=0.00175  %Systemic  arterial compliance (liters/mmHg)
+Csa=0.00175 * (0.664/5)  %Systemic  arterial compliance (liters/mmHg)
 %Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
 Cpa=Csa
-Csv=1.75     %Systemic  venous compliance (liters/mmHg)
-Cpv=0.08     %Pulmonary venous compliance (liters/mmHg)
-CLVS=0.00003 %Min (systolic)  value of CLV (liters/mmHg)
-CLVD=0.0146  %Max (diastolic) value of CLV (liters/mmHg)
+Csv=1.75 * (0.664/5)     %Systemic  venous compliance (liters/mmHg)
+Cpv=0.08 * (0.664/5)     %Pulmonary venous compliance (liters/mmHg)
+CLVS=0.00003 * (0.664/5) %Min (systolic)  value of CLV (liters/mmHg)
+CLVD=0.0146 * (0.664/5)  %Max (diastolic) value of CLV (liters/mmHg)
 
 %Make the compliance the same
 CRVS=CLVS
@@ -31,12 +34,12 @@ CRVD=CLVD
 
 %CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
 %CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
-Vsad=0.825   %Systemic arterial volume at P=0 (liters)
-Vpad=0.0382  %Pulmonary arterial volume at P=0 (liters)
+Vsad=0.825 * (0.664/5)   %Systemic arterial volume at P=0 (liters)
+Vpad=0.0382 * (0.664/5)  %Pulmonary arterial volume at P=0 (liters)
 Vsvd=0       %Systemic venous volume at P=0 (liters)
 Vpvd=0       %Pulmonary venous volume at P=0 (liters)
-VLVd=0.027   %Left ventricular volume at P=0 (liters)
-VRVd=0.027   %Right ventricular volume at P=0 (liters)
+VLVd=0.027 * (0.664/5)   %Left ventricular volume at P=0 (liters)
+VRVd=0.027 * (0.664/5)   %Right ventricular volume at P=0 (liters)
 dt=0.01*T    %Time step duration (minutes)
 
 %%%%
@@ -76,14 +79,14 @@ C  %This writes the result on the screen.
 %Pressure vector (initial values) at end of diastole:
 P=zeros(N,1);  
 %This makes P a column vector of length N.
-P(iLV)= 5;
-P(isa)=80;
+P(iLV)= 7;
+P(isa)=62;
 %P(isv)= 2;
-P(isv)= 4;
-P(iRV)= 2;
+P(isv)= 18;
+P(iRV)= 14;
 %P(ipa)= 8;
-P(ipa)=100;
-P(ipv)= 5;
+P(ipa)=65;
+P(ipv)= 18;
 P  %This writes the result on the screen.
 %Vector of dead volumes (volume at zero pressure);
 %Note: Vd is only needed for output purposes.  
@@ -121,7 +124,6 @@ G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
 
 G(ipv,isv)=asd/Rs;
 G(isv,ipv)=asd/Rs;
-
 G(iLV,iRV)=vsd/Rs;
 G(iRV,iLV)=vsd/Rs;
 
@@ -189,23 +191,20 @@ iD(jvsd)=iLV;
 iU(jd)=ipa;
 iD(jd)=isa;
 
-%O2 amount
-%4*[Hb]=4*2.5=10(mmol/liter)
+% O2 amount
+% 4*[Hb]=4 * 2.5 = 10  (mmol/liter)
+% (10 * (10.6/14)) = 7.57142857143
 
-%oxy_vec = 10
-oxy_vec = ones(N, 1) .* 10;
+% oxygen concentration
+oxy_vec = ones(N, 1) .* 7.57;
 
 %nvec
-
-
-%metabolism amount
-%10*0.3*5.6=16.8 (mmol/min)
-
-%mb = 16.8
-%metabolism = zeros(N,1);
+% 22.4 mL/mmol
+% 1 mmol / 22.4 ml
+% 160 / 22.4 * 0.44
 
 metabolism = zeros(size(G));
-metabolism(isa, isv) = -16.8;
+metabolism(isa, isv) = -((160 / 22.4) * 0.44);  % 16.8 // 3.14285 -> pi
 metabolism(ipa, ipv) = 0;
  
 %extract the conductances from the matrix G:
