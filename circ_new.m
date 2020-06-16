@@ -3,7 +3,7 @@
 clear all % clear all variables
 close all       % and figures
 
-asd_vec = []%0 10 100 500 800 1000 2000 3000 5000 10000]
+asd_vec = [0 10 100 500 800 1000 2000 3000 5000 10000]
 vsd_vec = []%0 0.5 3.5 5 7 10 13 16 20 30 50 70 80 100 500 800 1000]% 1500 3000]
 d_vec = [] % 0 0.1 0.3 0.5 0.7 1 3 4 6 10 30 50 70 100 500 1000
 
@@ -15,6 +15,7 @@ ppa_asd_vecA = zeros(1,ncase_asd);
 psa_asd_vecA = zeros(1,ncase_asd);
 oxy_sa_asd_vecA = zeros(1,ncase_asd);
 oxy_sv_asd_vecA = zeros(1,ncase_asd);
+oxy_pa_asd_vecA = zeros(1,ncase_asd);
 
 % vsd
 ncase_vsd = length(vsd_vec);
@@ -47,6 +48,7 @@ for iA = 1:length(asd_vec)
     % oxygen for sa & sv
     oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, 10);
     oxy_sv_asd_vecA(iA) = meanvalue(O2_plot(isv,:), klokmax, T, dt, 10);
+    oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, 10);
 end
 
 %ventricle conneciton & pulmonary and systemic artery pressure
@@ -82,60 +84,67 @@ end
 if(length(asd_vec) > 0)
 
 figure(201)
-plot(q_asd_vecA, ppa_asd_vecA, '-ro', q_asd_vecA, psa_asd_vecA, '-bs')
-legend({'Pulmonary artery P','Systemic artery P'},'Location', 'east') 
-xlabel('Shunt Flow Mean') 
-ylabel('Pressure')
-
-% asd comparison with systemic artery
-figure(202)
-subplot(2,1,1),plot(q_asd_vecA, ppa_asd_vecA, '-ro','linewidth', 1.5)
-title('Atrial Septal Defect','FontSize',16,'FontWeight','bold')
-legend({'Pulmonary Artery Pressure'},'Location', 'northwest') 
-xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold')
+plot(q_asd_vecA, ppa_asd_vecA, '-ro', q_asd_vecA, psa_asd_vecA, '-bs','linewidth', 1.5)
+title('Atrial Septal Defect','FontSize',14,'FontWeight','bold')
+legend({'Pulmonary Artery','Systemic Artery'},'Location', 'east') 
+xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
 ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(2,1,2),plot(q_asd_vecA, 10.*oxy_sa_asd_vecA, '-m*','linewidth', 1.5)
-legend({'Systemic Artery Pressure'},'Location', 'west') 
-xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold')
+
+% asd pulmonary artery pressure & O2
+figure(202)
+subplot(2,1,1),plot(asd_vec, ppa_asd_vecA, '-ro','linewidth', 1.5)
+title('Atrial Septal Defect','FontSize',14,'FontWeight','bold')
+legend({'Pulmonary Artery'},'Location', 'east') 
+xlabel('Shunt Size','FontSize',10,'FontWeight','bold')
+ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
+grid on
+subplot(2,1,2),plot(asd_vec, oxy_pa_asd_vecA * (100/7.57), '-m*','linewidth', 1.5)
+legend({'Pulmonary Artery'},'Location', 'east') 
+xlabel('Shunt Size','FontSize',10,'FontWeight','bold')
 ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
 grid on
 
-% asd comparison with systemic artery
+% asd systemic artery pressure & O2
 figure(203)
-subplot(2,1,1),plot(q_asd_vecA, psa_asd_vecA, '-bs','linewidth', 1.5)
-title('Atrial Septal Defect','FontSize',16,'FontWeight','bold')
-legend({'Systemic Artery Pressure'},'Location', 'northeast') 
-xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+subplot(2,1,1),plot(asd_vec, psa_asd_vecA, '-bs','linewidth', 1.5)
+title('Atrial Septal Defect','FontSize',14,'FontWeight','bold')
+legend({'Systemic Artery '},'Location', 'east') 
+xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(2,1,2),plot(q_asd_vecA, 10.*oxy_sa_asd_vecA, '-m*','linewidth', 1.5)
-legend({'Systemic Artery Pressure'},'Location', 'west') 
-xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+subplot(2,1,2),plot(asd_vec, oxy_sa_asd_vecA * (100/7.57), '-m*','linewidth', 1.5)
+legend({'Systemic Artery '},'Location', 'east') 
+xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
 grid on
 
 % asd comparison with systemic vein
 figure(204)
-subplot(2,1,1),plot(q_asd_vecA, ppa_asd_vecA, '-ro')
-title('Atrium Shunt Flow in Pulmonary Artery Pressure')
-xlabel('Shunt Flow Mean') 
-ylabel('Pressure')
-subplot(2,1,2),plot(q_asd_vecA, 10.*oxy_sv_asd_vecA, '-m*','linewidth', 2)
-title('Atrium Shunt Flow vs Oxygen Saturation for Systemic Vein')
-xlabel('Shunt Flow Mean') 
-ylabel('Oxygen Saturation (%)')
+subplot(2,1,1),plot(q_asd_vecA, ppa_asd_vecA, '-ro','linewidth', 1.5)
+title('ASD: Shunt Flow Mean vs Pressure','FontSize',14,'FontWeight','bold')
+legend({'Pulmonary Artery '},'Location', 'east') 
+xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
+grid on
+subplot(2,1,2),plot(q_asd_vecA, oxy_sv_asd_vecA * (100/7.57), '-m*','linewidth', 1.5)
+title('Atrium Shunt Flow vs Oxygen Saturation for Systemic Vein','FontSize',14,'FontWeight','bold')
+xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
+grid on
 
 % asd comparison with systemic vein
 figure(205)
-subplot(2,1,1),plot(q_asd_vecA, psa_asd_vecA, '-bs')
-title('Atrium Shunt Flow in Systemic Artery Pressure')
-xlabel('Shunt Flow Mean') 
-ylabel('Pressure')
-subplot(2,1,2),plot(q_asd_vecA, 10.*oxy_sv_asd_vecA, '-m*','linewidth', 2)
-title('Atrium Shunt Flow vs Oxygen Saturation for Systemic Vein')
-xlabel('Shunt Flow Mean') 
-ylabel('Oxygen Saturation (%)')
+subplot(2,1,1),plot(q_asd_vecA, psa_asd_vecA, '-bs','linewidth', 1.5)
+title('Atrium Shunt Flow in Systemic Artery Pressure','FontSize',14,'FontWeight','bold')
+xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
+grid on
+subplot(2,1,2),plot(q_asd_vecA, oxy_sv_asd_vecA * (100/7.57), '-m*','linewidth', 2)
+title('Atrium Shunt Flow vs Oxygen Saturation for Systemic Vein','FontSize',14,'FontWeight','bold')
+xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
+ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
+grid on
 
 figure(206)
 subplot(3,1,1),semilogx(asd_vec, qAo_asd_vecA, '-ro','linewidth', 1.5)
@@ -143,7 +152,7 @@ title('ASD: Systemic Artery','FontSize',16,'FontWeight','bold')
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('Cardiac Output (L/min)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(3,1,2),semilogx(asd_vec, 10.*oxy_sa_asd_vecA, '-bo','linewidth', 1.5)
+subplot(3,1,2),semilogx(asd_vec, oxy_sa_asd_vecA * (100/7.57), '-bo','linewidth', 1.5)
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('O2 Saturation (%)','FontSize',10,'FontWeight','bold')
 grid on
@@ -164,7 +173,7 @@ legend({'Pulmonary Artery Pressure','Systemic Artery Pressure'},'Location', 'nor
 xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
 ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(2,1,2),plot(q_vsd_vecV, 10.*oxy_sa_vsd_vecV, '-mo','linewidth', 1.5)
+subplot(2,1,2),plot(q_vsd_vecV, oxy_sa_vsd_vecV * (100/7.57), '-mo','linewidth', 1.5)
 legend({'Systemic Artery Pressure'},'Location', 'northeast') 
 xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
 ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
@@ -178,7 +187,7 @@ legend({'Pulmonary Artery Pressure','Systemic Artery Pressure'},'Location', 'nor
 xlabel('Shunt Flow Mean') 
 ylabel('Pressure (mmHg)')
 grid on
-subplot(2,1,2),plot(q_vsd_vecV, 10.*oxy_sv_vsd_vecV, '-m*','linewidth', 2)
+subplot(2,1,2),plot(q_vsd_vecV, oxy_sv_vsd_vecV * (100/7.57), '-m*','linewidth', 2)
 xlabel('Shunt Flow Mean') 
 title('Ventricle Shunt Flow vs Oxygen Saturation for Systemic Vein')
 ylabel('Oxygen Saturation (%)')
@@ -191,7 +200,7 @@ title('VSD: Systemic Artery','FontSize',16,'FontWeight','bold')
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('Caridac Output (L/min)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(3,1,2),semilogx(vsd_vec, 10.*oxy_sa_vsd_vecV, '-bo','linewidth', 1.5)
+subplot(3,1,2),semilogx(vsd_vec, oxy_sa_vsd_vecV * (100/7.57), '-bo','linewidth', 1.5)
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('O2 Saturation (%)','FontSize',10,'FontWeight','bold')
 grid on
@@ -213,7 +222,7 @@ legend({'Pulmonary Artery Pressure','Systemic Artery Pressure'},'Location', 'nor
 xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
 ylabel('Pressure (mmHg)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(2,1,2),plot(q_d_vecD, 10.*oxy_sa_d_vecD, '-mo','linewidth', 1.2)
+subplot(2,1,2),plot(q_d_vecD, oxy_sa_d_vecD * (100/7.57), '-mo','linewidth', 1.2)
 legend({'Systemic Artery Pressure'},'Location', 'northeast')
 xlabel('Shunt Flow Mean','FontSize',10,'FontWeight','bold') 
 ylabel('Oxygen Saturation (%)','FontSize',10,'FontWeight','bold')
@@ -227,7 +236,7 @@ legend({'Pulmonary Artery Pressure','Systemic Artery Pressure'},'Location', 'nor
 xlabel('Shunt Flow Mean') 
 ylabel('Pressure')
 grid on
-subplot(2,1,2),plot(q_d_vecD, 10.*oxy_sv_d_vecD, '-m*','linewidth', 2)
+subplot(2,1,2),plot(q_d_vecD, oxy_sv_d_vecD * (100/7.57), '-m*','linewidth', 2)
 xlabel('Shunt Flow Mean') 
 ylabel('Oxygen Saturation (%)')
 grid on
@@ -239,7 +248,7 @@ title('Ductus: Systemic Artery','FontSize',16,'FontWeight','bold')
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('Cardiac Output (L/min)','FontSize',10,'FontWeight','bold')
 grid on
-subplot(3,1,2),semilogx(d_vec, 10.*oxy_sa_d_vecD, '-bo','linewidth', 1.5)
+subplot(3,1,2),semilogx(d_vec, oxy_sa_d_vecD * (100/7.57), '-bo','linewidth', 1.5)
 xlabel('Shunt Size','FontSize',10,'FontWeight','bold') 
 ylabel('O2 Saturation (%)','FontSize',10,'FontWeight','bold')
 grid on
