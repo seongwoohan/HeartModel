@@ -35,7 +35,7 @@ for klok=1:klokmax
   %(the net 4flow is computed in each case)
   
   Qp = S(ipa,ipv)*G(ipa,ipv)*(P(ipa)-P(ipv));
-  metabolism(ipa,ipv) = Qp * (10 - oxy_old_vec(ipa));
+  metabolism(ipa,ipv) = Qp * (7.57 - oxy_old_vec(ipa));
   
   % backward euler method
   for i=1:N
