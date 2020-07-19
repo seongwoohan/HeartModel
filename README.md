@@ -1,6 +1,4 @@
-# RPH
-
-This repository contains numerical simulation for optimizing interventions in congenital heart disease.
+# Introduction
 
 We provide computer models, optimizing three proposed surgical treatments of refractory pulmonary hypertension. 
 The models set up the methodology to examine the treatment results without actually performing the surgery. 
