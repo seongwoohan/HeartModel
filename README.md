@@ -6,4 +6,8 @@ We provide computer models, optimizing three proposed surgical treatments of ref
 
 # SETUP
 
-Run circ_asd.m, circ_vsd.m, circ_d.m to see the numerical simulation in each intervention.
+Run the below files to see the numerical simulation in each intervention.
+
+circ_asd.m
+circ_vsd.m
+circ_d.m
