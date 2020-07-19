@@ -6,8 +6,8 @@ Numerical simulations are performed to compare the change of pressure and oxygen
 
 # SETUP
 
-Run the below files to see the numerical simulation in each intervention.
+Run the below files to see the numerical simulation in each intervention:
 
-circ_asd.m 
-circ_vsd.m 
-circ_d.m 
+1. circ_asd.m 
+2. circ_vsd.m 
+3. circ_d.m 
