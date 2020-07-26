@@ -18,6 +18,8 @@ qMi_vsd_vecV = zeros(1,ncase_vsd);
 
 % shunt flow mean
 q_vsd_mean_vecV = zeros(1,ncase_vsd);
+q_vsd_plus_vecV = zeros(1,ncase_vsd);
+q_vsd_minus_vecV = zeros(1,ncase_vsd);
 
 % pressure in pulmonary artery and systemic artery 
 ppa_vsd_vecV = zeros(1,ncase_vsd);
@@ -39,7 +41,11 @@ for iV = 1:length(vsd_vec)
     qPu_vsd_vecV(iV) = meanvalue(Q_plot(jPu,:), klokmax, T, dt, 10);
     qp_vsd_vecV(iV) = meanvalue(Q_plot(jp,:), klokmax, T, dt, 10);
     qMi_vsd_vecV(iV) = meanvalue(Q_plot(jMi,:), klokmax, T, dt, 10);
+    
     q_vsd_mean_vecV(iV) = meanvalue(Q_plot(jvsd,:), klokmax, T, dt, 10);
+    q_vsd_plus_vecV(iV) = meanvalue(max(Q_plot(jvsd,:),0), klokmax, T, dt, 10);
+    q_vsd_minus_vecV(iV) = meanvalue(min(Q_plot(jvsd,:),0), klokmax, T, dt, 10);
+    
     ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, 10);
     psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, 10);
     oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, 10);
@@ -59,8 +65,9 @@ grid on
 
 % VSD : shunt conductance & shunt flow mean
 figure(301)
-plot(vsd_vec, q_vsd_mean_vecV, '-o','linewidth', 1.5)
+plot(vsd_vec, q_vsd_mean_vecV, '-o',vsd_vec, q_vsd_plus_vecV,'-o', vsd_vec, q_vsd_minus_vecV, '-o','linewidth', 1.5)
 title('Ventricular Septal Defect','FontSize',18,'FontWeight','bold')
+legend({'Overall Flow', 'Positive Flow', 'Negative Flow'},'Location', 'east') 
 xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15,'FontWeight','bold')
 ylabel('Shunt Flow Mean (L/min)','FontSize',15,'FontWeight','bold')
 grid on
@@ -70,7 +77,7 @@ figure(303)
 subplot(3,1,1),semilogx(vsd_vec, qs_vsd_vecV, '-ro','linewidth', 1.5)
 title('Ventricular Septal Defect: Systemic Artery','FontSize',18,'FontWeight','bold')
 xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
-ylabel('Cardiac Output (L/min)','FontSize',15','FontWeight','bold')
+ylabel('Systemic Flow (L/min)','FontSize',15','FontWeight','bold')
 grid on
 subplot(3,1,2),semilogx(vsd_vec, 10.*oxy_sa_vsd_vecV, '-bo','linewidth', 1.5)
 xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
@@ -80,5 +87,28 @@ subplot(3,1,3),semilogx(vsd_vec, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-mo','linewidth'
 xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
 ylabel('Oxygen Delivery (mmol/min)','FontSize',15','FontWeight','bold')
 grid on
+
+% Without semilogx
+figure(304)
+subplot(3,1,1),plot(vsd_vec, qs_vsd_vecV, '-ro','linewidth', 1.5)
+title('Ventricular Septal Defect: Systemic Artery','FontSize',18,'FontWeight','bold')
+xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
+ylabel('Systemic Flow (L/min)','FontSize',15','FontWeight','bold')
+grid on
+subplot(3,1,2),plot(vsd_vec, 10.*oxy_sa_vsd_vecV, '-bo','linewidth', 1.5)
+xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
+ylabel('Oxygen Saturation (%)','FontSize',15','FontWeight','bold')
+grid on
+subplot(3,1,3),plot(vsd_vec, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-mo','linewidth', 1.5)
+xlabel('Shunt Conductance (L/min/mmHg)','FontSize',15','FontWeight','bold') 
+ylabel('Oxygen Delivery (mmol/min)','FontSize',15','FontWeight','bold')
+grid on
+
+% VSD : Flow on time dependence
+figure(305)
+plot(t_plot,Q_plot(jvsd,:),'linewidth', 1.5);
+title('Ventricular Septal Defect Shunt Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
 
 end
