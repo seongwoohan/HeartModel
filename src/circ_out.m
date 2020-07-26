@@ -59,17 +59,19 @@ xlabel('Volume')
 ylabel('Pressure')
 
 figure(5);
-subplot(3,1,1),plot(t_plot,Q_plot(jasd,:));
-title('Flow between Right and Left Atrium')
-xlabel('Time (min)') 
-ylabel('Blood Flow')
+plot(t_plot,Q_plot(jasd,:),'linewidth', 1.5);
+title('Atrial Septal Defect Shunt Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
 
-subplot(3,1,2),plot(t_plot,Q_plot(jvsd,:));
-title('Flow between Rigth and Left Ventricle')
-xlabel('Time (min)') 
-ylabel('Blood Flow')
+figure(6)
+plot(t_plot,Q_plot(jvsd,:),'linewidth', 1.5);
+title('Ventricular Septal Defect Shunt Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
 
-subplot(3,1,3),plot(t_plot,Q_plot(jd,:));
-title('Flow between Pulmonary and Systemic Artery')
-xlabel('Time (min)') 
-ylabel('Blood Flow')
+figure(7)
+plot(t_plot,Q_plot(jd,:),'linewidth', 1.5);
+title('Patent Ductus Arteriosus Shunt Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
