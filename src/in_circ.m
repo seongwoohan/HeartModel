@@ -18,6 +18,7 @@ RMi=0.01   %mitral valve resistance (mmHg/(liter/minute))
 RAo=0.01   %aortic valve resistance (mmHg/(liter/minute))
 RTr=0.01   %tricuspid valve resistance (mmHg/(liter/minute))
 RPu=0.01   %pulmonic valve  resistance (mmHg/(liter/minute))
+Rvisc = 0.01
 
 %The following values of Csa and Cpa are approximate.
 %They will need adjustment to make the systemic 
@@ -47,6 +48,14 @@ dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
 klokmax=1000*T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
+
+ifpmax = 10 
+%the trouble comes from the fact that we set the conductance of the shunt based on 
+%its flow in the previous time step.  It would be better to use the flow in 
+%the present time step, but this is unknown.  To find it, we could try fixed-point iteration, 
+%which simply means that we repeat each time step some number of times, 
+%always adjusting the conductance accordingto the flow that we found on 
+%the latest pass through the time step.
 
 %Assign an index to each compliance vessel 
 %of the model circulation:
@@ -184,6 +193,13 @@ iU(jvsd)=iRV;
 iD(jvsd)=iLV;
 iU(jd)=ipa;
 iD(jd)=isa;
+
+if (Ashunt > 0) 
+    
+G(iU(j_shunt),iD(j_shunt)) = 1 / Rvisc
+G(iD(j_shunt),iU(j_shunt)) = 1 / Rvisc
+
+end
 
 % oxy concentration mmol/L
 % metabolism = mmol/min
