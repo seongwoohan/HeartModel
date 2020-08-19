@@ -2,4 +2,4 @@ This is a python version of the original matlab code in https://www.math.nyu.edu
 
 (1) in_circ.py contains functions and values needed to run circ.py. (2) circ.py is the main program for the whole circulation simulation. (3) sa.py loops over time and computes the simulation of systemic arteries. (4) LV_sa.py is a simulation of the left heart and the systemic arteries. 
 
-For the notebooks version, circ.ipynb contains all the functions and values in in_circ.py.
+For the notebooks version, circ.ipynb contains all functions and values in in_circ.py.
