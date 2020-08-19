@@ -16,7 +16,7 @@ Run the below files to see the numerical simulation in each intervention:
 2. circ_vsd.m 
 3. circ_d.m 
 
-There is a new python version for the model (https://github.com/seongwoohan/HeartModel/tree/master/src/python_ver). Run the below files as well to see the numerical simulation in each intervention:
+There is a new python version for the model (https://github.com/seongwoohan/HeartModel/tree/master/src/python_ver/original). Run the below files as well to see the numerical simulation in each intervention:
 
 1. circ_asd.py
 2. circ_vsd.py
