@@ -41,7 +41,6 @@ for klok=1:klokmax
     Q_plot(:,klok)=(Gf.*(Pdiff>0)+Gr.*(Pdiff<0)).*Pdiff;
     %(the net 4flow is computed in each case)
   
-  
     % gorlin equation place
     rho = 1000 / ((1.36*980*10*(60)^2));   % mmHg.min2/dm2
  
@@ -58,28 +57,36 @@ for klok=1:klokmax
     Gshuntf_plot(klok) = Gf(j_shunt);
     Gshuntr_plot(klok) = Gr(j_shunt);
     
-    Qp = S(ipa,ipv)*G(ipa,ipv)*(P(ipa)-P(ipv));
-    metabolism(ipa,ipv) = Qp * (10 - oxy_old_vec(ipa));
-  
-    % backward euler method
-    for i=1:N
-        oxy_amt(i)=oxy_old_vec(i)*V_old(i);
-        for j=1:N
-            if j ~= i
-                Qij = S(i,j)*G(i,j)*(P(i)-P(j));
-                Qji = S(j,i)*G(j,i)*(P(j)-P(i));
-             
-                oxy_amt(i) = oxy_amt(i) + dt*(oxy_old_vec(j) * Qji - oxy_old_vec(i) * Qij + metabolism(j,i));
-            end
-        end
-        oxy_vec(i) = oxy_amt(i)/V(i);
-    end
-  
-    oxy_vec
-
-    % store the O2 cocentration at klok
-    O2_plot(:,klok) = oxy_vec;  
   end
+  
+  % oxygen
+  
+  if S(ipa,ipv) == 0
+      error("S(ipa,ipv) == 0")
+  end   
+  
+  Qp = S(ipa,ipv)*G(ipa,ipv)*(P(ipa)-P(ipv));
+  metabolism(ipa,ipv) = Qp * (10 - oxy_old_vec(ipa));
+  
+  % maybe forward euler?
+  % backward euler method
+  for i=1:N
+      oxy_amt(i)=oxy_old_vec(i)*V_old(i);
+      for j=1:N
+          if j ~= i
+              Qij = S(i,j)*G(i,j)*(P(i)-P(j));
+              Qji = S(j,i)*G(j,i)*(P(j)-P(i));
+             
+              oxy_amt(i) = oxy_amt(i) + dt*(oxy_old_vec(j) * Qji - oxy_old_vec(i) * Qij + metabolism(j,i));
+          end
+      end
+      oxy_vec(i) = oxy_amt(i)/V(i);
+  end
+  
+  oxy_vec
+  % store the O2 cocentration at klok
+  O2_plot(:,klok) = oxy_vec;  
+ 
   
 end
 %plot results:
