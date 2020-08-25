@@ -16,9 +16,10 @@ num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2)
 %parameters specific to each ventricle:
 EminLV = 0.08*1000 % (mmHg/L)
-EmaxLV = 3.00*1000 % (mmHg/L)
-EminRV = 0.04*1000 % (mmHg/L)
-EmaxRV = 0.60*1000 % (mmHg/L)
+EmaxLV = 30.00*1000 % (mmHg/L)
+EminRV = EminLV %0.04*1000 % (mmHg/L)
+EmaxRV = EmaxLV %0.60*1000 % (mmHg/L)
+
 
 tmax=10*T
 clockmax =3000
@@ -82,7 +83,7 @@ Vpad=0.0382    %Pulmonary arterial volume at P=0 (liters)
 Vsvd=0         %Systemic venous volume at P=0 (liters)
 Vpvd=0         %Pulmonary venous volume at P=0 (liters)
 VLVd=0.010     %Left ventricular volume at P=0 (liters)
-VRVd=0.055     %Right ventricular volume at P=0 (liters)
+VRVd= VLVd     %0.055  %Right ventricular volume at P=0 (liters) 0.027
 %0.01
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
