@@ -27,7 +27,10 @@ for klok=1:klokmax
   
   % fixed-point iteration
   for ifp=1:ifpmax
-      
+
+    % this is very important... to make sure we are using the conductances at the correct time!
+    G_prev = G;
+
     set_valves
     %store variables in arrays for future plotting:
 
@@ -56,7 +59,7 @@ for klok=1:klokmax
     end
     Gshuntf_plot(klok) = Gf(j_shunt);
     Gshuntr_plot(klok) = Gr(j_shunt);
-    
+
   end
   
   % oxygen
@@ -74,20 +77,21 @@ for klok=1:klokmax
       oxy_amt(i)=oxy_old_vec(i)*V_old(i);
       for j=1:N
           if j ~= i
-              Qij = S(i,j)*G(i,j)*(P(i)-P(j));
-              Qji = S(j,i)*G(j,i)*(P(j)-P(i));
+              Qij = S(i,j)*G_prev(i,j)*(P(i)-P(j));
+              Qji = S(j,i)*G_prev(j,i)*(P(j)-P(i));
              
               oxy_amt(i) = oxy_amt(i) + dt*(oxy_old_vec(j) * Qji - oxy_old_vec(i) * Qij + metabolism(j,i));
           end
       end
       oxy_vec(i) = oxy_amt(i)/V(i);
+      total_oxy_amt_plot(klok,1) = total_oxy_amt_plot(klok,1) + oxy_amt(i);
   end
   
   oxy_vec
   % store the O2 cocentration at klok
   O2_plot(:,klok) = oxy_vec;  
- 
-  
+  O2_amt_plot(:,klok) = oxy_amt; 
+  %pause
 end
 %plot results:
 circ_out

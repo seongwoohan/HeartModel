@@ -87,7 +87,7 @@ VRVd= VLVd     %0.055  %Right ventricular volume at P=0 (liters) 0.027
 %0.01
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=100*T/dt %T/dt %Total number of timesteps 
+klokmax=5*T/dt %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
 ifpmax = 10 
@@ -183,6 +183,8 @@ t_plot=zeros(1,klokmax);
 C_plot=zeros(N,klokmax);
 P_plot=zeros(N,klokmax);
 O2_plot=zeros(N,klokmax);
+O2_amt_plot=zeros(N,klokmax);
+total_oxy_amt_plot=zeros(klokmax,1);
 Gshuntf_plot=zeros(1,klokmax);
 Gshuntr_plot=zeros(1,klokmax);
 %Other variables that we might want to plot 
@@ -264,8 +266,7 @@ oxy_vec = ones(N, 1) .* 10;   % 5.088
 
 metabolism = zeros(size(G));
 metabolism(isa, isv) = -16.8;
-metabolism(ipa, ipv) = 0;
- 
+
 %extract the conductances from the matrix G:
 Gf=zeros(Nflows,1);
 Gr=zeros(Nflows,1);
