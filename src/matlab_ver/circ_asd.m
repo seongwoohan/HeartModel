@@ -1,6 +1,6 @@
 % The new main program and figures for asd
 % variables for asd
-
+tic
 clear all % clear all variables
 close all       
 
@@ -10,7 +10,7 @@ jvsd=8;
 jd=9;
 j_shunt = jasd
 asd_vec = (0 : 0.1 : 1) / 100
-%dm^2
+%(0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 ncase_asd = length(asd_vec);
 
@@ -35,26 +35,27 @@ psa_asd_vecA = zeros(1,ncase_asd);
 oxy_sa_asd_vecA = zeros(1,ncase_asd);
 oxy_pa_asd_vecA = zeros(1,ncase_asd);
 
+num_cycles_for_mean = 10;
 
 % mean value for above variables
 for iA = 1:length(asd_vec)
     Ashunt = asd_vec(iA);
     circ;     
-    qAo_asd_vecA(iA) = meanvalue(Q_plot(jAo,:), klokmax, T, dt, 10);
-    qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, 10);
-    qTr_asd_vecA(iA) = meanvalue(Q_plot(jTr,:), klokmax, T, dt, 10);
-    qPu_asd_vecA(iA) = meanvalue(Q_plot(jPu,:), klokmax, T, dt, 10);
-    qp_asd_vecA(iA) = meanvalue(Q_plot(jp,:), klokmax, T, dt, 10);
-    qMi_asd_vecA(iA) = meanvalue(Q_plot(jMi,:), klokmax, T, dt, 10);
+    qAo_asd_vecA(iA) = meanvalue(Q_plot(jAo,:), klokmax, T, dt, num_cycles_for_mean);
+    qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+    qTr_asd_vecA(iA) = meanvalue(Q_plot(jTr,:), klokmax, T, dt, num_cycles_for_mean);
+    qPu_asd_vecA(iA) = meanvalue(Q_plot(jPu,:), klokmax, T, dt, num_cycles_for_mean);
+    qp_asd_vecA(iA) = meanvalue(Q_plot(jp,:), klokmax, T, dt, num_cycles_for_mean);
+    qMi_asd_vecA(iA) = meanvalue(Q_plot(jMi,:), klokmax, T, dt, num_cycles_for_mean);
     
-    q_asd_mean_vecA(iA) = meanvalue(Q_plot(jasd,:), klokmax, T, dt, 10);
-    q_asd_plus_vecA(iA) = meanvalue(max(Q_plot(jasd,:),0), klokmax, T, dt, 10);
-    q_asd_minus_vecA(iA) = meanvalue(min(Q_plot(jasd,:),0), klokmax, T, dt, 10);
+    q_asd_mean_vecA(iA) = meanvalue(Q_plot(jasd,:), klokmax, T, dt, num_cycles_for_mean);
+    q_asd_plus_vecA(iA) = meanvalue(max(Q_plot(jasd,:),0), klokmax, T, dt, num_cycles_for_mean);
+    q_asd_minus_vecA(iA) = meanvalue(min(Q_plot(jasd,:),0), klokmax, T, dt, num_cycles_for_mean);
     
-    ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, 10);
-    psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, 10);
-    oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, 10);
-    oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, 10);
+    ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+    oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+    oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
 end
 
 if (length(asd_vec) > 0)
@@ -94,18 +95,22 @@ grid on
 
 % Without semilogx
 figure(202)
-subplot(3,1,1),plot(asd_vec*100, qs_asd_vecA, '-ro','linewidth', 2)
+plot(asd_vec*100, qs_asd_vecA, '-ro','linewidth', 2)
 title('Atrial Septal Defect: Systemic Artery')
 xlabel('Shunt Area (cm^2)') 
 ylabel('Systemic Flow (L/min)')
 set(gca,'FontSize',18)
 grid on
-subplot(3,1,2),plot(asd_vec*100, 10.*oxy_sa_asd_vecA, '-bo','linewidth', 2)
+figure(203)
+plot(asd_vec*100, 10.*oxy_sa_asd_vecA, '-bo','linewidth', 2)
+title('Atrial Septal Defect: Oxygen Saturation')
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Saturation (%)')
 set(gca,'FontSize',18)
 grid on
-subplot(3,1,3),plot(asd_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-mo','linewidth', 2)
+figure(204)
+plot(asd_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-mo','linewidth', 2)
+title('Atrial Septal Defect: Oxygen Delivery')
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Delivery (mmol/min)')
 set(gca,'FontSize',18)
@@ -113,14 +118,14 @@ grid on
 
 % ASD : Flow on time dependence
 % axis([xmin xmax ymin ymax])
-figure(203)
+figure(205)
 plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jasd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2);
 title('Atrial Septal Defect Shunt Flow')
 xlabel('Time (min)') 
 ylabel('Blood Flow (L/min)')
 set(gca,'FontSize',20)
-ylim([-1.5 1.5])
 yline(0, '--b','linewidth', 2)
+ylim([-1.5 1.5])
 % 0 on the line
 
 
@@ -131,3 +136,4 @@ yline(0, '--b','linewidth', 2)
 %grid on
 
 end
+toc
