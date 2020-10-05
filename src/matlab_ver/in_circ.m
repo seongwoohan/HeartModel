@@ -87,7 +87,7 @@ VRVd= VLVd     %0.055  %Right ventricular volume at P=0 (liters) 0.027
 %0.01
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=5*T/dt %T/dt %Total number of timesteps 
+klokmax=1000*T/dt %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
 ifpmax = 10 
