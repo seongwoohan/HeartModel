@@ -20,7 +20,6 @@ EmaxLV = 30.00*1000 % (mmHg/L)
 EminRV = EminLV %0.04*1000 % (mmHg/L)
 EmaxRV = EmaxLV %0.60*1000 % (mmHg/L)
 
-
 tmax=10*T
 clockmax =3000
 dt=tmax/clockmax
@@ -182,6 +181,10 @@ S=zeros(N,N);
 t_plot=zeros(1,klokmax);
 C_plot=zeros(N,klokmax);
 P_plot=zeros(N,klokmax);
+
+% V_diff arrary
+V_diff=zeros(N,klokmax);
+
 O2_plot=zeros(N,klokmax);
 O2_amt_plot=zeros(N,klokmax);
 total_oxy_amt_plot=zeros(klokmax,1);
