@@ -25,6 +25,7 @@ for klok=1:klokmax
   C(iLV)=1/elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
   C(iRV)=1/elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
   
+  V = Vd+C.*P
   % fixed-point iteration
   for ifp=1:ifpmax
 
