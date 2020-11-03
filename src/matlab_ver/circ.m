@@ -25,7 +25,7 @@ for klok=1:klokmax
   C(iLV)=1/elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
   C(iRV)=1/elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
   
-  V = Vd+C.*P
+  V_total_start = Vd+C.*P
   % fixed-point iteration
   for ifp=1:ifpmax
 
@@ -40,6 +40,11 @@ for klok=1:klokmax
     P_plot(:,klok)=P;
     V_plot(:,klok)=Vd+C.*P;
     V = Vd+C.*P;
+    
+    % calculate initial volume difference
+    V_total = sum(V)
+    V_diff(klok) = V_total - V_total_start
+    
     Pdiff=P(iU)-P(iD); %pressure differences 
                         %for flows of interest:
     Q_plot(:,klok)=(Gf.*(Pdiff>0)+Gr.*(Pdiff<0)).*Pdiff;
