@@ -22,4 +22,4 @@ There is a new python version for the model. Run the below files as well to see 
 2. circ_vsd.py
 3. circ.d.py
 
-https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg
+<a href="https://doi.org/10.5281/zenodo.4265104"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg" alt="DOI"></a>
