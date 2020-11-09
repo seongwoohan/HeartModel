@@ -21,3 +21,5 @@ There is a new python version for the model. Run the below files as well to see 
 1. circ_asd.py
 2. circ_vsd.py
 3. circ.d.py
+
+https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg
