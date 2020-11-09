@@ -1,14 +1,12 @@
 # Introduction
 
-<a href="https://doi.org/10.5281/zenodo.4265104"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg" alt="DOI"></a>
-
 We provide computer models, optimizing three proposed surgical treatments of refractory pulmonary hypertension. 
 The models set up the methodology to examine the treatment results without actually performing the surgery. 
 Numerical simulations are performed to compare the change of pressure and oxygen saturation in pulmonary artery and systemic artery to examine the impact of the treatments.
 
 This software is build upon https://www.math.nyu.edu/faculty/peskin/ModSimPrograms/ch1/. 
 See here for original code of computer simulation in heart and circulation.
-
+<a href="https://doi.org/10.5281/zenodo.4265104"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg" alt="DOI"></a>
 
 # Experiment
 
