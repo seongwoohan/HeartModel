@@ -1,5 +1,7 @@
 # Introduction
 
+<a href="https://doi.org/10.5281/zenodo.4265104"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg" alt="DOI"></a>
+
 We provide computer models, optimizing three proposed surgical treatments of refractory pulmonary hypertension. 
 The models set up the methodology to examine the treatment results without actually performing the surgery. 
 Numerical simulations are performed to compare the change of pressure and oxygen saturation in pulmonary artery and systemic artery to examine the impact of the treatments.
@@ -22,4 +24,4 @@ There is a new python version for the model. Run the below files as well to see 
 2. circ_vsd.py
 3. circ.d.py
 
-<a href="https://doi.org/10.5281/zenodo.4265104"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4265104.svg" alt="DOI"></a>
+
