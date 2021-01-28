@@ -70,12 +70,12 @@ for iDD = 1:length(int_vec)
 end 
 %, int_vec*100, qs_vsd_vecV, int_vec*100, qs_d_vecD
 
-%{
+
 figure(500)
 plot(int_vec*100, ppa_asd_vecA, '-o', int_vec*100, ppa_vsd_vecV, '-o', int_vec*100, ppa_d_vecD, '-o','linewidth', 4)
 set(gca,'FontSize',25)
 title('Pulmonary Artery Pressure','FontSize',22)
-legend({'ASD','VSD','PDA'},'Location', 'best','FontSize',18) 
+legend({'ASD','VSD','Potts Shunt'},'Location', 'best','FontSize',18) 
 legend boxoff                  
 xlabel('Shunt Area (cm^2)','FontSize', 22) 
 ylabel('Pressure (mmHg)','FontSize', 22)
@@ -85,38 +85,38 @@ figure(501)
 plot(int_vec*100, psa_asd_vecA, '-o', int_vec*100, psa_vsd_vecV, '-o', int_vec*100, psa_d_vecD, '-o','linewidth', 4)
 set(gca,'FontSize',25)
 title('Systemic Artery Pressure','FontSize', 22)
-legend({'ASD','VSD','PDA'},'Location', 'east','FontSize',18) 
+legend({'ASD','VSD','Potts Shunt'},'Location', 'east','FontSize',18) 
 legend boxoff 
 xlabel('Shunt Area (cm^2)','FontSize', 22) 
 ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
-%}
+
 
 figure(600)
-plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-o', int_vec*100, qs_d_vecD, '-o','linewidth', 2)
-set(gca,'FontSize',25)
-title('Systemic Flow')
-legend({'ASD','VSD', 'PDA'},'Location', 'east','FontSize',17) 
+plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-o', int_vec*100, qs_d_vecD, '-o','linewidth', 4)
+title('Systemic Flow','FontWeight','Normal')
+legend({'ASD','VSD', 'Potts Shunt'},'Location', 'east','FontSize',17, 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Systemic Flow (L/min)')
-
+set(gca,'FontSize',20)
 grid on
+
 figure(601)
-plot(int_vec*100, 10.*oxy_sa_asd_vecA, '-o', int_vec*100, 10.*oxy_sa_vsd_vecV, '-o', int_vec*100, 10.*oxy_sa_d_vecD,'-o','linewidth', 2)
-title('Oxygen Saturation')
-legend({'ASD','VSD', 'PDA'},'Location', 'east','FontSize',17) 
+plot(int_vec*100, 10.*oxy_sa_asd_vecA, '-o', int_vec*100, 10.*oxy_sa_vsd_vecV, '-o', int_vec*100, 10.*oxy_sa_d_vecD,'-o','linewidth', 4)
+title('Oxygen Saturation','FontWeight','Normal')
+legend({'ASD','VSD', 'Potts Shunt'},'Location', 'east','FontSize',17, 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Saturation (%)')
-set(gca,'FontSize',25)
+set(gca,'FontSize',20)
 grid on
 
 figure(602)
-plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-o', int_vec*100, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-o',int_vec*100, qs_d_vecD.*oxy_sa_d_vecD,'-o','linewidth', 2)
-title('Oxygen Delivery')
-legend({'ASD','VSD', 'PDA'},'Location', 'east','FontSize',17) 
+plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-o', int_vec*100, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-o',int_vec*100, qs_d_vecD.*oxy_sa_d_vecD,'-o','linewidth', 4)
+title('Oxygen Delivery','FontWeight','Normal')
+legend({'ASD','VSD', 'Potts Shunt'},'Location', 'east','FontSize',17, 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Delivery (mmol/min)')
-set(gca,'FontSize',25)
+set(gca,'FontSize',20)
 grid on
 
 
