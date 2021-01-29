@@ -23,4 +23,8 @@ There is a new python version for the model. Run the below files as well to see 
 2. circ_vsd.py
 3. circ.d.py
 
+# Refractory Pulmonary Hypertension
 
+Code and computer models for "Computer models for studying interventions used in treating refractory pulmonary hypertension". Paper at: https://arxiv.org/abs/2101.12191
+
+See the READMEs in subdirectories for directions on running the code.
