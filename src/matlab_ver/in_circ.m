@@ -67,10 +67,9 @@ Rvisc = 0.01
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
 Csa=0.00175   %Systemic  arterial compliance (liters/mmHg)
-%Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
-Cpa=Csa
-Csv=1.75     %Systemic  venous compliance (liters/mmHg)
-Cpv=0.08     %Pulmonary venous compliance (liters/mmHg)
+Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
+Csv=0.09     %Systemic  venous compliance (liters/mmHg)
+Cpv=0.01     %Pulmonary venous compliance (liters/mmHg)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% these compliance values are NOT used
@@ -84,9 +83,9 @@ CRVD=CLVD
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Vsad=0.825     %Systemic arterial volume at P=0 (liters)
-Vpad=0.0382    %Pulmonary arterial volume at P=0 (liters)
-Vsvd=0         %Systemic venous volume at P=0 (liters)
-Vpvd=0         %Pulmonary venous volume at P=0 (liters)
+Vpad=0.1135    %Pulmonary arterial volume at P=0 (liters)
+Vsvd=3.5         %Systemic venous volume at P=0 (liters)
+Vpvd=0.18         %Pulmonary venous volume at P=0 (liters)
 VLVd=0.010     %Left ventricular volume at P=0 (liters)
 VRVd= VLVd     %0.055  %Right ventricular volume at P=0 (liters) 0.027
 %0.01
