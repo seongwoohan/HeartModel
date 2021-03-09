@@ -99,6 +99,9 @@ for klok=1:klokmax
   O2_amt_plot(:,klok) = oxy_amt; 
   %pause
 end
-%plot results:
+
+
+
+%% plot results:
 circ_out
 
