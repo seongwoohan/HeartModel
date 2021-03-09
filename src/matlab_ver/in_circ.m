@@ -16,7 +16,7 @@ num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2)
 %parameters specific to each ventricle:
 EminLV = 0.08*1000 % (mmHg/L)
-EmaxLV = 30.00*1000 % (mmHg/L)
+EmaxLV = 3.0*1000 % 30.00*1000 % (mmHg/L)
 EminRV = EminLV %0.04*1000 % (mmHg/L)
 EmaxRV = EmaxLV %0.60*1000 % (mmHg/L)
 
@@ -70,6 +70,9 @@ Csa=0.00175   %Systemic  arterial compliance (liters/mmHg)
 Cpa=Csa
 Csv=1.75     %Systemic  venous compliance (liters/mmHg)
 Cpv=0.08     %Pulmonary venous compliance (liters/mmHg)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% these compliance values are NOT used
 CLVS=0.00003  %Min (systolic)  value of CLV (liters/mmHg)
 CLVD=0.0146   %Max (diastolic) value of CLV (liters/mmHg)
 %Make the compliance the same
@@ -77,6 +80,8 @@ CRVS=CLVS
 CRVD=CLVD
 %CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
 %CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Vsad=0.825     %Systemic arterial volume at P=0 (liters)
 Vpad=0.0382    %Pulmonary arterial volume at P=0 (liters)
 Vsvd=0         %Systemic venous volume at P=0 (liters)
