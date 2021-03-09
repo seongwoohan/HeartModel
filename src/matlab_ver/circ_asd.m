@@ -61,6 +61,14 @@ end
 
 if (length(asd_vec) > 0)
 
+      ns = (T/dt)*10;
+      Vtot = sum(V_plot, 1);      
+      fprintf('\n%s %f %s\n','total blood volume is ', Vtot(end), ' liters');
+      fprintf('%s %f %s\n','stroke volume from LV is ', 1000*(max(V_plot(iLV,(klokmax-ns+1):klokmax)) - min(V_plot(iLV,(klokmax-ns+1):klokmax))), ' mL');
+      fprintf('%s %f %s\n','stroke volume from RV is ', 1000*(max(V_plot(iRV,(klokmax-ns+1):klokmax)) - min(V_plot(iRV,(klokmax-ns+1):klokmax))), ' mL');
+      fprintf('%s %f %s\n','mean systemic arterial pressure is ', psa_asd_vecA(1), ' mmHg');
+      fprintf('%s %f %s\n\n','mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
+      
 % ASD : shunt conductance & pressure
 %figure(200)
 %subplot(3,1,1),plot(asd_vec*100, ppa_asd_vecA, '-o', asd_vec*100, psa_asd_vecA, '-o','linewidth', 2)

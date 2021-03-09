@@ -100,8 +100,6 @@ for klok=1:klokmax
   %pause
 end
 
-
-
 %% plot results:
 circ_out
 

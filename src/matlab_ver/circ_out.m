@@ -76,11 +76,11 @@ ylabel('Blood Flow')
 %xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
 %ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
 
-figure(8)
-Vtot = sum(V_plot, 1);
-plot(t_plot, Vtot ,'linewidth', 5);
-set(gca, 'fontsize', 18)
-xlabel('time in minutes')
-ylabel('total blood volume')
-saveas(8,'total_volume.eps','epsc')
+%figure(8)
+%Vtot = sum(V_plot, 1);
+%plot(t_plot, Vtot ,'linewidth', 5);
+%set(gca, 'fontsize', 18)
+%xlabel('time in minutes')
+%ylabel('total blood volume')
+%saveas(8,'total_volume.eps','epsc')
 
