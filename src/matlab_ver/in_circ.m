@@ -16,6 +16,7 @@ num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2)
 %parameters specific to each ventricle:
 EminLV = 0.08*1000 % (mmHg/L)
+%% here we decreased the max elastance
 EmaxLV = 3.0*1000 % 30.00*1000 % (mmHg/L)
 EminRV = EminLV %0.04*1000 % (mmHg/L)
 EmaxRV = EmaxLV %0.60*1000 % (mmHg/L)
