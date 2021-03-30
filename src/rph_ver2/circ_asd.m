@@ -9,10 +9,8 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jasd
-%asd_vec = (0 : 0.1 : 1) / 100
-asd_vec = [0 0.001];
+asd_vec = (0 : 0.1 : 1) / 100
 %(0 : 0.1 : 1) / 100
-% 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 ncase_asd = length(asd_vec);
 
 % each flow of interest
@@ -36,6 +34,11 @@ psa_asd_vecA = zeros(1,ncase_asd);
 oxy_sa_asd_vecA = zeros(1,ncase_asd);
 oxy_pa_asd_vecA = zeros(1,ncase_asd);
 
+% minimum/maximum SA pressure and stroke volume
+%psamin_asd_vecA = zeros(1, ncase_asd);
+%psamax_asd_vecA = zeros(1, ncase_asd);
+%sv_asd_vecA = zeros(1, ncase_asd);
+
 num_cycles_for_mean = 10;
 
 % mean value for above variables
@@ -57,28 +60,50 @@ for iA = 1:length(asd_vec)
     psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
     oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
     oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    
+    %psamin_asd_vecA(iA) = min(meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean));
+    %psamax_asd_vecA(iA) = max(meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean));
+    %sv_asd_vecA(iA) = meanvlaue(SV, klokmax, T, dt, num_cycles_for_mean);
 end
 
 if (length(asd_vec) > 0)
 
+      ns = (T/dt)*10;
+      Vtot = sum(V_plot, 1);      
+      fprintf('\n%s %f %s\n','Total blood volume is ', Vtot(end), ' liters');
+      fprintf('%s %f %s\n\n','Cardiac ouput is ', qs_asd_vecA(end), ' (L/min)');
+      fprintf('%s %f %s\n','Stroke volume from LV is ', 1000*(max(V_plot(iLV,(klokmax-ns+1):klokmax)) - min(V_plot(iLV,(klokmax-ns+1):klokmax))), ' mL');
+      fprintf('%s %f %s\n','Stroke volume from RV is ', 1000*(max(V_plot(iRV,(klokmax-ns+1):klokmax)) - min(V_plot(iRV,(klokmax-ns+1):klokmax))), ' mL');
+      
+      fprintf('%s %f %s\n','Diastolic systemic arterial pressure is ', min(P_plot(isa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Systolic systemic arterial pressure is ', max(P_plot(isa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Mean systemic arterial pressure is ', psa_asd_vecA(1), ' mmHg');
 
-    
+      fprintf('%s %f %s\n','Diastolic pulmonary arterial pressure is ', min(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Systolic pulmonary arterial pressure is ', max(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
+      
+     
+%{    
 % ASD : shunt conductance & pressure
-figure(200)
-subplot(3,1,1),plot(asd_vec*100, ppa_asd_vecA, '-o', asd_vec*100, psa_asd_vecA, '-o','linewidth', 2)
-title('Atrial Septal Defect')
-legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'east','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Pressure (mmHg)')
-set(gca,'FontSize',18)
+figure(199)
+plot(asd_vec*100, ppa_asd_vecA, '-bo', asd_vec*100, psa_asd_vecA, '-ro','linewidth', 2)
+set(gca,'FontSize',25)
+title('Atrial Septal Defect','FontSize',22,'FontWeight','Normal')
+legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'northeast','FontSize',20, 'Box','off') 
+legend boxoff                  
+xlabel('Shunt Area (cm^2)','FontSize', 22) 
+ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
-subplot(3,1,2),plot(asd_vec*100, ppa_asd_vecA, '-bo','linewidth', 2)
+
+figure(200)
+subplot(2,1,1),plot(asd_vec*100, ppa_asd_vecA, '-bo','linewidth', 2)
 legend({'Pulmonary Artery'},'Location', 'east','FontSize',20) 
 xlabel('Shunt Area (cm^2)')
 ylabel('Pressure (mmHg)')
 set(gca,'FontSize',18)
 grid on
-subplot(3,1,3),plot(asd_vec*100, psa_asd_vecA, '-ro','linewidth', 2)
+subplot(2,1,2),plot(asd_vec*100, psa_asd_vecA, '-ro','linewidth', 2)
 legend({'Systemic Artery'},'Location', 'east','FontSize',20) 
 xlabel('Shunt Area (cm^2)')
 ylabel('Pressure (mmHg)')
@@ -119,7 +144,7 @@ ylabel('Oxygen Delivery (mmol/min)')
 set(gca,'FontSize',18)
 grid on
 
-    
+%}    
 % ASD : Flow on time dependence
 % axis([xmin xmax ymin ymax])
 figure(205)
@@ -129,9 +154,37 @@ xlabel('Time (min)')
 ylabel('Blood Flow (L/min)')
 set(gca,'FontSize',20)
 yline(0, '--b','linewidth', 2)
-ylim([-1.5 1.5])
-xlim([12.4375 12.5])
+ylim([-3 4])
+%xlim([12.4375 12.5])
 % 0 on the line
+
+%{
+figure(207)
+plot(asd_vec*100, psamin_asd_vecA, '-bo', asd_vec*100, psamax_asd_vecA, '-ro','linewidth', 2)
+title('Atrial Septal Defect')
+legend({'Minimum', 'Maximum'},'Location', 'east','FontSize',20) 
+xlabel('Shunt Area (cm^2)') 
+ylabel('Systemic Artery Pressure')
+set(gca,'FontSize',18)
+grid on
+
+
+figure(207)
+plot(asd_vec*100, psamin_asd_vecA, '-ro','linewidth', 2)
+title('Atrial Septal Defect')
+legend({'Minimum', 'Maximum'},'Location', 'northwest','FontSize',20) 
+xlabel('Shunt Area (cm^2)')
+ylabel('Systemic Artery Pressure (mmHg)')
+set(gca,'FontSize',18)
+grid on
+
+
+figure(208)
+plot(asd_vec*100, sv_asd_vecA,  '-mo','linewidth', 2)
+xlabel('Shunt Area (cm^2)')
+ylabel('Stroke Volume (mL)')
+set(gca,'FontSize',18)
+grid on
 
 
 %figure(206)
@@ -139,6 +192,8 @@ xlim([12.4375 12.5])
 %plot(asd_vec, qp_asd_vecA, '-bo','linewidth', 1.5); hold on;
 %plot(asd_vec, qs_asd_vecA, '-mo', 'linewidth', 1.5); hold off;
 %grid on
-
+%}
+     
 end
+        
 toc
