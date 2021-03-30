@@ -1,7 +1,5 @@
 %filename: in_circ.m  (initialization for circ)
 T =0.0125    %Duration of heartbeat (minutes)
-
-
 tau1 = 0.269*T % time scale of contraction (minutes)
 tau2 = 0.452*T % duration of systole (minutes)
 m1 = 1.32
@@ -16,9 +14,9 @@ num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2)
 %parameters specific to each ventricle:
 EminLV = 0.08*1000 % (mmHg/L)
-EmaxLV = 30.00*1000 % (mmHg/L)
-EminRV = EminLV %0.04*1000 % (mmHg/L)
-EmaxRV = EmaxLV %0.60*1000 % (mmHg/L)
+EmaxLV = 3.00*1000 % (mmHg/L) % 30
+EminRV = EminLV % 0.04*1000 (mmHg/L)
+EmaxRV = EmaxLV % 0.60*1000 (mmHg/L)
 
 tmax=10*T
 clockmax =3000
@@ -29,16 +27,10 @@ for clock=1:clockmax
   ERV(clock)=elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
   tsave(clock) = t;
 end
-plot(tsave,ELV,tsave,ERV)
+%plot(tsave,ELV,tsave,ERV)
 
 %TS=0.005     %Duration of systole   (minutes)
-% 
 %tauS=0.0025  %CLV time constant during systole (minutes)
-
-% double it triple it ... 
-% voa flows 
-%0.0025
-
 %tauD=0.0075  %CLV time constant during diastole (minutes)
 
 % different compliance function
@@ -49,7 +41,7 @@ Rs=17.5 %Systemic resistance
 % SVR = 10.8 Wood U x m2
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
-Rp=1.5*Rs
+Rp=1.5*Rs     % rph state
 %Rp= 1.79     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
@@ -65,11 +57,13 @@ Rvisc = 0.01
 %blood pressure be roughly 120/80 mmHg
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
-Csa=0.00175   %Systemic  arterial compliance (liters/mmHg)
-%Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
-Cpa=Csa
-Csv=1.75     %Systemic  venous compliance (liters/mmHg)
-Cpv=0.08     %Pulmonary venous compliance (liters/mmHg)
+Csa=0.00175 * 0.7   %Systemic  arterial compliance (liters/mmHg)
+Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
+Csv=0.09     %Systemic  venous compliance (liters/mmHg)
+Cpv=0.01     %Pulmonary venous compliance (liters/mmHg)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% these compliance values are NOT used
 CLVS=0.00003  %Min (systolic)  value of CLV (liters/mmHg)
 CLVD=0.0146   %Max (diastolic) value of CLV (liters/mmHg)
 %Make the compliance the same
@@ -77,13 +71,17 @@ CRVS=CLVS
 CRVD=CLVD
 %CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
 %CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
-Vsad=0.825     %Systemic arterial volume at P=0 (liters)
-Vpad=0.0382    %Pulmonary arterial volume at P=0 (liters)
-Vsvd=0         %Systemic venous volume at P=0 (liters)
-Vpvd=0         %Pulmonary venous volume at P=0 (liters)
-VLVd=0.010     %Left ventricular volume at P=0 (liters)
-VRVd= VLVd     %0.055  %Right ventricular volume at P=0 (liters) 0.027
-%0.01
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Vsad=0.825   %Systemic arterial volume at P=0 (liters)
+Vpad=0.1135  %Pulmonary arterial volume at P=0 (liters)
+Vsvd=3.5 % 2.8745  %3.5     %Systemic venous volume at P=0 (liters)
+Vpvd=0.18       %Pulmonary venous volume at P=0 (liters)
+VLVd=0.010
+VRVd= VLVd 
+%0.027   %Left ventricular volume at P=0 (liters)
+%VRVd=0.027   %Right vejfntricular volume at P=0 (liters)
+
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
 klokmax=1000*T/dt %T/dt %Total number of timesteps 
@@ -126,13 +124,11 @@ C  %This writes the result on the screen.
 %Pressure vector (initial values) at end of diastole:
 P=zeros(N,1);  
 %This makes P a column vector of length N.
-P(iLV)= 5;
+P(iLV)= 5;  
 P(isa)=80;
-%P(isv)= 2;
-P(isv)= 4;
-P(iRV)= 2;
-%P(ipa)= 8; 
-P(ipa)=100;
+P(isv)= 10 %20 %2 + 4.8611%+ 6.7778 %4.8611;  % 5.0155 / 0.6100 % rph state
+P(iRV)= 2 
+P(ipa)=100; % rph state
 P(ipv)= 5;
 P  %This writes the result on the screen.
 %Vector of dead volumes (volume at zero pressure);
