@@ -2,7 +2,7 @@ global T TS tauS tauD;
 global G dt CHECK N;
 
 in_circ_normal  %initialize
-change
+%change
 
 for klok=1:klokmax
     
