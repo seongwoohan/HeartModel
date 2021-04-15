@@ -1,5 +1,6 @@
 %filename: in_circ.m  (initialization for circ)
-T =0.0125    %Duration of heartbeat (minutes)
+%T =0.0125    %Duration of heartbeat (minutes)
+T = 1 / HR_set
 tau1 = 0.269*T % time scale of contraction (minutes)
 tau2 = 0.452*T % duration of systole (minutes)
 m1 = 1.32
@@ -36,7 +37,8 @@ end
 % different compliance function
 % tauS, tauD
 
-Rs=17.5 %Systemic resistance  
+%Rs=17.5 %Systemic resistance
+Rs = Rs_set
 % ( 10.8 mmHg / ((liter/minute)/m2)))/ 0.44 m2
 % SVR = 10.8 Wood U x m2
 % Du Bois commonly used ==> 0.44 m2
@@ -75,7 +77,7 @@ CRVD=CLVD
 
 Vsad=0.825   %Systemic arterial volume at P=0 (liters)
 Vpad=0.1135  %Pulmonary arterial volume at P=0 (liters)
-Vsvd=3.5 % 2.8745  %3.5     %Systemic venous volume at P=0 (liters)
+Vsvd=3.5 - 0.4 % 2.8745  %3.5     %Systemic venous volume at P=0 (liters)
 Vpvd=0.18       %Pulmonary venous volume at P=0 (liters)
 VLVd=0.010
 VRVd= VLVd 
@@ -84,7 +86,7 @@ VRVd= VLVd
 
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=1000*T/dt %T/dt %Total number of timesteps 
+klokmax=100*T/dt %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
 ifpmax = 10  %10 
@@ -126,7 +128,7 @@ P=zeros(N,1);
 %This makes P a column vector of length N.
 P(iLV)= 5;
 P(isa)=80;
-P(isv)= 4;
+P(isv)= 6.3;
 P(iRV)= 2;
 P(ipa)= 8; 
 P(ipv)= 5;
@@ -264,7 +266,7 @@ oxy_vec = ones(N, 1) .* 10;   % 5.088
 %10 * 0.3*5.6=16.8 (mmol/min)
 
 metabolism = zeros(size(G));
-metabolism(isa, isv) = -16.8;
+metabolism(isa, isv) = -m_set; %16.8;
 
 %extract the conductances from the matrix G:
 Gf=zeros(Nflows,1);
