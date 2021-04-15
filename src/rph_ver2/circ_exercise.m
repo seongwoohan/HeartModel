@@ -2,6 +2,12 @@ tic
 clear all % clear all variables
 close all  
 
+%% set exercise flag
+do_exercise = true;
+
+%% set disease state
+disease_state = false;
+
 % ductance shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;
@@ -31,15 +37,14 @@ Ashunt = 0
 
 % mean value for above variables
 for iEE = 1:length(m_vec)
-    m_set = m_vec(iEE)
-    HR_set = 0.94 * (m_set - 16.8) + 80
-    %Rs_set = 100 ./ (0.07 * HR_set)
-    Rs_set = (17.5 * 80)/HR_set
-    circ;
-    oxy_sv_d_vecD(iEE) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
-    psa_d_vecD(iEE) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    qs_d_vecD(iEE) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-    ppa_d_vecD(iEE) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+  m_set = m_vec(iEE);
+  HR_set = 0.94 * (m_set - 16.8) + 80;
+  Rs_set = (17.5 * 80)/HR_set;
+  circ;
+  oxy_sv_d_vecD(iEE) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
+  psa_d_vecD(iEE) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+  qs_d_vecD(iEE) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+  ppa_d_vecD(iEE) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
 end 
 
 % exercise plot

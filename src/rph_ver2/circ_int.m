@@ -9,7 +9,10 @@ jd=9;
 int_vec = (0 : 0.1 : 1) / 100
 
 %% set disease state
-disease_state = true
+disease_state = true;
+
+%% set exercise flag
+do_exercise = false;
 
 ncase_asd = length(int_vec);
 ncase_vsd = length(int_vec)
