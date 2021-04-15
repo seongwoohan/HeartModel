@@ -66,6 +66,11 @@ ylabel('Pressure (mmHg)')
 set(gca,'FontSize',15)
 grid on
 
+figure(903)
+plot(m_vec, HR_set, '-bo','linewidth', 3)
+
+figure(904)
+plot(HR_set, Rs_set, '-ro','linewidth', 3)
 
 if (length(m_vec) > 0)
     
