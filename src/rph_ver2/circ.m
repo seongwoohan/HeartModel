@@ -2,8 +2,10 @@ global T TS tauS tauD;
 global G dt CHECK N;
 
 % initialize
-in_circ_normal  
-% change
+in_circ_normal
+if (disease_state = true)
+  rph_change;
+end
 
 for klok=1:klokmax
     

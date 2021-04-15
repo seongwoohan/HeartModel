@@ -4,6 +4,9 @@ tic
 clear all % clear all variables
 close all  
 
+%% set disease state
+disease_state = true;
+
 % ductance shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;
