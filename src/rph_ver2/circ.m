@@ -3,11 +3,9 @@ global G dt CHECK N;
 
 %% initialize
 if (do_exercise == false)
-  %% if we are not doing exercise, we need to set these before calling
+  %% if we are NOT doing exercise, we need to set these before calling
   %% in_circ_normal
-  Rs_set = 17.5;
-  HR_set = 80;
-  m_set = 16.8;
+  exercise_change;
 end
 
 %% initializing everything
