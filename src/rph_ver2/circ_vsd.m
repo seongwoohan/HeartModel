@@ -4,6 +4,12 @@ tic
 clear all % clear all variables
 close all       
 
+%% set disease state
+disease_state = true;
+
+%% set exercise flag
+do_exercise = false;
+
 % vsd shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;

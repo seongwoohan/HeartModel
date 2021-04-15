@@ -1,8 +1,20 @@
 global T TS tauS tauD;
 global G dt CHECK N;
 
-in_circ_normal  %initialize
-%change
+%% initialize
+if (do_exercise == false)
+  %% if we are NOT doing exercise, we need to set these before calling
+  %% in_circ_normal
+  exercise_change;
+end
+
+%% initializing everything
+in_circ_normal
+
+if (disease_state == true)
+  %% change some things if we want to consider the disease state
+  rph_change;
+end
 
 for klok=1:klokmax
     
