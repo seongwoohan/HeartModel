@@ -8,8 +8,8 @@ jvsd=8;
 jd=9;
 j_shunt = jd
 
-m_vec = 16.8%(16.8 : 8.32 : 100)
-% (16.8 : 8.32 : 100)
+% values for consumption, our independent variable
+m_vec = (16.8 : 8.32 : 100)
 
 ncase_dm = length(m_vec);
 
@@ -26,6 +26,7 @@ qs_d_vecD = zeros(1,ncase_dm);
 % number of cycles
 num_cycles_for_mean = 5;
 
+% first we consider the case of no shunts
 Ashunt = 0
 
 % mean value for above variables
