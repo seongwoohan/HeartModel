@@ -52,6 +52,7 @@ for klok=1:klokmax
     C_plot(:,klok)=C;
     P_plot(:,klok)=P;
     V_plot(:,klok)=Vd+C.*P;
+    %HR_plot(:,klok) = 0.94 * (m_set - 16.8) + 80;
     V = Vd+C.*P;
     
     % calculate initial volume difference

@@ -15,7 +15,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jd
-d_vec = (0 : 0.1 : 1) / 100
+d_vec = 0 %(0 : 0.1 : 1) / 100
 % (0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
@@ -68,7 +68,7 @@ end
 
 if (length(d_vec) > 0)
 
-
+%{
 figure(1000)
 plot(t_plot, 10.*O2_plot,'linewidth',3)
 id = legend('LV','SA','SV','RV','PA','PV')
@@ -102,7 +102,7 @@ id = legend('LV','SA','SV','RV','PA','PV')
 xlabel('Time (min)') 
 ylabel('Volume')
 set(gca,'FontSize',18)
-%}
+
 figure(404)
 plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 4);
 title('Potts Shunt','FontWeight','Normal')
@@ -126,7 +126,7 @@ ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
 
 
-%{
+
 figure(300)
 plot(d_vec*100, ppa_vsd_vecD, '-o', d_vec*100, psa_vsd_vecD, '-o','linewidth', 4)
 set(gca,'FontSize',25)
@@ -136,7 +136,7 @@ legend boxoff
 xlabel('Shunt Area (cm^2)','FontSize', 22) 
 ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
-%}
+
 % Ductus : shunt conductance & shunt flow mean
 figure(401)
 plot(d_vec*100, q_d_mean_vecD,'-o',d_vec*100, q_d_plus_vecD,'-o', d_vec*100, q_d_minus_vecD,'-o','linewidth', 2)
@@ -205,33 +205,35 @@ yline(0, '--b','linewidth', 2)
 
 figure(406)
 plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jAo,((klokmax-((T/dt)*10)+1):klokmax)),t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5)
-%title('Aortic Valve Flow','FontSize',18,'FontWeight','bold')
-%xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
-%ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
-%ylim([0 50])
+title('Aortic Valve Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
+ylim([0 50])
 
-%figure(407)
-%plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jTr,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
-%title('Tricuspid Valve Flow','FontSize',18,'FontWeight','bold')
-%xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
-%ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
-%ylim([0 30])
+figure(407)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jTr,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
+title('Tricuspid Valve Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
+ylim([0 30])
 
-%figure(408)
-%plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jPu,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
-%title('Pulmonic Valve Flow','FontSize',18,'FontWeight','bold')
-%xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
-%ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
-%ylim([0 60])
+figure(408)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jPu,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
+title('Pulmonic Valve Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
+ylim([0 60])
 
-%figure(409)
-%plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jMi,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
-%title('Mitral Valve Flow','FontSize',18,'FontWeight','bold')
-%xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
-%ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
-%ylim([0 25])
+figure(409)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jMi,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
+title('Mitral Valve Flow','FontSize',18,'FontWeight','bold')
+xlabel('Time (min)','FontSize',15,'FontWeight','bold') 
+ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
+ylim([0 25])
 
 %}
 
 end
+%circ_excerise
+
 toc
