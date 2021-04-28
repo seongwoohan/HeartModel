@@ -15,11 +15,12 @@ jd=9;
 j_shunt = jd
 
 % values for consumption, our independent variable
-m_vec = (16.8 : 200 : 1000)
+m_vec = (16.8 : 8.32 : 100)
 ncase_dm = length(m_vec);
 
-% oxygen saturation in systemic vein
+% oxygen saturation in systemic vein/artery
 oxy_sv_d_vecD = zeros(1,ncase_dm);
+oxy_sa_d_vecD = zeros(1,ncase_dm);
 
 % pressure in systemic artery and pulmonary artery
 psa_d_vecD = zeros(1,ncase_dm);
@@ -54,6 +55,7 @@ for iEE = 1:length(m_vec)
   circ;
   ns = (T/dt)*10;
   oxy_sv_d_vecD(iEE) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
+  oxy_sa_d_vecD(iEE) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
   psa_d_vecD(iEE) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
   qs_d_vecD(iEE) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
   ppa_d_vecD(iEE) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);

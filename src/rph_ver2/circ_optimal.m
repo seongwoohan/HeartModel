@@ -15,7 +15,7 @@ jd=9;
 j_shunt = jd
 
 % values for consumption, our independent variable
-d_vec = 0.1
+d_vec = 0.1/100
 m_vec = (16.8 : 8.32 : 100)
 
 ncase_d = length(d_vec);
@@ -155,10 +155,10 @@ xlim([16.8 100])
 grid on
 
 figure(907)
-plot(m_vec, nLV_d_vecD, '-ro', m_vec, nRV_d_vecD, '-ro','linewidth', 3)
+plot(m_vec, nLV_d_vecD, '-bo', m_vec, nRV_d_vecD, '-ro','linewidth', 3)
 set(gca,'FontSize',20)
 title('Stroke volume ','FontWeight','Normal')
-legend({'LV & RV'},'Location', 'east','FontSize',20) 
+legend({'LV','RV'},'Location', 'east','FontSize',20) 
 legend boxoff                  
 xlabel('Oxgyen consumption (mmol/min)')
 ylabel('Volume (mL)')

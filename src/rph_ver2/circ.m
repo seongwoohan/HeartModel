@@ -5,7 +5,7 @@ global G dt CHECK N;
 if (do_exercise == false)
   %% if we are NOT doing exercise, we need to set these before calling
   %% in_circ_normal
-  exercise_change;
+  no_exercise_change;
 end
 
 %% initializing everything

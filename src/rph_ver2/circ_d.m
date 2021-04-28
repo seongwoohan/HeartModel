@@ -15,7 +15,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jd
-d_vec = 0 %(0 : 0.1 : 1) / 100
+d_vec = 0.1/100 %(0 : 0.1 : 1) / 100
 % (0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
@@ -68,6 +68,21 @@ end
 
 if (length(d_vec) > 0)
 
+      ns = (T/dt)*10;
+      Vtot = sum(V_plot, 1);      
+      fprintf('\n%s %f %s\n','Total blood volume is ', Vtot(end), ' liters');
+      fprintf('%s %f %s\n\n','Cardiac ouput is ', qs_d_vecD(end), ' (L/min)');
+      fprintf('%s %f %s\n','Stroke volume from LV is ', 1000*(max(V_plot(iLV,(klokmax-ns+1):klokmax)) - min(V_plot(iLV,(klokmax-ns+1):klokmax))), ' mL');
+      fprintf('%s %f %s\n','Stroke volume from RV is ', 1000*(max(V_plot(iRV,(klokmax-ns+1):klokmax)) - min(V_plot(iRV,(klokmax-ns+1):klokmax))), ' mL');
+      
+      fprintf('%s %f %s\n','Diastolic systemic arterial pressure is ', min(P_plot(isa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Systolic systemic arterial pressure is ', max(P_plot(isa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Mean systemic arterial pressure is ', psa_d_vecD(1), ' mmHg');
+
+      fprintf('%s %f %s\n','Diastolic pulmonary arterial pressure is ', min(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n','Systolic pulmonary arterial pressure is ', max(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
+      fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_d_vecD(1), ' mmHg');
+      
 %{
 figure(1000)
 plot(t_plot, 10.*O2_plot,'linewidth',3)
