@@ -89,7 +89,7 @@ if (disease_state == true)
     
     for iDD = 1:length(v_vec)
         j_shunt = jvsd;
-        Ashunt = d_vec(iDD);
+        Ashunt = v_vec(iDD);
         for iEE = 1:length(m_vec)
             m_set = m_vec(iEE);
             HR_set = 0.94 * (m_set - 16.8) + 80;
