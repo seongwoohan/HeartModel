@@ -3,7 +3,7 @@
 T = 1 / HR_set
 tau1 = 0.269*T % time scale of contraction (minutes)
 tau2 = 0.452*T % duration of systole (minutes)
-m1 = 1.32
+m1 = 1.32;
 m2 = 27.4
 %initialization of maxnum (same for both ventricles):
 tt=0:(T/1000):T;
@@ -77,7 +77,8 @@ CRVD=CLVD
 
 Vsad=0.825   %Systemic arterial volume at P=0 (liters)
 Vpad=0.1135  %Pulmonary arterial volume at P=0 (liters)
-Vsvd=3.5 - 0.4 % 2.8745  %3.5     %Systemic venous volume at P=0 (liters)
+Vsvd_normal = 3.5 - 0.4    %Systemic venous volume at P=0 (liters) 
+Vsvd = Vsvd_normal * (80 / HR_set)^(0.1)
 Vpvd=0.18       %Pulmonary venous volume at P=0 (liters)
 VLVd=0.010
 VRVd= VLVd 
@@ -86,7 +87,7 @@ VRVd= VLVd
 
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=100*T/dt %T/dt %Total number of timesteps 
+klokmax=floor(1000*T/dt) %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
 ifpmax = 10  %10 
@@ -128,7 +129,7 @@ P=zeros(N,1);
 %This makes P a column vector of length N.
 P(iLV)= 5;
 P(isa)=80;
-P(isv)= 6.3;
+P(isv)= 6.3 + (Vsvd_normal - Vsvd)/Csv
 P(iRV)= 2;
 P(ipa)= 8; 
 P(ipv)= 5;

@@ -1,6 +1,7 @@
 %script to plot results of computer simulation 
 %of the entire circulation.
 %left ventricular compliance, pressures, and flows:
+%{
 figure(1);
 subplot(3,1,1),plot(t_plot, C_plot(iLV,:));
 title('Left Ventricular Compliance')
@@ -83,3 +84,4 @@ set(gca, 'fontsize', 18)
 xlabel('time in minutes')
 ylabel('total blood volume')
 saveas(8,'total_volume.eps','epsc')
+%}
