@@ -107,7 +107,7 @@ for klok=1:klokmax
       total_oxy_amt_plot(klok,1) = total_oxy_amt_plot(klok,1) + oxy_amt(i);
   end
   
-  oxy_vec
+  oxy_vec;
   % store the O2 cocentration at klok
   O2_plot(:,klok) = oxy_vec;  
   O2_amt_plot(:,klok) = oxy_amt; 

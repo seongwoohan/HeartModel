@@ -1,10 +1,10 @@
 %filename: in_circ.m  (initialization for circ)
 %T =0.0125    %Duration of heartbeat (minutes)
-T = 1 / HR_set
-tau1 = 0.269*T % time scale of contraction (minutes)
-tau2 = 0.452*T % duration of systole (minutes)
+T = 1 / HR_set;
+tau1 = 0.269*T; % time scale of contraction (minutes)
+tau2 = 0.452*T; % duration of systole (minutes)
 m1 = 1.32;
-m2 = 27.4
+m2 = 27.4;
 %initialization of maxnum (same for both ventricles):
 tt=0:(T/1000):T;
 g1=(tt/tau1).^m1;
@@ -12,16 +12,16 @@ g2=(tt/tau2).^m2;
 g2T=(T/tau2)^m2;
 num1=g1./(1+g1);
 num2=(1./(1+g2)) - (1/(1+g2T));
-maxnum = max(num1.*num2)
+maxnum = max(num1.*num2);
 %parameters specific to each ventricle:
-EminLV = 0.08*1000 % (mmHg/L)
-EmaxLV = 3.00*1000 % (mmHg/L)
-EminRV = 0.04*1000 % (mmHg/L)
-EmaxRV = 0.60*1000 % (mmHg/L)
+EminLV = 0.08*1000; % (mmHg/L)
+EmaxLV = 3.00*1000; % (mmHg/L)
+EminRV = 0.04*1000; % (mmHg/L)
+EmaxRV = 0.60*1000; % (mmHg/L)
 
-tmax=10*T
-clockmax =3000
-dt=tmax/clockmax
+tmax=10*T;
+clockmax =3000;
+dt=tmax/clockmax;
 for clock=1:clockmax
   t=clock*dt;
   ELV(clock)=elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
@@ -38,59 +38,59 @@ end
 % tauS, tauD
 
 %Rs=17.5 %Systemic resistance
-Rs = Rs_set
+Rs = Rs_set;
 % ( 10.8 mmHg / ((liter/minute)/m2)))/ 0.44 m2
 % SVR = 10.8 Wood U x m2
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-Rp= 1.79     %Pulmonary resistance (mmHg/(liter/minute))
+Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
-RMi=0.01   %mitral valve resistance (mmHg/(liter/minute))
-RAo=0.01   %aortic valve resistance (mmHg/(liter/minute))
-RTr=0.01   %tricuspid valve resistance (mmHg/(liter/minute))
-RPu=0.01   %pulmonic valve  resistance (mmHg/(liter/minute))
-Rvisc = 0.01
+RMi=0.01;   %mitral valve resistance (mmHg/(liter/minute))
+RAo=0.01;   %aortic valve resistance (mmHg/(liter/minute))
+RTr=0.01;   %tricuspid valve resistance (mmHg/(liter/minute))
+RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
+Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
 %They will need adjustment to make the systemic 
 %blood pressure be roughly 120/80 mmHg
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
-Csa=0.00175 * 0.7   %Systemic  arterial compliance (liters/mmHg)
-Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
-Csv=0.09     %Systemic  venous compliance (liters/mmHg)
-Cpv=0.01     %Pulmonary venous compliance (liters/mmHg)
+Csa=0.00175 * 0.7;   %Systemic  arterial compliance (liters/mmHg)
+Cpa=0.00412;  %Pulmonary arterial compliance (liters/mmHg)
+Csv=0.09;     %Systemic  venous compliance (liters/mmHg)
+Cpv=0.01;    %Pulmonary venous compliance (liters/mmHg)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% these compliance values are NOT used
-CLVS=0.00003  %Min (systolic)  value of CLV (liters/mmHg)
-CLVD=0.0146   %Max (diastolic) value of CLV (liters/mmHg)
+CLVS=0.00003;  %Min (systolic)  value of CLV (liters/mmHg)
+CLVD=0.0146;   %Max (diastolic) value of CLV (liters/mmHg)
 %Make the compliance the same
-CRVS=CLVS
-CRVD=CLVD
+CRVS=CLVS;
+CRVD=CLVD;
 %CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
 %CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Vsad=0.825   %Systemic arterial volume at P=0 (liters)
-Vpad=0.1135  %Pulmonary arterial volume at P=0 (liters)
-Vsvd_normal = 3.5 - 0.4    %Systemic venous volume at P=0 (liters) 
-Vsvd = Vsvd_normal * (80 / HR_set)^(0.1)
-Vpvd=0.18       %Pulmonary venous volume at P=0 (liters)
-VLVd=0.010
-VRVd= VLVd 
+Vsad=0.825;   %Systemic arterial volume at P=0 (liters)
+Vpad=0.1135;  %Pulmonary arterial volume at P=0 (liters)
+Vsvd_normal = 3.5 - 0.4;    %Systemic venous volume at P=0 (liters) 
+Vsvd = Vsvd_normal * (80 / HR_set)^(0.1);
+Vpvd=0.18;       %Pulmonary venous volume at P=0 (liters)
+VLVd=0.010;
+VRVd= VLVd;
 %0.027   %Left ventricular volume at P=0 (liters)
 %VRVd=0.027   %Right vejfntricular volume at P=0 (liters)
 
-dt=0.01*T    %Time step duration (minutes)
+dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(1000*T/dt) %T/dt %Total number of timesteps 
+klokmax=floor(1000*T/dt); %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
-ifpmax = 10  %10 
+ifpmax = 10;  %10 
 %the trouble comes from the fact that we set the conductance of the shunt based on 
 %its flow in the previous time step.  It would be better to use the flow in 
 %the present time step, but this is unknown.  To find it, we could try fixed-point iteration, 
@@ -100,13 +100,13 @@ ifpmax = 10  %10
 
 %Assign an index to each compliance vessel 
 %of the model circulation:
-iLV=1
-isa=2
-isv=3
-iRV=4
-ipa=5
-ipv=6
-N=6
+iLV=1;
+isa=2;
+isv=3;
+iRV=4;
+ipa=5;
+ipv=6;
+N=6;
 %Enter parameters and initial values 
 %into correct slots in arrays.
 %Note that the code that follows is independent 
@@ -115,25 +115,25 @@ N=6
 C=zeros(N,1);  
 %This makes C a column vector of length N.
 %C(iLV)=CV_now(0,CLVS,CLVD); % CLVS,CLVD  %initial value
-C(iLV)=1/elastance(0,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum)
+C(iLV)=1/elastance(0,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
 C(isa)=Csa;
 C(isv)=Csv;
 %C(iRV)=CV_now(0,CRVS,CRVD); % CRVS, CRVD %initial value
 C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 C(ipa)=Cpa;  %Cpa
 C(ipv)=Cpv;
-C  %This writes the result on the screen.
+C;  %This writes the result on the screen.
 
 %Pressure vector (initial values) at end of diastole:
 P=zeros(N,1);  
 %This makes P a column vector of length N.
 P(iLV)= 5;
 P(isa)=80;
-P(isv)= 6.3 + (Vsvd_normal - Vsvd)/Csv
+P(isv)= 6.3 + (Vsvd_normal - Vsvd)/Csv;
 P(iRV)= 2;
 P(ipa)= 8; 
 P(ipv)= 5;
-P  %This writes the result on the screen.
+P;  %This writes the result on the screen.
 %Vector of dead volumes (volume at zero pressure);
 %Note: Vd is only needed for output purposes.  
 %It drops out of the equations we solve for P, 
@@ -147,7 +147,7 @@ Vd(isv)=Vsvd;
 Vd(iRV)=VRVd;
 Vd(ipa)=Vpad;
 Vd(ipv)=Vpvd;
-Vd  
+Vd;  
 %This writes the results on the screen.
 %Conductance matrix:
 G=zeros(N,N);  
@@ -239,8 +239,8 @@ iD(jd)=isa;
 
 if (Ashunt > 0) 
     
-G(iU(j_shunt),iD(j_shunt)) = 1 / Rvisc
-G(iD(j_shunt),iU(j_shunt)) = 1 / Rvisc
+  G(iU(j_shunt),iD(j_shunt)) = 1 / Rvisc;
+  G(iD(j_shunt),iU(j_shunt)) = 1 / Rvisc;
 
 end
 

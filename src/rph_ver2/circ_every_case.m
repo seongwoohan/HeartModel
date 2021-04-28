@@ -3,20 +3,20 @@ tic
 clear all
 close all
 
-do_exercise = true
+do_exercise = true;
 
 jasd=7;
 jvsd=8;
 jd=9;
 
-m_vec = (16.8 : 8.32 : 100)
+m_vec = (16.8 : 8.32 : 100);
 ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;
 
 %% normal case
 
-disease_state = false
+disease_state = false;
 if (disease_state == false) 
     oxy_sv_normal = zeros(1, ncase_dm);
     oxy_sa_normal = zeros(1, ncase_dm);
@@ -35,9 +35,22 @@ if (disease_state == false)
     end
 end    
 
+clearvars -except oxy_sv_normal oxy_sa_normal
+
+disp('done with normal case');
+
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = (16.8 : 8.32 : 100);
+ncase_dm = length(m_vec);
+
+num_cycles_for_mean = 5;
+
 %% pre-intervention rph case
 
-disease_state = true
+disease_state = true;
 if (disease_state == true) 
     oxy_sv_pre_intervention_rph = zeros(1, ncase_dm);
     oxy_sa_pre_intervention_rph = zeros(1, ncase_dm);
@@ -56,11 +69,24 @@ if (disease_state == true)
     end    
 end 
 
+clearvars -except oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph
+
+disp('done with pre-intervention case');
+
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = (16.8 : 8.32 : 100);
+ncase_dm = length(m_vec);
+
+num_cycles_for_mean = 5;
+
 %% potts shunt 0.1cm^2 rph case
 
-disease_state = true
+disease_state = true;
 if (disease_state == true) 
-    d_vec = 0.1 /100
+  d_vec = 0.1 /100;
     oxy_sv_potts_shunt = zeros(1, ncase_dm);
     oxy_sa_potts_shunt = zeros(1, ncase_dm);
     
@@ -80,10 +106,23 @@ if (disease_state == true)
     end  
 end 
 
+clearvars -except oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph oxy_sv_potts_shunt oxy_sa_potts_shunt
+
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = (16.8 : 8.32 : 100)
+ncase_dm = length(m_vec);
+
+num_cycles_for_mean = 5;
+
+disp('done with potts case');
+
 %% vsd 0.3cm^2 rph case
-disease_state = true
+disease_state = true;
 if (disease_state == true) 
-    v_vec = 0.3 /100
+  v_vec = 0.3 /100;
     oxy_sv_vsd = zeros(1, ncase_dm);
     oxy_sa_vsd = zeros(1, ncase_dm);
     
@@ -102,6 +141,10 @@ if (disease_state == true)
         end
     end  
 end 
+
+clearvars -except m_vec oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph oxy_sv_potts_shunt oxy_sa_potts_shunt oxy_sv_vsd oxy_sa_vsd
+
+disp('done with vsd case');
 
 figure(1000)
 plot(m_vec, 10*oxy_sv_normal, '-o', m_vec, 10*oxy_sa_normal, '-o', m_vec, 10*oxy_sv_pre_intervention_rph, '-o',  m_vec, 10*oxy_sa_pre_intervention_rph, '-o', m_vec, 10*oxy_sv_potts_shunt, '-o', m_vec, 10*oxy_sa_potts_shunt, '-o', m_vec, 10*oxy_sv_vsd,'-o', m_vec, 10*oxy_sa_vsd,'-o','linewidth', 3)
