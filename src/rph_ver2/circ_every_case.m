@@ -1,9 +1,6 @@
 % exercise simulation for every case
-tic
 clear all
 close all
-
-do_exercise = true;
 
 jasd=7;
 jvsd=8;
@@ -15,13 +12,13 @@ ncase_dm = length(m_vec);
 num_cycles_for_mean = 5;
 
 %% normal case
-
+tic
 disease_state = false;
+do_exercise = true;
 if (disease_state == false) 
     oxy_sv_normal = zeros(1, ncase_dm);
-    oxy_sa_normal = zeros(1, ncase_dm);
-    
-    Ashunt = 0
+    oxy_sa_normal = zeros(1, ncase_dm);   
+    Ashunt = 0;
     for iNN = 1:length(m_vec)
        j_shunt = jd;
        m_set = m_vec(iNN);
@@ -36,8 +33,9 @@ if (disease_state == false)
 end    
 
 clearvars -except oxy_sv_normal oxy_sa_normal
-
 disp('done with normal case');
+toc
+tic
 
 jasd=7;
 jvsd=8;
@@ -51,11 +49,11 @@ num_cycles_for_mean = 5;
 %% pre-intervention rph case
 
 disease_state = true;
+do_exercise = true;
 if (disease_state == true) 
     oxy_sv_pre_intervention_rph = zeros(1, ncase_dm);
     oxy_sa_pre_intervention_rph = zeros(1, ncase_dm);
-   
-    Ashunt = 0   
+    Ashunt = 0;   
     for iPP = 1:length(m_vec)
        j_shunt = jd;
        m_set = m_vec(iPP);
@@ -70,8 +68,9 @@ if (disease_state == true)
 end 
 
 clearvars -except oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph
-
 disp('done with pre-intervention case');
+toc
+tic
 
 jasd=7;
 jvsd=8;
@@ -85,6 +84,7 @@ num_cycles_for_mean = 5;
 %% potts shunt 0.1cm^2 rph case
 
 disease_state = true;
+do_exercise = true;
 if (disease_state == true) 
   d_vec = 0.1 /100;
     oxy_sv_potts_shunt = zeros(1, ncase_dm);
@@ -107,6 +107,9 @@ if (disease_state == true)
 end 
 
 clearvars -except oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph oxy_sv_potts_shunt oxy_sa_potts_shunt
+disp('done with potts case');
+toc
+tic
 
 jasd=7;
 jvsd=8;
@@ -117,10 +120,9 @@ ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;
 
-disp('done with potts case');
-
 %% vsd 0.3cm^2 rph case
 disease_state = true;
+do_exercise = true;
 if (disease_state == true) 
   v_vec = 0.3 /100;
     oxy_sv_vsd = zeros(1, ncase_dm);
@@ -143,8 +145,8 @@ if (disease_state == true)
 end 
 
 clearvars -except m_vec oxy_sv_normal oxy_sa_normal oxy_sv_pre_intervention_rph oxy_sa_pre_intervention_rph oxy_sv_potts_shunt oxy_sa_potts_shunt oxy_sv_vsd oxy_sa_vsd
-
 disp('done with vsd case');
+toc
 
 figure(1000)
 plot(m_vec, 10*oxy_sv_normal, '-o', m_vec, 10*oxy_sa_normal, '-o', m_vec, 10*oxy_sv_pre_intervention_rph, '-o',  m_vec, 10*oxy_sa_pre_intervention_rph, '-o', m_vec, 10*oxy_sv_potts_shunt, '-o', m_vec, 10*oxy_sa_potts_shunt, '-o', m_vec, 10*oxy_sv_vsd,'-o', m_vec, 10*oxy_sa_vsd,'-o','linewidth', 3)
@@ -182,4 +184,3 @@ ylabel('Oxygen Saturation (%)')
 xlim([16.8 100])
 grid on
 
-toc
