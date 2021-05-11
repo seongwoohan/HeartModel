@@ -15,8 +15,8 @@ jd=9;
 j_shunt = jd
 
 % values for consumption, our independent variable
-d_vec = 0.1/100
-m_vec = (16.8 : 8.32 : 100)
+d_vec = (0 : 0.1 : 1) / 100
+m_vec = (16.8 : 6.64 : 50) % 100
 
 ncase_d = length(d_vec);
 ncase_dm = length(m_vec);

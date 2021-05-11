@@ -3,8 +3,8 @@
 % disease-state
 
 % EminLV, EmaxLV, EminRV and EmaxRV
-EminRV = EminLV         % (mmHg/L)
-EmaxRV = EmaxLV         % (mmHg/L) 
+EminRV = EminLV;         % (mmHg/L)
+EmaxRV = EmaxLV;         % (mmHg/L) 
 C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 
 % Rp value
@@ -14,5 +14,9 @@ G(ipa,ipv)=1/Rp;   %no valve
 G(ipv,ipa)=1/Rp;   %no valve
 
 % Pressure 
-P(isv)= 10;
-P(ipa)=100;
+P(isv)= 7%10;
+P(ipa)=70%100;
+
+Cpa = Cpa/8
+C(ipa) = Cpa
+
