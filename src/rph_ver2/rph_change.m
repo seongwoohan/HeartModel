@@ -17,6 +17,6 @@ G(ipv,ipa)=1/Rp;   %no valve
 P(isv)= 7%10;
 P(ipa)=70%100;
 
-Cpa = Cpa/8
+Cpa = Cpa/2 %8
 C(ipa) = Cpa
 
