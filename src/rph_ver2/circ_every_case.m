@@ -155,6 +155,7 @@ toc
 
 
 %%
+%{
 figure(1000)
 plot(m_vec, 10*oxy_sv_normal, '-o', m_vec, 10*oxy_sv_pre_intervention_rph, '-ro', m_vec, 10*oxy_sv_potts_shunt, '-bo', m_vec, 10*oxy_sv_vsd,'-go', m_vec, 10*oxy_sa_normal, '-o',  m_vec, 10*oxy_sa_pre_intervention_rph, '-ro', m_vec, 10*oxy_sa_potts_shunt, '-bo', m_vec, 10*oxy_sa_vsd,'-go','linewidth', 1.5)
 yline(0, '--b','linewidth', 2)
@@ -226,4 +227,37 @@ xlabel('Oxgyen consumption (mmol/min)')
 ylabel('Oxygen delivery (moml/min)')
 xlim([16.8 100])
 %ylim([-65 110])
+grid on
+%}
+figure(1006)
+plot(m_vec, (qs_normal.*oxy_sa_normal - qs_normal.*oxy_sv_normal), '-mo', m_vec, (qs_pre_intervention_rph.*oxy_sa_pre_intervention_rph - qs_pre_intervention_rph.*oxy_sv_pre_intervention_rph), '-ro', m_vec, (qs_potts_shunt.*oxy_sa_potts_shunt - qs_potts_shunt.*oxy_sv_potts_shunt), '-bo', m_vec, (qs_vsd.*oxy_sa_vsd - qs_vsd.*oxy_sv_vsd),'-go','linewidth', 1.5)
+yline(0, '--b','linewidth', 2)
+set(gca,'FontSize',20)
+title('Exercise difference: systemic artery and vein','FontWeight','Normal')
+legend({'normal','pre-intervention','potts shunt 0.1cm^2', 'vsd 0.5cm^2'},'Location', 'best','FontSize',15)
+legend boxoff
+xlabel('Oxgyen consumption (mmol/min)')
+ylabel('Oxygen delivery (moml/min)')
+xlim([16.8 100])
+%ylim([-65 110])
+grid on
+
+figure(1007)
+plot(m_vec, (qs_normal.*oxy_sa_normal - qs_normal.*oxy_sv_normal))
+xlim([16.8 100])
+grid on
+
+figure(1008)
+plot(m_vec, (qs_pre_intervention_rph.*oxy_sa_pre_intervention_rph - qs_pre_intervention_rph.*oxy_sv_pre_intervention_rph))
+xlim([16.8 100])
+grid on
+
+figure(1009)
+plot(m_vec, (qs_potts_shunt.*oxy_sa_potts_shunt - qs_potts_shunt.*oxy_sv_potts_shunt))
+ xlim([16.8 100])
+grid on
+
+figure(1010)
+plot(m_vec, (qs_vsd.*oxy_sa_vsd - qs_vsd.*oxy_sv_vsd))
+xlim([16.8 100])
 grid on
