@@ -161,5 +161,9 @@ toc
 figure(1)
 plot(Rp_vec, 10*oxy_sv_normal, '-mo', Rp_vec, 10*oxy_sv_pre_intervention_rph, '-ro', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
 set(gca,'FontSize',20)
-
+legend({'normal','pre-intervention','potts shunt 0.1cm^2', 'vsd 0.5cm^2'},'Location', 'best','FontSize',15)
+legend boxoff
+xlabel('Rp')
+ylabel('Oxygen Saturation (%)')
+grid on
 
