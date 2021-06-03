@@ -6,13 +6,17 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = (0 : 0.1 : 1) / 100
+int_vec = (0 : 0.2 : 1) / 100;
+m_vec = (16.8 : 16.64 : 100);
 
 %% set disease state
 disease_state = true;
 
 %% set exercise flag
 do_exercise = false;
+
+%% set disease_pre flag
+%disease_state_pre = false;
 
 ncase_asd = length(int_vec);
 ncase_vsd = length(int_vec)
@@ -39,40 +43,55 @@ oxy_pa_vsd_vecV = zeros(1,ncase_vsd);
 oxy_sa_d_vecD = zeros(1,ncase_d);
 oxy_pa_d_vecD = zeros(1,ncase_d);
 
-num_cycles_for_mean = 10;
+num_cycles_for_mean = 5;
 
 % mean value for above variables
 for iA = 1:length(int_vec)
     j_shunt = jasd
     Ashunt = int_vec(iA);
-    circ;     
-    qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-    ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-    psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    for iEE = 1:length(m_vec)
+        m_set = m_vec(iEE);
+        HR_set = 0.94 * (m_set - 16.8) + 80;
+        Rs_set = (17.5 * 80)/HR_set;
+        circ;     
+        qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+        ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    end
 end
 
 for iV = 1:length(int_vec)
     j_shunt = jvsd
     Ashunt = int_vec(iV);
-    circ;
-    qs_vsd_vecV(iV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-    ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-    psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_pa_vsd_vecV(iV) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    for iEE = 1:length(m_vec)
+        m_set = m_vec(iEE);
+        HR_set = 0.94 * (m_set - 16.8) + 80;
+        Rs_set = (17.5 * 80)/HR_set;
+        circ; 
+        qs_vsd_vecV(iV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+        ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_pa_vsd_vecV(iV) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    end
 end 
 
 for iDD = 1:length(int_vec)
     j_shunt = jd
     Ashunt = int_vec(iDD);
-    circ; 
-    qs_d_vecD(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-    ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-    psa_d_vecD(iDD) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-    oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    for iEE = 1:length(m_vec)
+        m_set = m_vec(iEE);
+        HR_set = 0.94 * (m_set - 16.8) + 80;
+        Rs_set = (17.5 * 80)/HR_set;
+        circ; 
+        qs_d_vecD(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+        ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        psa_d_vecD(iDD) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+        oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    end
 end 
 %, int_vec*100, qs_vsd_vecV, int_vec*100, qs_d_vecD
 

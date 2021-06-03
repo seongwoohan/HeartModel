@@ -15,7 +15,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jd
-d_vec = 0/100 %(0 : 0.1 : 1) / 100
+d_vec = (0 : 0.1 : 1) / 100
 % (0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
@@ -152,36 +152,6 @@ xlabel('Shunt Area (cm^2)','FontSize', 22)
 ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
 
-% Ductus : shunt conductance & shunt flow mean
-figure(401)
-plot(d_vec*100, q_d_mean_vecD,'-o',d_vec*100, q_d_plus_vecD,'-o', d_vec*100, q_d_minus_vecD,'-o','linewidth', 2)
-title('Potts Shunt')
-legend({'Overall Flow', 'Positive Flow', 'Negative Flow'},'Location', 'east','FontSize',25) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Shunt Flow Mean (L/min)')
-set(gca,'FontSize',25)
-grid on
-
-figure(402)
-subplot(3,1,1),plot(d_vec*100, q_d_mean_vecD,'-bo','linewidth', 2)
-title('Potts Shunt')
-legend({'Overall Flow'},'Location', 'east','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Shunt Flow Mean (L/min)')
-set(gca,'FontSize',18)
-grid on
-subplot(3,1,2),plot(d_vec*100, q_d_plus_vecD,'r-o','linewidth', 2)
-legend({'Positive Flow'},'Location', 'east','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Shunt Flow Mean (L/min)')
-set(gca,'FontSize',18)
-grid on
-subplot(3,1,3),plot(d_vec*100, q_d_minus_vecD,'-yo','linewidth', 2)
-legend({'Negative Flow'},'Location', 'northeast','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Shunt Flow Mean (L/min)')
-set(gca,'FontSize',18)
-grid on
 
 % Ductus : shunt conductance & oxygen saturation 
 % Without semilogx 
@@ -207,16 +177,6 @@ ylabel('Oxygen Delivery (mmol/min)')
 set(gca,'FontSize',18)
 grid on
 
-% Ductus : Flow on time dependence
-figure(404)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
-title('Potts Shunt Flow')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-ylim([0 8])
-yline(0, '--b','linewidth', 2)
-%draw a line on the 0 
 
 figure(406)
 plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jAo,((klokmax-((T/dt)*10)+1):klokmax)),t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5)
@@ -247,6 +207,48 @@ ylabel('Blood Flow (L)','FontSize',15,'FontWeight','bold')
 ylim([0 25])
 
 %}
+% Ductus : Flow on time dependence
+figure(404)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
+title('Potts Shunt Flow','FontWeight','Normal')
+xlabel('Time (min)') 
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',18)
+ylim([-2 10])
+yline(0, '--b','linewidth', 2)
+%draw a line on the 0 
+
+% Ductus : shunt conductance & shunt flow mean
+figure(401)
+plot(d_vec*100, q_d_mean_vecD,'-o',d_vec*100, q_d_plus_vecD,'-o', d_vec*100, q_d_minus_vecD,'-o','linewidth', 2)
+title('Potts Shunt','FontWeight','Normal')
+legend({'Overall Flow', 'Positive Flow', 'Negative Flow'},'Location', 'east','FontSize',25) 
+legend boxoff
+xlabel('Shunt Area (cm^2)')
+ylabel('Shunt Flow Mean (L/min)')
+set(gca,'FontSize',25)
+grid on
+
+figure(402)
+subplot(3,1,1),plot(d_vec*100, q_d_mean_vecD,'-bo','linewidth', 2)
+title('Potts Shunt')
+legend({'Overall Flow'},'Location', 'east','FontSize',20) 
+xlabel('Shunt Area (cm^2)')
+ylabel('Shunt Flow Mean (L/min)')
+set(gca,'FontSize',18)
+grid on
+subplot(3,1,2),plot(d_vec*100, q_d_plus_vecD,'r-o','linewidth', 2)
+legend({'Positive Flow'},'Location', 'east','FontSize',20) 
+xlabel('Shunt Area (cm^2)')
+ylabel('Shunt Flow Mean (L/min)')
+set(gca,'FontSize',18)
+grid on
+subplot(3,1,3),plot(d_vec*100, q_d_minus_vecD,'-yo','linewidth', 2)
+legend({'Negative Flow'},'Location', 'northeast','FontSize',20) 
+xlabel('Shunt Area (cm^2)')
+ylabel('Shunt Flow Mean (L/min)')
+set(gca,'FontSize',18)
+grid on
 
 end
 %circ_excerise

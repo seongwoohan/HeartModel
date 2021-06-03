@@ -11,10 +11,16 @@ end
 %% initializing everything
 in_circ_normal
 
+if (disease_state_pre == true)
+  %% change some thing only for pre-intervention rph case
+  pre_rph_change;
+end
+
 if (disease_state == true)
   %% change some things if we want to consider the disease state
   rph_change;
 end
+
 
 for klok=1:klokmax
     

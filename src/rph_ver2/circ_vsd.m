@@ -16,8 +16,6 @@ jvsd=8;
 jd=9;
 j_shunt = jvsd
 vsd_vec = (0 : 0.1 : 1) / 100
-% (0 : 0.1 : 1) / 100
-% 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
 ncase_vsd = length(vsd_vec);
 
@@ -68,7 +66,7 @@ end
 if (length(vsd_vec) > 0)
 
 figure(8)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 4);
+plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
 set(gca,'FontSize',23)
 title('Ventricular Septal Defect','FontWeight','Normal')
 xlabel('Time (min)') 
@@ -76,9 +74,22 @@ ylabel('Blood Flow (L/min)')
 set(gca,'FontSize',20)
 yline(0, '--b','linewidth', 2)
 xlim([12.4375 12.5])
-ylim([0 7])
+%ylim([-4 8])
 
+% VSD : shunt conductance & shunt flow mean
+figure(301)
+plot(vsd_vec*100, q_vsd_mean_vecV, '-o',vsd_vec*100, q_vsd_plus_vecV,'-o', vsd_vec*100, q_vsd_minus_vecV, '-o','linewidth', 2)
+title('Ventricular Septal Defect','FontWeight','Normal')
+legend({'Overall Flow', 'Positive Flow', 'Negative Flow'},'Location', 'east','FontSize',25) 
+xlabel('Shunt Area (cm^2)')
+ylabel('Shunt Flow Mean (L/min)')
+ylim([-2 0.5])
+set(gca,'FontSize',25)
+grid on
 
+plot(vsd_vec*100, q_vsd_mean_vecV,'-o')
+plot(vsd_vec*100, q_vsd_minus_vecV, '-o')
+%{
 % VSD : shunt conductance & pressure
 figure(300)
 plot(vsd_vec*100, ppa_vsd_vecV, '-bo', vsd_vec*100, psa_vsd_vecV, '-ro','linewidth', 4)
@@ -91,16 +102,6 @@ ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
 
 
-
-% VSD : shunt conductance & shunt flow mean
-figure(301)
-plot(vsd_vec*100, q_vsd_mean_vecV, '-o',vsd_vec*100, q_vsd_plus_vecV,'-o', vsd_vec*100, q_vsd_minus_vecV, '-o','linewidth', 2)
-title('Ventricular Septal Defect')
-legend({'Overall Flow', 'Positive Flow', 'Negative Flow'},'Location', 'east','FontSize',25) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Shunt Flow Mean (L/min)')
-set(gca,'FontSize',25)
-grid on
 
 figure(302)
 subplot(3,1,1),plot(vsd_vec*100, q_vsd_mean_vecV, '-ro','linewidth', 2)

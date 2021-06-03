@@ -15,7 +15,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jasd
-asd_vec = 0 / 100
+asd_vec = 0.1 / 100
 %(0 : 0.1 : 1) / 100
 ncase_asd = length(asd_vec);
 
