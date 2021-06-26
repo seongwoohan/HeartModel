@@ -6,17 +6,20 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = (0 : 0.2 : 1) / 100;
-m_vec = (16.8 : 16.64 : 100);
+int_vec = 0.3
+m_vec = 50.8%(16.8 : 16.64 : 100);
 
 %% set disease state
 disease_state = true;
 
 %% set exercise flag
-do_exercise = false;
+do_exercise = true;
 
 %% set disease_pre flag
-%disease_state_pre = false;
+disease_state_pre = false;
+
+%% set rp flag
+Rp_state = false
 
 ncase_asd = length(int_vec);
 ncase_vsd = length(int_vec)
@@ -111,7 +114,27 @@ if (length(int_vec) > 0)
       fprintf('%s %f %s\n','Diastolic pulmonary arterial pressure is ', min(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
       fprintf('%s %f %s\n','Systolic pulmonary arterial pressure is ', max(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
       fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
+ 
       
+figure(1006)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
+title('Potts Shunt Flow','FontWeight','Normal')
+xlabel('Time (min)') 
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',18)
+%ylim([-2 10])
+yline(0, '--b','linewidth', 2)
+
+figure(1007)
+plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
+set(gca,'FontSize',23)
+title('Ventricular Septal Defect','FontWeight','Normal')
+xlabel('Time (min)') 
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',20)
+yline(0, '--b','linewidth', 2)
+%xlim([12.4375 12.5])
+%ylim([-4 8])
 
 figure(500)
 plot(int_vec*100, ppa_asd_vecA, '-o', int_vec*100, ppa_vsd_vecV, '-o', int_vec*100, ppa_d_vecD, '-o','linewidth', 4)

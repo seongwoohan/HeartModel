@@ -4,7 +4,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-m_vec = (16.8 : 16.64 : 100);
+m_vec = 50.8%(16.8 : 16.64 : 100);
 ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;

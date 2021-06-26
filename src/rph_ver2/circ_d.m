@@ -9,13 +9,15 @@ disease_state = true;
 
 %% set exercise flag
 do_exercise = false;
+disease_state_pre = false;
+Rp_state = false;
 
 % ductance shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jd
-d_vec = (0 : 0.1 : 1) / 100
+d_vec = 0.3
 % (0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
@@ -65,6 +67,7 @@ for iDD = 1:length(d_vec)
     oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
     oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
 end 
+
 
 if (length(d_vec) > 0)
 
@@ -208,14 +211,7 @@ ylim([0 25])
 
 %}
 % Ductus : Flow on time dependence
-figure(404)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 1.5);
-title('Potts Shunt Flow','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-ylim([-2 10])
-yline(0, '--b','linewidth', 2)
+
 %draw a line on the 0 
 
 % Ductus : shunt conductance & shunt flow mean
