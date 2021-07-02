@@ -6,8 +6,8 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = 0.3
-m_vec = 50.8%(16.8 : 16.64 : 100);
+int_vec = (0 : 0.2 : 1) / 100
+m_vec = (16.8 : 16.64 : 100);
 
 %% set disease state
 disease_state = true;
@@ -32,10 +32,13 @@ qs_d_vecD = zeros(1,ncase_d);
 
 % pressure in pulmonary artery and systemic artery 
 ppa_asd_vecA = zeros(1,ncase_asd);
+ppv_asd_vecA = zeros(1,ncase_asd);
 psa_asd_vecA = zeros(1,ncase_asd);
 ppa_vsd_vecV = zeros(1,ncase_vsd);
+ppv_vsd_vecV = zeros(1,ncase_vsd);
 psa_vsd_vecV = zeros(1,ncase_vsd);
 ppa_d_vecD = zeros(1,ncase_d);
+ppv_d_vecD = zeros(1,ncase_d);
 psa_d_vecD = zeros(1,ncase_d);
 
 % oxygen saturation in pulmonary artery and systemic artery
@@ -59,6 +62,7 @@ for iA = 1:length(int_vec)
         circ;     
         qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
         ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        ppv_asd_vecA(iA) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
         psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
@@ -75,6 +79,7 @@ for iV = 1:length(int_vec)
         circ; 
         qs_vsd_vecV(iV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
         ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        ppv_vsd_vecV(iV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
         psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_pa_vsd_vecV(iV) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
@@ -91,6 +96,7 @@ for iDD = 1:length(int_vec)
         circ; 
         qs_d_vecD(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
         ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        ppv_d_vecD(iDD) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
         psa_d_vecD(iDD) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
         oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
@@ -116,25 +122,6 @@ if (length(int_vec) > 0)
       fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
  
       
-figure(1006)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
-title('Potts Shunt Flow','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-%ylim([-2 10])
-yline(0, '--b','linewidth', 2)
-
-figure(1007)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
-set(gca,'FontSize',23)
-title('Ventricular Septal Defect','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',20)
-yline(0, '--b','linewidth', 2)
-%xlim([12.4375 12.5])
-%ylim([-4 8])
 
 figure(500)
 plot(int_vec*100, ppa_asd_vecA, '-o', int_vec*100, ppa_vsd_vecV, '-o', int_vec*100, ppa_d_vecD, '-o','linewidth', 4)
@@ -156,6 +143,15 @@ xlabel('Shunt Area (cm^2)','FontSize', 22)
 ylabel('Pressure (mmHg)','FontSize', 22)
 grid on
 
+figure(502)
+plot(int_vec*100, ppv_asd_vecA, '-o', int_vec*100, ppv_vsd_vecV, '-o', int_vec*100, ppv_d_vecD, '-o','linewidth', 4)
+set(gca,'FontSize',25)
+title('Pulmonary Vein Pressure','FontSize', 22,'FontWeight','Normal')
+legend({'ASD','VSD','Potts Shunt'},'Location', 'best','FontSize',18) 
+legend boxoff 
+xlabel('Shunt Area (cm^2)','FontSize', 22) 
+ylabel('Pressure (mmHg)','FontSize', 22)
+grid on
 
 figure(600)
 plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-o', int_vec*100, qs_d_vecD, '-o','linewidth', 4)

@@ -1,10 +1,10 @@
-%% potts shunt 0.3cm^2 VSD 0.3cm^2 * 0.8
+%% potts shunt 0.3cm^2 
 
 jasd=7;
 jvsd=8;
 jd=9;
 
-m_vec = 16.8%50.08;
+m_vec = 16.8%50.08; 
 ncase_dm = length(m_vec);
 num_cycles_for_mean = 5;
 
@@ -44,6 +44,16 @@ if (disease_state == true)
     end  
 end 
 
+figure(1007)
+plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
+title('Potts Shunt Flow','FontWeight','Normal')
+xlabel('Time (min)') 
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',18)
+%ylim([-2 10])
+yline(0, '--b','linewidth', 2)
+
+%% VSD 0.3cm^2
 
 jasd=7;
 jvsd=8;
@@ -88,18 +98,9 @@ if (disease_state == true)
         end
     end  
 end 
-toc
+
 
 figure(1006)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
-title('Potts Shunt Flow','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-%ylim([-2 10])
-yline(0, '--b','linewidth', 2)
-
-figure(1007)
 plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
 set(gca,'FontSize',23)
 title('Ventricular Septal Defect','FontWeight','Normal')
@@ -109,3 +110,5 @@ set(gca,'FontSize',20)
 yline(0, '--b','linewidth', 2)
 %xlim([12.4375 12.5])
 %ylim([-4 8])
+
+

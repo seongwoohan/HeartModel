@@ -87,7 +87,7 @@ VRVd= VLVd;
 
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(10*T/dt); %T/dt %Total number of timesteps 
+klokmax=floor(15*T/dt); %T/dt %Total number of timesteps 
 
 %This choice implies simulation of 15 cardiac cycles.
 
