@@ -2,107 +2,129 @@ tic
 clear all % clear all variables
 close all  
 
+%% ASD
 jasd=7;
 jvsd=8;
 jd=9;
 
 int_vec = (0 : 0.2 : 1) / 100
-%m_vec = 50.08;
-
-%% set disease state
-disease_state = true;
-
-%% set exercise flag
-do_exercise = true;
-
-%% set disease_pre flag
-disease_state_pre = false;
-
-%% set rp flag
-Rp_state = false
-
+m_vec = 50.08;
 ncase_asd = length(int_vec);
-ncase_vsd = length(int_vec)
-ncase_d = length(int_vec);
-
-% each flow of interest
-qs_asd_vecA = zeros(1,ncase_asd);
-qs_vsd_vecV = zeros(1,ncase_vsd);
-qs_d_vecD = zeros(1,ncase_d);
-
-% pressure in pulmonary artery and systemic artery 
-ppa_asd_vecA = zeros(1,ncase_asd);
-ppv_asd_vecA = zeros(1,ncase_asd);
-psa_asd_vecA = zeros(1,ncase_asd);
-ppa_vsd_vecV = zeros(1,ncase_vsd);
-ppv_vsd_vecV = zeros(1,ncase_vsd);
-psa_vsd_vecV = zeros(1,ncase_vsd);
-ppa_d_vecD = zeros(1,ncase_d);
-ppv_d_vecD = zeros(1,ncase_d);
-psa_d_vecD = zeros(1,ncase_d);
-
-% oxygen saturation in pulmonary artery and systemic artery
-oxy_sa_asd_vecA = zeros(1,ncase_asd);
-oxy_pa_asd_vecA = zeros(1,ncase_asd);
-oxy_sa_vsd_vecV = zeros(1,ncase_vsd);
-oxy_pa_vsd_vecV = zeros(1,ncase_vsd);
-oxy_sa_d_vecD = zeros(1,ncase_d);
-oxy_pa_d_vecD = zeros(1,ncase_d);
 
 num_cycles_for_mean = 5;
 
+disease_state = true;
+do_exercise = true;
+disease_state_pre = false;
+Rp_state = false
+
 % mean value for above variables
-for iA = 1:length(int_vec)
-    j_shunt = jasd
-    Ashunt = int_vec(iA);
-    m_vec = 50.08
-    for iEE = 1:length(m_vec)
-        m_set = m_vec(iEE);
-        HR_set = 0.94 * (m_set - 16.8) + 80;
-        Rs_set = (17.5 * 80)/HR_set;
-        circ;     
-        qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-        ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-        ppv_asd_vecA(iA) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-        psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+if (disease_state == true) 
+    qs_asd_vecA = zeros(1,ncase_asd);
+    ppa_asd_vecA = zeros(1,ncase_asd);
+    ppv_asd_vecA = zeros(1,ncase_asd);
+    psa_asd_vecA = zeros(1,ncase_asd);
+    oxy_sa_asd_vecA = zeros(1,ncase_asd);
+    oxy_pa_asd_vecA = zeros(1,ncase_asd);
+    
+    for iA = 1:length(int_vec)
+        j_shunt = jasd
+        Ashunt = int_vec(iA);
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ;     
+            qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+            ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+            ppv_asd_vecA(iA) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
+            psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        end
     end
 end
 
-for iV = 1:length(int_vec)
-    j_shunt = jvsd
-    Ashunt = int_vec(iV);
-    m_vec = 50.08
-    for iEE = 1:length(m_vec)
-        m_set = m_vec(iEE);
-        HR_set = 0.94 * (m_set - 16.8) + 80;
-        Rs_set = (17.5 * 80)/HR_set;
-        circ; 
-        qs_vsd_vecV(iV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-        ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-        ppv_vsd_vecV(iV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-        psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_pa_vsd_vecV(iV) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+%% VSD
+jasd=7;
+jvsd=8;
+jd=9;
+
+int_vec = (0 : 0.2 : 1) / 100
+m_vec = 50.08;
+ncase_vsd = length(int_vec);
+
+num_cycles_for_mean = 5;
+
+disease_state = true;
+do_exercise = true;
+disease_state_pre = false;
+Rp_state = false
+
+if (disease_state == true)
+    qs_vsd_vecV = zeros(1,ncase_vsd);
+    ppa_vsd_vecV = zeros(1,ncase_vsd);
+    ppv_vsd_vecV = zeros(1,ncase_vsd);
+    psa_vsd_vecV = zeros(1,ncase_vsd);
+    oxy_sa_vsd_vecV = zeros(1,ncase_vsd);
+    oxy_pa_vsd_vecV = zeros(1,ncase_vsd);
+    
+    for iV = 1:length(int_vec)
+        j_shunt = jvsd
+        Ashunt = int_vec(iV);
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ; 
+            qs_vsd_vecV(iV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+            ppa_vsd_vecV(iV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+            ppv_vsd_vecV(iV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
+            psa_vsd_vecV(iV) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_sa_vsd_vecV(iV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_pa_vsd_vecV(iV) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        end
     end
 end 
 
-for iDD = 1:length(int_vec)
-    j_shunt = jd
-    Ashunt = int_vec(iDD);
-    m_vec = 50.08
-    for iEE = 1:length(m_vec)
-        m_set = m_vec(iEE);
-        HR_set = 0.94 * (m_set - 16.8) + 80;
-        Rs_set = (17.5 * 80)/HR_set;
-        circ; 
-        qs_d_vecD(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-        ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-        ppv_d_vecD(iDD) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-        psa_d_vecD(iDD) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-        oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+%% Potts shunt
+jasd=7;
+jvsd=8;
+jd=9;
+
+int_vec = (0 : 0.2 : 1) / 100
+m_vec = 50.08;
+ncase_d = length(int_vec);
+
+num_cycles_for_mean = 5;
+
+disease_state = true;
+do_exercise = true;
+disease_state_pre = false;
+Rp_state = false
+
+if (disease_state == true)
+    qs_d_vecD = zeros(1,ncase_d);
+    ppa_d_vecD = zeros(1,ncase_d);
+    ppv_d_vecD = zeros(1,ncase_d);
+    psa_d_vecD = zeros(1,ncase_d);
+    oxy_sa_d_vecD = zeros(1,ncase_d);
+    oxy_pa_d_vecD = zeros(1,ncase_d);
+    for iDD = 1:length(int_vec)
+        j_shunt = jd
+        Ashunt = int_vec(iDD);
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ; 
+            qs_d_vecD(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+            ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+            ppv_d_vecD(iDD) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
+            psa_d_vecD(iDD) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_sa_d_vecD(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+            oxy_pa_d_vecD(iDD) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+        end
     end
 end 
 %, int_vec*100, qs_vsd_vecV, int_vec*100, qs_d_vecD
