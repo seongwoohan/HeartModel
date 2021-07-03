@@ -7,7 +7,7 @@ jvsd=8;
 jd=9;
 
 int_vec = (0 : 0.2 : 1) / 100
-m_vec = (16.8 : 16.64 : 100);
+%m_vec = 50.08;
 
 %% set disease state
 disease_state = true;
@@ -55,6 +55,7 @@ num_cycles_for_mean = 5;
 for iA = 1:length(int_vec)
     j_shunt = jasd
     Ashunt = int_vec(iA);
+    m_vec = 50.08
     for iEE = 1:length(m_vec)
         m_set = m_vec(iEE);
         HR_set = 0.94 * (m_set - 16.8) + 80;
@@ -72,6 +73,7 @@ end
 for iV = 1:length(int_vec)
     j_shunt = jvsd
     Ashunt = int_vec(iV);
+    m_vec = 50.08
     for iEE = 1:length(m_vec)
         m_set = m_vec(iEE);
         HR_set = 0.94 * (m_set - 16.8) + 80;
@@ -89,6 +91,7 @@ end
 for iDD = 1:length(int_vec)
     j_shunt = jd
     Ashunt = int_vec(iDD);
+    m_vec = 50.08
     for iEE = 1:length(m_vec)
         m_set = m_vec(iEE);
         HR_set = 0.94 * (m_set - 16.8) + 80;
