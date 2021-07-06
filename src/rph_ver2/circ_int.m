@@ -7,9 +7,8 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = (0 : 0.2 : 1) / 100
 m_vec = 50.08;
-ncase_asd = length(int_vec);
+ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;
 
@@ -20,12 +19,13 @@ Rp_state = false
 
 % mean value for above variables
 if (disease_state == true) 
-    qs_asd_vecA = zeros(1,ncase_asd);
-    ppa_asd_vecA = zeros(1,ncase_asd);
-    ppv_asd_vecA = zeros(1,ncase_asd);
-    psa_asd_vecA = zeros(1,ncase_asd);
-    oxy_sa_asd_vecA = zeros(1,ncase_asd);
-    oxy_pa_asd_vecA = zeros(1,ncase_asd);
+    int_vec = (0 : 0.2 : 1) / 100
+    qs_asd_vecA = zeros(1,ncase_dm);
+    ppa_asd_vecA = zeros(1,ncase_dm);
+    ppv_asd_vecA = zeros(1,ncase_dm);
+    psa_asd_vecA = zeros(1,ncase_dm);
+    oxy_sa_asd_vecA = zeros(1,ncase_dm);
+    oxy_pa_asd_vecA = zeros(1,ncase_dm);
     
     for iA = 1:length(int_vec)
         j_shunt = jasd
@@ -50,9 +50,8 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = (0 : 0.2 : 1) / 100
 m_vec = 50.08;
-ncase_vsd = length(int_vec);
+ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;
 
@@ -62,12 +61,13 @@ disease_state_pre = false;
 Rp_state = false
 
 if (disease_state == true)
-    qs_vsd_vecV = zeros(1,ncase_vsd);
-    ppa_vsd_vecV = zeros(1,ncase_vsd);
-    ppv_vsd_vecV = zeros(1,ncase_vsd);
-    psa_vsd_vecV = zeros(1,ncase_vsd);
-    oxy_sa_vsd_vecV = zeros(1,ncase_vsd);
-    oxy_pa_vsd_vecV = zeros(1,ncase_vsd);
+    int_vec = (0 : 0.2 : 1) / 100
+    qs_vsd_vecV = zeros(1,ncase_dm);
+    ppa_vsd_vecV = zeros(1,ncase_dm);
+    ppv_vsd_vecV = zeros(1,ncase_dm);
+    psa_vsd_vecV = zeros(1,ncase_dm);
+    oxy_sa_vsd_vecV = zeros(1,ncase_dm);
+    oxy_pa_vsd_vecV = zeros(1,ncase_dm);
     
     for iV = 1:length(int_vec)
         j_shunt = jvsd
@@ -92,9 +92,8 @@ jasd=7;
 jvsd=8;
 jd=9;
 
-int_vec = (0 : 0.2 : 1) / 100
 m_vec = 50.08;
-ncase_d = length(int_vec);
+ncase_dm = length(m_vec);
 
 num_cycles_for_mean = 5;
 
@@ -104,12 +103,14 @@ disease_state_pre = false;
 Rp_state = false
 
 if (disease_state == true)
-    qs_d_vecD = zeros(1,ncase_d);
-    ppa_d_vecD = zeros(1,ncase_d);
-    ppv_d_vecD = zeros(1,ncase_d);
-    psa_d_vecD = zeros(1,ncase_d);
-    oxy_sa_d_vecD = zeros(1,ncase_d);
-    oxy_pa_d_vecD = zeros(1,ncase_d);
+    int_vec = (0 : 0.2 : 1) / 100
+    qs_d_vecD = zeros(1,ncase_dm);
+    ppa_d_vecD = zeros(1,ncase_dm);
+    ppv_d_vecD = zeros(1,ncase_dm);
+    psa_d_vecD = zeros(1,ncase_dm);
+    oxy_sa_d_vecD = zeros(1,ncase_dm);
+    oxy_pa_d_vecD = zeros(1,ncase_dm);
+    
     for iDD = 1:length(int_vec)
         j_shunt = jd
         Ashunt = int_vec(iDD);

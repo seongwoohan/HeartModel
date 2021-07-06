@@ -76,7 +76,7 @@ if (Rp_state == true)
     end    
 end 
 
-%% potts shunt 0.3cm^2 VSD 0.3cm^2 * 0.8
+%% potts shunt 0.3cm^2 
 
 jasd=7;
 jvsd=8;
@@ -122,6 +122,7 @@ if (Rp_state == true)
     end  
 end 
 
+%% VSD 0.3 cm^2
 
 jasd=7;
 jvsd=8;
@@ -168,49 +169,49 @@ if (Rp_state == true)
 end 
 toc
 
-figure(1006)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
-title('Potts Shunt Flow','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-%ylim([-2 10])
-yline(0, '--b','linewidth', 2)
-
-figure(1007)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
-set(gca,'FontSize',23)
-title('Ventricular Septal Defect','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',20)
-yline(0, '--b','linewidth', 2)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure(1)
 plot(Rp_vec, 10*oxy_sa_pre_intervention_rph, '-ro', Rp_vec, 10*oxy_sa_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sa_vsd_one,'-go', Rp_vec, 10*oxy_sv_pre_intervention_rph, '-ro', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
-%yline(0, '--b','linewidth', 2)
+%yline(0, '--b','linewidth', 1.2)
+%yline(1.773, '--r','linewidth', 1.2)
+yline(54.19, '--r','linewidth', 1.2)
 set(gca,'FontSize',20)
 title('Rp vs Oxygen saturation','FontWeight','Normal')
 legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'east','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Oxygen Saturation (%)')
-%xlim([3.2709 16.3547])
+%xlim([3.271 16.3547])
+xlim([4.55 22.75])
+grid on
+
+figure(100)
+plot(Rp_vec, 10*oxy_sa_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sa_vsd_one,'-go', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
+%yline(0, '--b','linewidth', 1.2)
+%yline(1.773, '--r','linewidth', 1.2)
+yline(54.19, '--r','linewidth', 1.2)
+set(gca,'FontSize',20)
+title('Rp vs Oxygen saturation','FontWeight','Normal')
+legend({'potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'east','FontSize',15)
+legend boxoff
+xlabel('Pulmonary resistance (mmHg/(liter/minute))')
+ylabel('Oxygen Saturation (%)')
+%xlim([3.271 16.3547])
 xlim([4.55 22.75])
 grid on
 
 figure(2)
 plot(Rp_vec, 10*oxy_sv_pre_intervention_rph, '-ro', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
-yline(0, '--b','linewidth', 2)
+yline(0, '--b','linewidth', 1.2)
 set(gca,'FontSize',20)
 title('Systemic vein','FontWeight','Normal')
 legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'best','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Oxygen Saturation (%)')
-%xlim([3.2709 16.3547])
-xlim([4.55 22.75])
+%xlim([3.271 16.354])
+%xlim([4.55 22.75])
 grid on
 
 figure(3)
@@ -222,8 +223,8 @@ legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'be
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Oxygen Saturation (%)')
-%xlim([3.2709 16.3547])
-xlim([4.55 22.75])
+%xlim([3.271 16.354])
+%xlim([4.55 22.75])
 %ylim([80 105])
 grid on
 
@@ -236,8 +237,8 @@ legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'be
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Systemic flow (L/min)')
-%xlim([3.2709 16.3547])
-xlim([4.55 22.75])
+%xlim([3.271 16.354])
+%xlim([4.55 22.75])
 grid on
 
 figure(5)
@@ -249,40 +250,40 @@ legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'be
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Oxygen delivery (moml/min)')
-%xlim([3.2709 16.3547])
-xlim([4.55 22.75])
+%xlim([3.271 16.354])
+%xlim([4.55 22.75])
 grid on
 
-figure(5)
+figure(6)
 plot(Rp_vec, qs_pre_intervention_rph.*oxy_sa_pre_intervention_rph, '-ro', Rp_vec, qs_potts_shunt_one.*oxy_sa_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sa_vsd_one,'-go', Rp_vec, qs_pre_intervention_rph.*oxy_sv_pre_intervention_rph, '-ro', Rp_vec, qs_potts_shunt_one.*oxy_sv_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
-%yline(0, '--b','linewidth', 2)
+%yline(0, '--b','linewidth', 1.2)
+%yline(0.9026, '--r','linewidth', 1.2)
+%yline(19.84, '--r','linewidth', 1.2)
 set(gca,'FontSize',20)
 title('Rp vs Oxygen delivery','FontWeight','Normal')
-legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'best','FontSize',15)
+legend({'pre-intervention','potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'northeast','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Oxygen delivery (moml/min)')
-%xlim([3.2709 16.3547])
+%xlim([3.271 16.3547])
 xlim([4.55 22.75])
+ylim([15 60])
 grid on
 
-figure(1006)
-plot(t_plot((klokmax-((T/dt)*10)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*10)+1):klokmax)),'linewidth', 2.5);
-title('Potts Shunt Flow','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-%ylim([-2 10])
-yline(0, '--b','linewidth', 2)
-
-figure(1007)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 2.5);
-set(gca,'FontSize',23)
-title('Ventricular Septal Defect','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
+figure(600)
+plot(Rp_vec, qs_potts_shunt_one.*oxy_sa_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sa_vsd_one,'-go', Rp_vec, qs_potts_shunt_one.*oxy_sv_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sv_vsd_one,'-go', 'linewidth', 1.5)
+%yline(0, '--b','linewidth', 1.2)
+%yline(0.9026, '--r','linewidth', 1.2)
+yline(19.84, '--r','linewidth', 1.2)
 set(gca,'FontSize',20)
-yline(0, '--b','linewidth', 2)
-%xlim([12.4375 12.5])
-%ylim([-4 8])
+title('Rp vs Oxygen delivery','FontWeight','Normal')
+legend({'potts shunt 0.3cm^2', 'vsd 0.3cm^2'},'Location', 'northeast','FontSize',15)
+legend boxoff
+xlabel('Pulmonary resistance (mmHg/(liter/minute))')
+ylabel('Oxygen delivery (moml/min)')
+%xlim([3.271 16.3547])
+xlim([4.55 22.75])
+ylim([15 60])
+grid on
+
 
