@@ -8,12 +8,13 @@ m_vec = 16.8%50.08;
 ncase_dm = length(m_vec);
 num_cycles_for_mean = 5;
 
+
 disease_state_pre = false
 disease_state = true;
 Rp_state = false;
 do_exercise = true;
 if (disease_state == true) 
-    v_vec = 0.3;
+    v_vec = 0.3 / 100;
     ppa_vsd_vecV = zeros(1, ncase_dm);
     ppv_vsd_vecV = zeros(1, ncase_dm);
     oxy_sv_vsd_one = zeros(1, ncase_dm);
@@ -23,25 +24,23 @@ if (disease_state == true)
     q_vsd_plus_vecV_one = zeros(1,ncase_dm);
     q_vsd_minus_vecV_one = zeros(1,ncase_dm);
     
-    for iVV = 1:length(v_vec)
-        j_shunt = jvsd;
-        Ashunt = v_vec(iVV);
-        for iEE = 1:length(m_vec)
-            m_set = m_vec(iEE);
-            HR_set = 0.94 * (m_set - 16.8) + 80;
-            Rs_set = (17.5 * 80)/HR_set;
-            circ;
-            ns = floor((T/dt)*10);  
-            ppa_vsd_vecV(iVV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-            ppv_vsd_vecV(iVV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sv_vsd_one(iVV) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sa_vsd_one(iVV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-            qs_vsd_one(iVV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_mean_vecV_one(iVV) = meanvalue(Q_plot(jvsd,:), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_plus_vecV_one(iVV) = meanvalue(max(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_minus_vecV_one(iVV) = meanvalue(min(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean); 
-        end
-    end  
+    j_shunt = jvsd;
+    Ashunt = v_vec(iVV);
+    m_set = m_vec(iEE);
+    HR_set = 0.94 * (m_set - 16.8) + 80;
+    Rs_set = (17.5 * 80)/HR_set;
+    
+    circ;
+    ns = floor((T/dt)*10);  
+    ppa_vsd_vecV(iVV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
+    ppv_vsd_vecV(iVV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
+    oxy_sv_vsd_one(iVV) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
+    oxy_sa_vsd_one(iVV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
+    qs_vsd_one(iVV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+    q_vsd_mean_vecV_one(iVV) = meanvalue(Q_plot(jvsd,:), klokmax, T, dt, num_cycles_for_mean);
+    q_vsd_plus_vecV_one(iVV) = meanvalue(max(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean);
+    q_vsd_minus_vecV_one(iVV) = meanvalue(min(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean); 
+    
 end 
 
 

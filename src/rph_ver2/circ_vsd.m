@@ -10,6 +10,9 @@ disease_state = true;
 %% set exercise flag
 do_exercise = false;
 
+disease_state_pre = false;
+Rp_state = false;
+
 % vsd shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;
@@ -87,8 +90,7 @@ ylim([-2 0.5])
 set(gca,'FontSize',25)
 grid on
 
-plot(vsd_vec*100, q_vsd_mean_vecV,'-o')
-plot(vsd_vec*100, q_vsd_minus_vecV, '-o')
+
 %{
 % VSD : shunt conductance & pressure
 figure(300)
