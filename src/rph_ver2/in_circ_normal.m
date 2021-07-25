@@ -44,7 +44,7 @@ Rs = Rs_set;
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-%Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
+Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
@@ -55,7 +55,7 @@ RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
 Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
-%They will need adjustment to make the systemic 
+%They will need adjustment to make the systemic 2
 %blood pressure be roughly 120/80 mmHg
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.

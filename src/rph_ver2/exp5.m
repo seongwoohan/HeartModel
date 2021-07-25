@@ -166,15 +166,16 @@ if (Rp_state == true)
     end
 end 
 
-figure(1000)
-plot(Rp_vec, q_vsd_mean_vecV,'-o', Rp_vec, q_vsd_mean_vecV_one,'-o', Rp_vec, q_d_mean_vecD, '-o', Rp_vec, q_d_mean_vecD_one, '-o','linewidth', 1.8) 
-yline(0, '--b','linewidth', 1.2)
-legend({'VSD^{16.8}','VSD^{50.08}','PS^{16.8}','PS^{50.08}'},'Location', 'east','FontSize',15)
+f(1) = figure
+plot(Rp_vec, q_d_mean_vecD_one, '-.r^', Rp_vec, q_vsd_mean_vecV_one,'-.k^', Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
+yline(0, '--m','linewidth', 1.2)
+legend({'PS^{50.08}', 'VSD^{50.08}','PS^{16.8}','VSD^{16.8}'},'Location', 'east','FontSize',15)
 legend boxoff
 title('Blood Flow','FontWeight','Normal')
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Blood Flow (L/min)')
 xlim([3.25 18.85])
 set(gca,'FontSize',18)
+saveas(f(1),"exp5",'epsc')
 
 
