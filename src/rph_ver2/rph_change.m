@@ -9,7 +9,13 @@ C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 
 % Rp value
 %Rs = 17.5;
-Rp = 1.3*Rs*0.8; %14.95%0.26  % lower factor by 2
+Rp = 1.3*Rs; %14.95%0.26  % lower factor by 2
+%{
+Rs_normal = 17.5;
+Rs = Rs_normal;
+Rp_RPH = 1.3*Rs_normal
+Rp = 14.95%Rp_RPH
+%}
 G(ipa,ipv)=1/Rp;   %no valve
 G(ipv,ipa)=1/Rp;   %no valve
 

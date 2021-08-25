@@ -44,7 +44,7 @@ Rs = Rs_set;
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-%Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
+Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.

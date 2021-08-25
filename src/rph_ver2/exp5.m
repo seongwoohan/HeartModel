@@ -15,11 +15,11 @@ if (Rp_state == true)
         j_shunt = jvsd;
         Ashunt = v_vec(iVV);
         
-        m_vec = 16.8 
-        HR_set = 0.94 * (m_vec - 16.8) + 80;
+        m_set = 16.8 
+        HR_set = 0.94 * (m_set - 16.8) + 80;
         Rs_set = (17.5 * 80)/HR_set;
         
-        Rp_vec = (3.25 : 3.9 : 18.85) 
+        Rp_vec = (3.25 : 3.9 : 22.75) 
         ncase_dm = length(Rp_vec);
         
         q_vsd_mean_vecV = zeros(1, ncase_dm);
@@ -40,7 +40,7 @@ if (Rp_state == true)
     end
 end 
 
-%% VSD 50.08
+%% VSD 33.44
 
 jasd=7;
 jvsd=8;
@@ -57,11 +57,11 @@ if (Rp_state == true)
         j_shunt = jvsd;
         Ashunt = v_vec(iVV);
         
-        m_vec = 50.08
-        HR_set = 0.94 * (m_vec - 16.8) + 80;
+        m_set = 33.44
+        HR_set = 0.94 * (m_set - 16.8) + 80;
         Rs_set = (17.5 * 80)/HR_set;
         
-        Rp_vec = (3.25 : 3.9 : 18.85) 
+        Rp_vec = (3.25 : 3.9 : 22.75)
         ncase_dm = length(Rp_vec);
         
         q_vsd_mean_vecV_one = zeros(1, ncase_dm);
@@ -99,11 +99,11 @@ if (Rp_state == true)
         j_shunt = jd;
         Ashunt = d_vec(iDD);
         
-        m_vec = 16.8
-        HR_set = 0.94 * (m_vec - 16.8) + 80;
+        m_set = 16.8
+        HR_set = 0.94 * (m_set - 16.8) + 80;
         Rs_set = (17.5 * 80)/HR_set;
         
-        Rp_vec = (3.25 : 3.9 : 18.85) 
+        Rp_vec = (3.25 : 3.9 : 22.75)
         ncase_dm = length(Rp_vec);
         
         q_d_mean_vecD = zeros(1, ncase_dm);
@@ -124,7 +124,7 @@ if (Rp_state == true)
     end
 end 
 
-%% Potts Shunt 50.08
+%% Potts Shunt 33.44
 
 jasd=7;
 jvsd=8;
@@ -141,11 +141,11 @@ if (Rp_state == true)
         j_shunt = jd;
         Ashunt = d_vec(iDD);
         
-        m_vec = 50.08
-        HR_set = 0.94 * (m_vec - 16.8) + 80;
+        m_set = 33.44
+        HR_set = 0.94 * (m_set - 16.8) + 80;
         Rs_set = (17.5 * 80)/HR_set;
         
-        Rp_vec = (3.25 : 3.9 : 18.85) 
+        Rp_vec = (3.25 : 3.9 : 22.75)
         ncase_dm = length(Rp_vec);
         
         q_d_mean_vecD_one = zeros(1, ncase_dm);
@@ -167,14 +167,15 @@ if (Rp_state == true)
 end 
 
 f(1) = figure
-plot(Rp_vec, q_d_mean_vecD_one, '-.r^', Rp_vec, q_vsd_mean_vecV_one,'-.k^', Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
-yline(0, '--m','linewidth', 1.2)
-legend({'PS^{50.08}', 'VSD^{50.08}','PS^{16.8}','VSD^{16.8}'},'Location', 'east','FontSize',15)
+plot(Rp_vec, q_d_mean_vecD_one, '-.b^', Rp_vec, q_vsd_mean_vecV_one,'-.k^', Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
+yline(0, '--b','linewidth', 1.2)
+legend({'PS^{exercise}', 'VSD^{exercise}','PS^{rest}','VSD^{rest}'},'Location', 'east','FontSize',15)
 legend boxoff
-title('Blood Flow','FontWeight','Normal')
+title('Mean Shunt Flow ','FontWeight','Normal')
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
-ylabel('Blood Flow (L/min)')
-xlim([3.25 18.85])
+ylabel('Flow (L/min)')
+xlim([3.25 22.75])
+%ylim([-6 3])
 set(gca,'FontSize',18)
 saveas(f(1),"exp5",'epsc')
 
