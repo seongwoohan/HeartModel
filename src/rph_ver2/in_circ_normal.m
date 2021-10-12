@@ -28,7 +28,7 @@ for clock=1:clockmax
   ERV(clock)=elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
   tsave(clock) = t;
 end
-%plot(tsave,ELV,tsave,ERV)
+plot(tsave,ELV,tsave,ERV)
 
 %TS=0.005     %Duration of systole   (minutes)
 %tauS=0.0025  %CLV time constant during systole (minutes)
@@ -44,7 +44,7 @@ Rs = Rs_set;
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
+%Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
@@ -87,7 +87,7 @@ VRVd= VLVd;
 
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(500*T/dt); %T/dt %Total number of timesteps 
+klokmax=floor(10*T/dt); %T/dt %Total number of timesteps 
 
 %This choice implies simulation of 15 cardiac cycles.
 

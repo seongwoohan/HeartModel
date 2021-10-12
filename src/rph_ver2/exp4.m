@@ -1,4 +1,4 @@
-%% VSD
+%% VSD 33.44
 
 jasd=7;
 jvsd=8;
@@ -11,18 +11,7 @@ Rp_state = false;
 disease_state = true;
 do_exercise = true;
 if (disease_state == true) 
-    v_vec = 0.3 / 100;
-    ncase_dm = length(v_vec);
-    
-    ppa_vsd_vecV = zeros(1, ncase_dm);
-    ppv_vsd_vecV = zeros(1, ncase_dm);
-    oxy_sv_vsd_one = zeros(1, ncase_dm);
-    oxy_sa_vsd_one = zeros(1, ncase_dm);
-    qs_vsd_one = zeros(1, ncase_dm);
-    q_vsd_mean_vecV_one = zeros(1,ncase_dm);
-    q_vsd_plus_vecV_one = zeros(1,ncase_dm);
-    q_vsd_minus_vecV_one = zeros(1,ncase_dm);
-    
+    v_vec = 0.3 / 100;    
     for iVV = 1:length(v_vec)
         j_shunt = jvsd;
         Ashunt = v_vec(iVV);
@@ -32,34 +21,101 @@ if (disease_state == true)
             Rs_set = (17.5 * 80)/HR_set;
             circ;
             ns = floor((T/dt)*10); 
-            num_cycles_for_mean = 5;
-            ppa_vsd_vecV(iVV) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-            ppv_vsd_vecV(iVV) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sv_vsd_one(iVV) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sa_vsd_one(iVV) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-            qs_vsd_one(iVV) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_mean_vecV_one(iVV) = meanvalue(Q_plot(jvsd,:), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_plus_vecV_one(iVV) = meanvalue(max(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean);
-            q_vsd_minus_vecV_one(iVV) = meanvalue(min(Q_plot(jvsd,:),0), klokmax, T, dt, num_cycles_for_mean); 
+        end
+    end  
+end 
+%% potts shunt 33.44
+
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = 33.44; 
+
+disease_state_pre = false
+disease_state = true;
+Rp_state = false;
+do_exercise = true;
+if (disease_state == true) 
+    d_vec = 0.3 / 100;  
+    for iDD = 1:length(d_vec)
+        j_shunt = jd;
+        Ashunt = d_vec(iDD);
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ;
+            ns = floor((T/dt)*10);
+        end
+    end  
+end
+
+%% elastance function 33.44
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = 33.44; 
+
+disease_state_pre = false
+disease_state = true;
+Rp_state = false;
+do_exercise = true;
+if (disease_state == true) 
+    Ashunt = 0;  
+    for iDD = 1:length(d_vec)
+        j_shunt = jd;
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ;
+            ns = floor((T/dt)*10);
+            dt=0.01*T
+            klokmax=floor(10*T/dt)
+            for klock=1:klokmax
+                t=klock*dt;
+                ELV(klock)=elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
+                ERV(klock)=elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+                tsave(klock) = t;
+            end
+        end
+    end  
+end
+%plot(tsave, ELV)
+%plot(tsave((clockmax-((T/dt)*5)+1):clockmax), ELV((clockmax-((T/dt)*5)+1):clockmax), 'linewidth', 1.8);
+plot(tsave((klokmax-((T/dt)*5)+1):klokmax), ELV((klokmax-((T/dt)*5)+1):klokmax), 'linewidth', 1.8);
+
+
+%% VSD 16.8
+%{
+jasd=7;
+jvsd=8;
+jd=9;
+
+m_vec = 16.8; 
+
+disease_state_pre = false
+Rp_state = false;
+disease_state = true;
+do_exercise = true;
+if (disease_state == true) 
+    v_vec = 0.3 / 100;    
+    for iVV = 1:length(v_vec)
+        j_shunt = jvsd;
+        Ashunt = v_vec(iVV);
+        for iEE = 1:length(m_vec)
+            m_set = m_vec(iEE);
+            HR_set = 0.94 * (m_set - 16.8) + 80;
+            Rs_set = (17.5 * 80)/HR_set;
+            circ;
+            ns = floor((T/dt)*10); 
         end
     end  
 end 
 
-f(1) = figure;
-%figure(1)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 1.8);
-title('Ventricular Septal Defect (m = 33.44)','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',18)
-yline(0, '--b','linewidth', 2)
-xlim([5.176, 5.228])
-%xlim([6.188 6.25])
-%ylim([-2 1.5])
-saveas(f(1),"exp4_1!",'epsc')
-
-
-%% potts shunt 
+%% potts shunt 16.8
 
 jasd=7;
 jvsd=8;
@@ -72,18 +128,7 @@ disease_state = true;
 Rp_state = false;
 do_exercise = true;
 if (disease_state == true) 
-    d_vec = 0.3 / 100;
-    ncase_dm = length(d_vec);
-
-    ppa_d_vecD = zeros(1, ncase_dm);
-    ppv_d_vecD = zeros(1, ncase_dm);
-    oxy_sv_potts_shunt_one = zeros(1, ncase_dm);
-    oxy_sa_potts_shunt_one = zeros(1, ncase_dm);
-    qs_potts_shunt_one = zeros(1, ncase_dm);
-    q_d_mean_vecD_one = zeros(1,ncase_dm);
-    q_d_plus_vecD_one = zeros(1,ncase_dm);
-    q_d_minus_vecD_one = zeros(1,ncase_dm);
-    
+    d_vec = 0.3 / 100;  
     for iDD = 1:length(d_vec)
         j_shunt = jd;
         Ashunt = d_vec(iDD);
@@ -93,45 +138,37 @@ if (disease_state == true)
             Rs_set = (17.5 * 80)/HR_set;
             circ;
             ns = floor((T/dt)*10);
-            num_cycles_for_mean = 5;
-            ppa_d_vecD(iDD) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-            ppv_d_vecD(iDD) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sv_potts_shunt_one(iDD) = meanvalue(O2_plot(isv,:), klokmax, T, dt, num_cycles_for_mean);
-            oxy_sa_potts_shunt_one(iDD) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
-            qs_potts_shunt_one(iDD) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
-            q_d_mean_vecD_one(iDD) = meanvalue(Q_plot(jd,:), klokmax, T, dt, num_cycles_for_mean);
-            q_d_plus_vecD_one(iDD) = meanvalue(max(Q_plot(jd,:),0), klokmax, T, dt, num_cycles_for_mean);
-            q_d_minus_vecD_one(iDD) = meanvalue(min(Q_plot(jd,:),0), klokmax, T, dt, num_cycles_for_mean);
         end
     end  
 end 
+%}
 
-
-f(2) = figure;f(2) = figure;
-%figure(2)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*5)+1):klokmax)), 'linewidth', 1.8);
+f(1) = figure;
+subplot(3,1,1),plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jvsd,((klokmax-((T/dt)*5)+1):klokmax)),'linewidth', 1.8);
+title('Ventricular Septal Defect (m = 33.44)','FontWeight','Normal')
+xlabel('Time (min)') 
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',18)
+yline(0, '--b','linewidth', 2)
+xlim([5.176, 5.228])
+%xlim([6.188 6.25])
+ylim([-2 1.5])
+subplot(3,1,2),plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*5)+1):klokmax)), 'linewidth', 1.8);
 set(gca,'FontSize',23)
 title('Potts Shunt (m = 16.8)','FontWeight','Normal')
 xlabel('Time (min)') 
 ylabel('Blood Flow (L/min)')
 set(gca,'FontSize',20)
 yline(0, '--b','linewidth', 2)
-%xlim([5.176, 5.228])
-xlim([6.188 6.25])
+xlim([5.176, 5.228])
+%xlim([6.188 6.25])
 ylim([-3 1.5])
-%figure(2)
-plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jd,((klokmax-((T/dt)*5)+1):klokmax)), 'linewidth', 1.8);
-set(gca,'FontSize',23)
-title('Potts Shunt (m = 16.8)','FontWeight','Normal')
-xlabel('Time (min)') 
-ylabel('Blood Flow (L/min)')
-set(gca,'FontSize',20)
-yline(0, '--b','linewidth', 2)
-%xlim([5.176, 5.228])
-xlim([6.188 6.25])
-ylim([-3 1.5])
+subplot(3,1,3),
 
-saveas(f(2),"exp4_2!",'epsc')
+figure(100)
+plot(tsave((clockmax-((T/dt)*5)+1):clockmax), ELV((clockmax-((T/dt)*5)+1):clockmax), 'linewidth', 1.8);
+
+
 
 
 

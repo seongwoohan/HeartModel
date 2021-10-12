@@ -9,14 +9,15 @@ disease_state = true;
 
 %% set exercise flag
 do_exercise = false;
+disease_state_pre = false;
+Rp_state = false;
 
 % asd shunt conductance (L/min/mmHg)
 jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jasd
-asd_vec = 0.1 / 100
-%(0 : 0.1 : 1) / 100
+asd_vec = (0 : 0.1 : 1) / 100
 ncase_asd = length(asd_vec);
 
 % each flow of interest
@@ -90,33 +91,34 @@ if (length(asd_vec) > 0)
       fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
       
      
-%{    
+   
 % ASD : shunt conductance & pressure
 figure(199)
-plot(asd_vec*100, ppa_asd_vecA, '-bo', asd_vec*100, psa_asd_vecA, '-ro','linewidth', 2)
-set(gca,'FontSize',25)
+plot(asd_vec*100, ppa_asd_vecA, '-bo', asd_vec*100, psa_asd_vecA, '-ro','linewidth', 3)
+%set(gca,'FontSize',25)
 title('Atrial Septal Defect','FontSize',22,'FontWeight','Normal')
-legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'northeast','FontSize',20, 'Box','off') 
+legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'east','FontSize',18, 'Box','off') 
 legend boxoff                  
-xlabel('Shunt Area (cm^2)','FontSize', 22) 
-ylabel('Pressure (mmHg)','FontSize', 22)
+xlabel('Shunt Area (cm^2)') 
+ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
 grid on
 
 figure(200)
-subplot(2,1,1),plot(asd_vec*100, ppa_asd_vecA, '-bo','linewidth', 2)
-legend({'Pulmonary Artery'},'Location', 'east','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Pressure (mmHg)')
-set(gca,'FontSize',18)
+subplot(2,1,1),plot(asd_vec*100, ppa_asd_vecA, '-bo','linewidth', 3)
+%legend({'Pulmonary Artery'},'Location', 'east','FontSize',18) 
+%xlabel('Shunt Area (cm^2)')
+%ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
 grid on
-subplot(2,1,2),plot(asd_vec*100, psa_asd_vecA, '-ro','linewidth', 2)
-legend({'Systemic Artery'},'Location', 'east','FontSize',20) 
-xlabel('Shunt Area (cm^2)')
-ylabel('Pressure (mmHg)')
-set(gca,'FontSize',18)
+subplot(2,1,2),plot(asd_vec*100, psa_asd_vecA, '-ro','linewidth', 3)
+%legend({'Systemic Artery'},'Location', 'east','FontSize',18) 
+%xlabel('Shunt Area (cm^2)')
+%ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
 grid on
 
-
+%{
 % ASD : shunt conductance & shunt flow mean
 figure(201)
 plot(asd_vec*100, q_asd_mean_vecA, '-o', asd_vec*100, q_asd_plus_vecA, '-o', asd_vec*100, q_asd_minus_vecA, '-o','linewidth', 2)

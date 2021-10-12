@@ -169,7 +169,7 @@ end
 f(1) = figure
 plot(Rp_vec, q_d_mean_vecD_one, '-.b^', Rp_vec, q_vsd_mean_vecV_one,'-.k^', Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
 yline(0, '--b','linewidth', 1.2)
-legend({'PS^{exercise}', 'VSD^{exercise}','PS^{rest}','VSD^{rest}'},'Location', 'east','FontSize',15)
+legend({'PS (exercise)', 'VSD (exercise)','PS (rest)','VSD (rest)'},'Location', 'east','FontSize',15)
 legend boxoff
 title('Mean Shunt Flow ','FontWeight','Normal')
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')

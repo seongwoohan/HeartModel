@@ -17,8 +17,7 @@ jasd=7;
 jvsd=8;
 jd=9;
 j_shunt = jd
-d_vec = 0.3
-% (0 : 0.1 : 1) / 100
+d_vec = (0 : 0.1 : 1) / 100
 % 0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009 0.01
 
 
@@ -85,7 +84,19 @@ if (length(d_vec) > 0)
       fprintf('%s %f %s\n','Diastolic pulmonary arterial pressure is ', min(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
       fprintf('%s %f %s\n','Systolic pulmonary arterial pressure is ', max(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
       fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_d_vecD(1), ' mmHg');
-      
+
+% Ductus : shunt conductance & pressure
+figure(400)
+plot(d_vec*100, ppa_d_vecD, '-bo', d_vec*100, psa_d_vecD, '-ro','linewidth', 3)
+title('Potts Shunt','FontSize', 22, 'FontWeight', 'Normal')
+legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'east','FontSize',18) 
+legend boxoff
+xlabel('Shunt Area (cm^2)')
+ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
+
+grid on
+
 %{
 figure(1000)
 plot(t_plot, 10.*O2_plot,'linewidth',3)
@@ -130,18 +141,6 @@ set(gca,'FontSize',20)
 xlim([12.4375 12.5])
 ylim([0 8])
 yline(0, '--b','linewidth', 2)
-
-
-% Ductus : shunt conductance & pressure
-figure(400)
-plot(d_vec*100, ppa_d_vecD, '-bo', d_vec*100, psa_d_vecD, '-ro','linewidth', 4)
-set(gca,'FontSize',23)
-title('Potts Shunt','FontSize', 22, 'FontWeight', 'Normal')
-legend({'Pulmonary Artery', 'Systemic Artery'},'Location', 'east','FontSize',18) 
-legend boxoff
-xlabel('Shunt Area (cm^2)','FontSize', 22)
-ylabel('Pressure (mmHg)','FontSize', 22)
-grid on
 
 
 
@@ -214,6 +213,7 @@ ylim([0 25])
 
 %draw a line on the 0 
 
+%{
 % Ductus : shunt conductance & shunt flow mean
 figure(401)
 plot(d_vec*100, q_d_mean_vecD,'-o',d_vec*100, q_d_plus_vecD,'-o', d_vec*100, q_d_minus_vecD,'-o','linewidth', 2)
@@ -246,6 +246,7 @@ ylabel('Shunt Flow Mean (L/min)')
 set(gca,'FontSize',18)
 grid on
 
+%}
 end
 %circ_excerise
 
