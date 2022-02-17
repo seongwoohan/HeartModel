@@ -1,5 +1,6 @@
 %filename: in_circ.m  (initialization for circ)
-T =0.0125    %Duration of heartbeat (minutes)
+%T =0.0125    %Duration of heartbeat (minutes)
+T = 1 / HR_set
 tau1 = 0.269*T % time scale of contraction (minutes)
 tau2 = 0.452*T % duration of systole (minutes)
 m1 = 1.32
@@ -41,7 +42,7 @@ Rs=17.5 %Systemic resistance
 % SVR = 10.8 Wood U x m2
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
-Rp=1.5*Rs     % rph state
+Rp=1.3*Rs     % rph state
 %Rp= 1.79     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
@@ -50,6 +51,9 @@ RMi=0.01   %mitral valve resistance (mmHg/(liter/minute))
 RAo=0.01   %aortic valve resistance (mmHg/(liter/minute))
 RTr=0.01   %tricuspid valve resistance (mmHg/(liter/minute))
 RPu=0.01   %pulmonic valve  resistance (mmHg/(liter/minute))
+
+ReRA = 0.01 % entry to RA
+ReLA - 0.01 % entry to LA
 Rvisc = 0.01
 
 %The following values of Csa and Cpa are approximate.
@@ -58,7 +62,7 @@ Rvisc = 0.01
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
 Csa=0.00175 * 0.7   %Systemic  arterial compliance (liters/mmHg)
-Cpa=0.00412  %Pulmonary arterial compliance (liters/mmHg)
+Cpa=0.0021  %Pulmonary arterial compliance (liters/mmHg)
 Csv=0.09     %Systemic  venous compliance (liters/mmHg)
 Cpv=0.01     %Pulmonary venous compliance (liters/mmHg)
 
@@ -75,8 +79,11 @@ CRVD=CLVD
 
 Vsad=0.825   %Systemic arterial volume at P=0 (liters)
 Vpad=0.1135  %Pulmonary arterial volume at P=0 (liters)
+
 Vsvd=3.5 % 2.8745  %3.5     %Systemic venous volume at P=0 (liters)
 Vpvd=0.18       %Pulmonary venous volume at P=0 (liters)
+
+
 VLVd=0.010
 VRVd= VLVd 
 %0.027   %Left ventricular volume at P=0 (liters)
@@ -84,7 +91,7 @@ VRVd= VLVd
 
 dt=0.01*T    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=1000*T/dt %T/dt %Total number of timesteps 
+klokmax=500*T/dt %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
 
 ifpmax = 10  %10 
@@ -103,7 +110,9 @@ isv=3
 iRV=4
 ipa=5
 ipv=6
-N=6
+iRA=7
+iLA=8
+N=8 %8
 %Enter parameters and initial values 
 %into correct slots in arrays.
 %Note that the code that follows is independent 
@@ -114,11 +123,24 @@ C=zeros(N,1);
 %C(iLV)=CV_now(0,CLVS,CLVD); % CLVS,CLVD  %initial value
 C(iLV)=1/elastance(0,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum)
 C(isa)=Csa;
+
 C(isv)=Csv;
+
+frac_RA = 17 / 3500 %0.0049
+frac_LA = 3 / 180 %0.0167
+
+C(iRA) = frac_RA * C(isv) %0.000441
+% 0.09 - 1/40 = 0.065
+C(isv) = (1- frac_RA) * C(isv) %0.0896
+
 %C(iRV)=CV_now(0,CRVS,CRVD); % CRVS, CRVD %initial value
 C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 C(ipa)=Cpa;  %Cpa
+
 C(ipv)=Cpv;
+C(iLA) = frac_LA * C(ipv) %0.000167
+C(ipv) = (1 - frac_LA) * C(ipv) %0.0098
+
 C  %This writes the result on the screen.
 
 %Pressure vector (initial values) at end of diastole:
@@ -130,6 +152,8 @@ P(isv)= 10 %20 %2 + 4.8611%+ 6.7778 %4.8611;  % 5.0155 / 0.6100 % rph state
 P(iRV)= 2 
 P(ipa)=100; % rph state
 P(ipv)= 5;
+P(iRA)= P(isv)
+P(iLA)= P(ipv)
 P  %This writes the result on the screen.
 %Vector of dead volumes (volume at zero pressure);
 %Note: Vd is only needed for output purposes.  
@@ -141,9 +165,17 @@ Vd=zeros(N,1);
 Vd(iLV)=VLVd;
 Vd(isa)=Vsad;
 Vd(isv)=Vsvd;
+
+Vd(iRA) = frac_RA * Vd(isv)
+Vd(isv) = (1- frac_RA) * Vd(isv)
+
 Vd(iRV)=VRVd;
 Vd(ipa)=Vpad;
+
 Vd(ipv)=Vpvd;
+Vd(iLA) = frac_LA * Vd(ipv)
+Vd(ipv) = (1 - frac_LA) * Vd(ipv)
+
 Vd  
 %This writes the results on the screen.
 %Conductance matrix:
@@ -161,6 +193,12 @@ G(iRV,ipa)=1/RPu;  %But G(ipa,iRV)=0; (no leak)
 G(ipa,ipv)=1/Rp;   %no valve
 G(ipv,ipa)=1/Rp;   %no valve
 G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
+
+% new G
+G(isv, iRA) = 1/ReRA
+G(iRA, isv) = 1/ReRA
+G(ipv, iLA) = 1/ReLA
+G(iLA, ipv) = 1/ReLA
 
 %New varaiable
 % asd = 1,10,100 // vsd =1,10,100...  // d = 1,10,100...
@@ -224,8 +262,9 @@ iU(jMi)=ipv;
 iD(jMi)=iLV;
 
 %NEW three connections between the flow
-iU(jasd)=isv;
-iD(jasd)=ipv;
+iU(jasd)=iRA %isv;
+iD(jasd)=iLA %ipv;
+
 iU(jvsd)=iRV;
 iD(jvsd)=iLV;
 iU(jd)=ipa;

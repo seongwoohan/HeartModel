@@ -35,9 +35,9 @@ if (disease_state == true)
             HR_set = 0.94 * (m_set - 16.8) + 80;
             Rs_set = (17.5 * 80)/HR_set;
             circ;     
-            qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);
+            qs_asd_vecA(iA) = meanvalue(Q_plot(js,:), klokmax, T, dt, num_cycles_for_mean);            
             ppa_asd_vecA(iA) = meanvalue(P_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
-            ppv_asd_vecA(iA) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);
+            ppv_asd_vecA(iA) = meanvalue(P_plot(ipv,:), klokmax, T, dt, num_cycles_for_mean);         
             psa_asd_vecA(iA) = meanvalue(P_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
             oxy_sa_asd_vecA(iA) = meanvalue(O2_plot(isa,:), klokmax, T, dt, num_cycles_for_mean);
             oxy_pa_asd_vecA(iA) = meanvalue(O2_plot(ipa,:), klokmax, T, dt, num_cycles_for_mean);
@@ -103,7 +103,7 @@ disease_state_pre = false;
 Rp_state = false
 
 if (disease_state == true)
-    int_vec = 0/100%(0 : 0.1 : 1) / 100
+    int_vec = (0 : 0.1 : 1) / 100
     qs_d_vecD = zeros(1,ncase_dm);
     ppa_d_vecD = zeros(1,ncase_dm);
     ppv_d_vecD = zeros(1,ncase_dm);
@@ -155,7 +155,7 @@ newcolors = {'#D95319'}
 colororder(newcolors)
 %set(gca,'FontSize',25)
 title('Pulmonary Artery Pressure','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)','PS (Rp: 22.75)'},'Location', 'best','FontSize',18) 
+legend({'ASD','VSD','PS'},'Location', 'best','FontSize',18) 
 legend boxoff                  
 xlabel('Shunt Area (cm^2)') 
 ylabel('Pressure (mmHg)')
@@ -168,7 +168,7 @@ newcolors = {'#D95319'}
 colororder(newcolors)
 %set(gca,'FontSize',25)
 title('Systemic Artery Pressure','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)','PS (Rp: 22.75)'},'Location', 'best','FontSize',18) 
+legend({'ASD','VSD','PS'},'Location', 'best','FontSize',18) 
 legend boxoff 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Pressure (mmHg)')
@@ -181,7 +181,7 @@ newcolors = {'#D95319'}
 colororder(newcolors)
 %set(gca,'FontSize',25)
 title('Pulmonary Vein Pressure','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)','PS (Rp: 22.75)'},'Location', 'best') 
+legend({'ASD','VSD','PS'},'Location', 'best') 
 legend boxoff 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Pressure (mmHg)')
@@ -193,7 +193,7 @@ plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-ko', int_vec*10
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Systemic Flow','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)', 'PS (Rp: 22.75)'},'Location', 'best', 'Box','off') 
+legend({'ASD','VSD','PS'},'Location', 'best', 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Systemic Flow (L/min)')
 set(gca,'FontSize',20)
@@ -204,7 +204,7 @@ plot(int_vec*100, 10.*oxy_sa_asd_vecA, '-o', int_vec*100, 10.*oxy_sa_vsd_vecV, '
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Oxygen Saturation','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)', 'PS (Rp: 22.75)'},'Location', 'best', 'Box','off') 
+legend({'ASD','VSD','PS'},'Location', 'best', 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Saturation (%)')
 set(gca,'FontSize',20)
@@ -215,7 +215,7 @@ plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-o', int_vec*100, qs_vsd_vecV.*
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Oxygen Delivery','FontWeight','Normal')
-legend({'ASD (Rp: 22.75)','VSD (Rp: 22.75)', 'PS (Rp: 22.75)'},'Location', 'best', 'Box','off') 
+legend({'ASD','VSD','PS'},'Location', 'best', 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Delivery (mmol/min)')
 set(gca,'FontSize',20)

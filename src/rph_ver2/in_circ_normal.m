@@ -44,7 +44,7 @@ Rs = Rs_set;
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-%Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
+Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
@@ -52,6 +52,9 @@ RMi=0.01;   %mitral valve resistance (mmHg/(liter/minute))
 RAo=0.01;   %aortic valve resistance (mmHg/(liter/minute))
 RTr=0.01;   %tricuspid valve resistance (mmHg/(liter/minute))
 RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
+
+ReRA = 0.01 % entry to RA
+ReLA = 0.01 % entry to LA
 Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
@@ -60,7 +63,7 @@ Rvisc = 0.01;
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
 Csa=0.00175 * 0.7;   %Systemic  arterial compliance (liters/mmHg)
-Cpa=0.00412;  %Pulmonary arterial compliance (liters/mmHg)
+Cpa=0.0042;  %Pulmonary arterial compliance (liters/mmHg)
 Csv=0.09;     %Systemic  venous compliance (liters/mmHg)
 Cpv=0.01;    %Pulmonary venous compliance (liters/mmHg)
 
@@ -87,7 +90,7 @@ VRVd= VLVd;
 
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(10*T/dt); %T/dt %Total number of timesteps 
+klokmax=floor(500*T/dt); %T/dt %Total number of timesteps 
 
 %This choice implies simulation of 15 cardiac cycles.
 
@@ -107,7 +110,10 @@ isv=3;
 iRV=4;
 ipa=5;
 ipv=6;
-N=6;
+
+iRA=7;
+iLA=8;
+N=8;
 %Enter parameters and initial values 
 %into correct slots in arrays.
 %Note that the code that follows is independent 
@@ -119,10 +125,21 @@ C=zeros(N,1);
 C(iLV)=1/elastance(0,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
 C(isa)=Csa;
 C(isv)=Csv;
+
+frac_RA = 17 / 3500 %0.0049
+frac_LA = 3 / 180 %0.0167
+
+C(iRA) = frac_RA * C(isv) %0.000441
+% 0.09 - 1/40 = 0.065
+C(isv) = (1- frac_RA) * C(isv) %0.0896
+
 %C(iRV)=CV_now(0,CRVS,CRVD); % CRVS, CRVD %initial value
 C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 C(ipa)=Cpa;  %Cpa
+
 C(ipv)=Cpv;
+C(iLA) = frac_LA * C(ipv) %0.000167
+C(ipv) = (1 - frac_LA) * C(ipv) %0.0098
 C;  %This writes the result on the screen.
 
 %Pressure vector (initial values) at end of diastole:
@@ -134,6 +151,8 @@ P(isv)= 6.3 + (Vsvd_normal - Vsvd)/Csv;
 P(iRV)= 2;
 P(ipa)= 8; 
 P(ipv)= 5;
+P(iRA)= P(isv)
+P(iLA)= P(ipv)
 P;  %This writes the result on the screen.
 %Vector of dead volumes (volume at zero pressure);
 %Note: Vd is only needed for output purposes.  
@@ -145,9 +164,17 @@ Vd=zeros(N,1);
 Vd(iLV)=VLVd;
 Vd(isa)=Vsad;
 Vd(isv)=Vsvd;
+
+Vd(iRA) = frac_RA * Vd(isv)
+Vd(isv) = (1- frac_RA) * Vd(isv)
+
 Vd(iRV)=VRVd;
 Vd(ipa)=Vpad;
+
 Vd(ipv)=Vpvd;
+Vd(iLA) = frac_LA * Vd(ipv)
+Vd(ipv) = (1 - frac_LA) * Vd(ipv)
+
 Vd;  
 %This writes the results on the screen.
 %Conductance matrix:
@@ -160,11 +187,22 @@ G=zeros(N,N);
 G(iLV,isa)=1/RAo;  %But G(isa,iLV)=0 (no leak)
 G(isa,isv)=1/Rs;   %no valve
 G(isv,isa)=1/Rs;   %no valve
-G(isv,iRV)=1/RTr;  %But G(iRV,isv)=0; (no leak)
+
+%G(isv,iRV)=1/RTr;  %But G(iRV,isv)=0; (no leak)
+G(iRA,iRV)=1/RTr;
+
 G(iRV,ipa)=1/RPu;  %But G(ipa,iRV)=0; (no leak)
 G(ipa,ipv)=1/Rp;   %no valve
 G(ipv,ipa)=1/Rp;   %no valve
-G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
+
+%G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
+G(iLA,iLV)=1/RMi
+
+% new G
+G(isv, iRA) = 1/ReRA
+G(iRA, isv) = 1/ReRA
+G(ipv, iLA) = 1/ReLA
+G(iLA, ipv) = 1/ReLA
 
 %New varaiable
 % asd = 1,10,100 // vsd =1,10,100...  // d = 1,10,100...
@@ -206,30 +244,48 @@ jPu=4;
 jp =5; % except this one
 jMi=6;
 
+jsva=10; % system vein & atrium
+jpva=11; % pulmonary vein & atrium
+
 %add three more flows(atria, ventricle ,artery)
 
-Nflows=9;
+Nflows=11; %9
 
 %note index of upstream and downstream chamber 
 %for each flow:
 iU=zeros(Nflows,1);
 iD=zeros(Nflows,1);
+
 iU(jAo)=iLV;
 iD(jAo)=isa;
+
 iU(js )=isa;
 iD(js )=isv;
-iU(jTr)=isv;
+
+%iU(jTr)=isv;
+iU(jTr)=iRA;
 iD(jTr)=iRV;
+
 iU(jPu)=iRV;
 iD(jPu)=ipa;
+
 iU(jp )=ipa;
 iD(jp )=ipv;
-iU(jMi)=ipv;
+
+%iU(jMi)=ipv;
+iU(jMi)=iLA;
 iD(jMi)=iLV;
 
+iU(jsva)=isv;
+iD(jsva)=iRA;
+
+iU(jpva)=ipv;
+iD(jpva)=iLA;
+
 %NEW three connections between the flow
-iU(jasd)=isv;
-iD(jasd)=ipv;
+iU(jasd)=iRA %isv;
+iD(jasd)=iLA %ipv;
+
 iU(jvsd)=iRV;
 iD(jvsd)=iLV;
 iU(jd)=ipa;
