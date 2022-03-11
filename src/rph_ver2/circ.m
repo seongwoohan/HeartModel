@@ -46,8 +46,11 @@ for klok=1:klokmax
   %C(iRV)=CV_now(t,CRVS,CRVD);
   %find self-consistent valve states and pressures:
   
-  C(iLV)=1/elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
-  C(iRV)=1/elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+  C(iLV)=1/elastance(t,T,0,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
+  C(iRV)=1/elastance(t,T,0,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+  C(iLA)=1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminLA,EmaxLA,maxnumA);
+  C(iRA)=1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
+  
   
   % V_total_start = Vd+C.*P
   % fixed-point iteration

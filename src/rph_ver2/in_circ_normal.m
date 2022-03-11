@@ -1,10 +1,21 @@
 %filename: in_circ.m  (initialization for circ)
 %T =0.0125    %Duration of heartbeat (minutes)
-T = 1 / HR_set;
+%T = 1 / HR_set;
+T = 0.0125
 tau1 = 0.269*T; % time scale of contraction (minutes)
 tau2 = 0.452*T; % duration of systole (minutes)
+
+tau1A = 0.110*T;
+tau2A = 0.110*T;
+
 m1 = 1.32;
 m2 = 27.4;
+
+m1A = 1.32;
+m2A = 13.1;
+
+t_atrial_delay = 0.85 * T;
+
 %initialization of maxnum (same for both ventricles):
 tt=0:(T/1000):T;
 g1=(tt/tau1).^m1;
@@ -13,22 +24,40 @@ g2T=(T/tau2)^m2;
 num1=g1./(1+g1);
 num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2);
+% LA & RA
+g1A=(tt/tau1A).^m1A;
+g2A=(tt/tau2A).^m2A;
+g2TA=(T/tau2A)^m2A;
+num1A=g1A./(1+g1A);
+num2A=(1./(1+g2A)) - (1/(1+g2TA));
+maxnumA = max(num1A.*num2A);
+
 %parameters specific to each ventricle:
 EminLV = 0.08*1000; % (mmHg/L)
 EmaxLV = 3.00*1000; % (mmHg/L)
 EminRV = 0.04*1000; % (mmHg/L)
 EmaxRV = 0.60*1000; % (mmHg/L)
 
+EmaxLA = 0.4 * 1000; % (mmHg/L) 
+EminLA = 0.15 * 1000; % (mmHg/L) 
+EmaxRA = 0.4 * 1000; % (mmHg/L)
+EminRA = 0.12 * 1000; % (mmHg/L)
+
 tmax=10*T;
 clockmax =3000;
 dt=tmax/clockmax;
 for clock=1:clockmax
   t=clock*dt;
-  ELV(clock)=elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
-  ERV(clock)=elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+  ELV(clock)=elastance(t,T,0,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
+  ERV(clock)=elastance(t,T,0,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+  ELA(clock)=elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminLA,EmaxLA,maxnumA);
+  ERA(clock)=elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
   tsave(clock) = t;
 end
-plot(tsave,ELV,tsave,ERV)
+figure(1)
+subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
+subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
+
 
 %TS=0.005     %Duration of systole   (minutes)
 %tauS=0.0025  %CLV time constant during systole (minutes)
@@ -48,13 +77,13 @@ Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
-RMi=0.01;   %mitral valve resistance (mmHg/(liter/minute))
-RAo=0.01;   %aortic valve resistance (mmHg/(liter/minute))
-RTr=0.01;   %tricuspid valve resistance (mmHg/(liter/minute))
-RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
+RMi=0.1;   %mitral valve resistance (mmHg/(liter/minute))
+RAo=0.1;   %aortic valve resistance (mmHg/(liter/minute))
+RTr=0.1;   %tricuspid valve resistance (mmHg/(liter/minute))
+RPu=0.1;   %pulmonic valve  resistance (mmHg/(liter/minute))
 
-ReRA = 0.01 % entry to RA
-ReLA = 0.01 % entry to LA
+ReRA = 0.1 % entry to RA 0.01
+ReLA = 0.1 % entry to LA 0.01 
 Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
@@ -90,7 +119,7 @@ VRVd= VLVd;
 
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(500*T/dt); %T/dt %Total number of timesteps 
+klokmax=floor(20*T/dt); %T/dt %Total number of timesteps 
 
 %This choice implies simulation of 15 cardiac cycles.
 
@@ -122,24 +151,19 @@ N=8;
 C=zeros(N,1);  
 %This makes C a column vector of length N.
 %C(iLV)=CV_now(0,CLVS,CLVD); % CLVS,CLVD  %initial value
-C(iLV)=1/elastance(0,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
+C(iLV)=1/elastance(0,T,0,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
 C(isa)=Csa;
 C(isv)=Csv;
 
-frac_RA = 17 / 3500 %0.0049
-frac_LA = 3 / 180 %0.0167
 
-C(iRA) = frac_RA * C(isv) %0.000441
-% 0.09 - 1/40 = 0.065
-C(isv) = (1- frac_RA) * C(isv) %0.0896
-
+C(iRA) = 1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
+%0.0083
 %C(iRV)=CV_now(0,CRVS,CRVD); % CRVS, CRVD %initial value
-C(iRV)=1/elastance(0,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
+C(iRV)=1/elastance(0,T,0,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 C(ipa)=Cpa;  %Cpa
-
 C(ipv)=Cpv;
-C(iLA) = frac_LA * C(ipv) %0.000167
-C(ipv) = (1 - frac_LA) * C(ipv) %0.0098
+C(iLA) = 1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminLA,EmaxLA,maxnumA);
+%0.0067
 C;  %This writes the result on the screen.
 
 %Pressure vector (initial values) at end of diastole:
@@ -165,15 +189,13 @@ Vd(iLV)=VLVd;
 Vd(isa)=Vsad;
 Vd(isv)=Vsvd;
 
-Vd(iRA) = frac_RA * Vd(isv)
-Vd(isv) = (1- frac_RA) * Vd(isv)
+Vd(iRA) = 0.01
 
 Vd(iRV)=VRVd;
 Vd(ipa)=Vpad;
 
 Vd(ipv)=Vpvd;
-Vd(iLA) = frac_LA * Vd(ipv)
-Vd(ipv) = (1 - frac_LA) * Vd(ipv)
+Vd(iLA) = 0.01
 
 Vd;  
 %This writes the results on the screen.

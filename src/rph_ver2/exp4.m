@@ -84,7 +84,7 @@ xlabel('Time (min)')
 ylabel('Blood Flow (L/min)')
 set(gca,'FontSize',18)
 xlim([6.188 6.25])
-ylim([-3 4])
+ylim([-3 3])
 grid on
 
 
@@ -223,6 +223,8 @@ ylim([5 10])
 subplot(5,1,5), plot(O2_plot(isa,:))
 title('sa')
 ylim([5 10])
+set(gca,'FontSize',10)
+
 
 f(3) = figure
 plot(O2_plot(iLA,:)); hold on 
@@ -233,6 +235,8 @@ set(gca,'FontSize',10)
 
 
 
-sub
+f(4) = figure
+plot(t_plot((klokmax-((T/dt)*5)+1):klokmax), Q_plot(jMi,((klokmax-((T/dt)*5)+1):klokmax)), 'linewidth', 1.8);
+
 
 
