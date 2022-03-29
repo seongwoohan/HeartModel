@@ -1,6 +1,8 @@
-function E = elastance(t,T,tau1,tau2,m1,m2,Emin,Emax,maxnum)
+% function E = elastance(t,T,tau1,tau2,m1,m2,Emin,Emax,maxnum)
+function E = elastance(t,T,t_delay,tau1,tau2,m1,m2,Emin,Emax,maxnum)
 
-tt=mod(t,T);
+tt=mod(t-t_delay,T);
+% tt=mod(t,T);
 g1=(tt/tau1)^m1;
 g2=(tt/tau2)^m2;
 g2T=(T/tau2)^m2;

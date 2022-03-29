@@ -166,17 +166,35 @@ if (Rp_state == true)
     end
 end 
 
-f(1) = figure
-plot(Rp_vec, q_d_mean_vecD_one, '-.b^', Rp_vec, q_vsd_mean_vecV_one,'-.k^', Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
+figure(1)
+plot(Rp_vec, q_d_mean_vecD_one, '-.b^', Rp_vec, q_vsd_mean_vecV_one,'-.k^','linewidth', 1.8,'MarkerSize', 8) 
+hold on
+plot(16, 0.35, 'bp', 16, 0.1 ,'kp','linewidth', 1.8, 'MarkerSize',9)
 yline(0, '--b','linewidth', 1.2)
-legend({'PS (exercise)', 'VSD (exercise)','PS (rest)','VSD (rest)'},'Location', 'east','FontSize',15)
+legend({'PS 0.3cm^2', 'VSD 0.3cm^2'},'Location', 'east','FontSize',15)
 legend boxoff
-title('Mean Shunt Flow ','FontWeight','Normal')
+title('Mean Shunt Flow (exercise)','FontWeight','Normal')
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
 ylabel('Flow (L/min)')
 xlim([3.25 22.75])
-%ylim([-6 3])
+ylim([-6 2])
+grid on
 set(gca,'FontSize',18)
-saveas(f(1),"exp5",'epsc')
+
+figure(2)
+plot(Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
+hold on
+plot(16, -0.53, 'kp', 16, -0.3 ,'bp','linewidth', 1.8, 'MarkerSize',9)
+yline(0, '--b','linewidth', 1.2)
+legend({'PS 0.3cm^2', 'VSD 0.3cm^2'},'Location', 'east','FontSize',15)
+legend boxoff
+title('Mean Shunt Flow (rest)','FontWeight','Normal')
+xlabel('Pulmonary resistance (mmHg/(liter/minute))')
+ylabel('Flow (L/min)')
+xlim([3.25 22.75])
+ylim([-6 2])
+grid on
+set(gca,'FontSize',18)
+
 
 

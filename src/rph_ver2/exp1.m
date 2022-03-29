@@ -147,9 +147,15 @@ if (length(int_vec) > 0)
       fprintf('%s %f %s\n','Systolic pulmonary arterial pressure is ', max(P_plot(ipa,(klokmax-ns+1):klokmax)), ' mmHg');
       fprintf('%s %f %s\n\n','Mean pulmonary arterial pressure is ', ppa_asd_vecA(1), ' mmHg');
  
-      
 
-figure(500)
+
+f(400) = figure  
+subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
+subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
+title('Elastance: rph','FontWeight','Normal')
+ylim([0 3000])      
+
+f(500) = figure
 plot(int_vec*100, ppa_asd_vecA, '-o', int_vec*100, ppa_vsd_vecV, '-ko', int_vec*100, ppa_d_vecD, '-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -162,7 +168,7 @@ ylabel('Pressure (mmHg)')
 set(gca,'FontSize',20)
 grid on
 
-figure(501)
+f(501) = figure
 plot(int_vec*100, psa_asd_vecA, '-o', int_vec*100, psa_vsd_vecV, '-ko', int_vec*100, psa_d_vecD, '-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -175,7 +181,7 @@ ylabel('Pressure (mmHg)')
 set(gca,'FontSize',20)
 grid on
 
-figure(502)
+f(502) = figure
 plot(int_vec*100, ppv_asd_vecA, '-o', int_vec*100, ppv_vsd_vecV, '-ko', int_vec*100, ppv_d_vecD, '-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -188,7 +194,7 @@ ylabel('Pressure (mmHg)')
 set(gca,'FontSize',20)
 grid on
 
-figure(600)
+f(503) = figure
 plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-ko', int_vec*100, qs_d_vecD, '-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -199,7 +205,7 @@ ylabel('Systemic Flow (L/min)')
 set(gca,'FontSize',20)
 grid on
 
-figure(601)
+f(504) = figure
 plot(int_vec*100, 10.*oxy_sa_asd_vecA, '-o', int_vec*100, 10.*oxy_sa_vsd_vecV, '-ko', int_vec*100, 10.*oxy_sa_d_vecD,'-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -210,7 +216,7 @@ ylabel('Oxygen Saturation (%)')
 set(gca,'FontSize',20)
 grid on
 
-figure(602)
+f(505) = figure
 plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-o', int_vec*100, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-ko',int_vec*100, qs_d_vecD.*oxy_sa_d_vecD,'-bo','linewidth', 3)
 newcolors = {'#D95319'}
 colororder(newcolors)
@@ -218,8 +224,10 @@ title('Oxygen Delivery','FontWeight','Normal')
 legend({'ASD','VSD','PS'},'Location', 'best', 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Delivery (mmol/min)')
+ylim([37 38.8])
 set(gca,'FontSize',20)
 grid on
+
 
 end
 
