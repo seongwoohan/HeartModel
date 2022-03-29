@@ -51,12 +51,10 @@ for klok=1:klokmax
   C(iLA)=1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminLA,EmaxLA,maxnumA);
   C(iRA)=1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
   
-<<<<<<< HEAD
   % in_circ_normal_v2.m
 %   C(iLV)=1/elastance(t,T,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
 %   C(iRV)=1/elastance(t,T,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
-=======
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
+
   
   % V_total_start = Vd+C.*P
   % fixed-point iteration

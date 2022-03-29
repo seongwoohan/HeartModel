@@ -29,17 +29,13 @@ G(ipv,ipa)=1/Rp;   %no valve
 % Pressure 
 P(isv)= 7%10;
 P(ipa)=70%100;
-<<<<<<< HEAD
 % in_circ_normal_v2 --> turn off
-=======
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
+
 P(iRA)= P(isv)
 P(iLA)= P(ipv)
 
 Cpa = Cpa/2 %8-->_2.png / 2-->_.png
 C(ipa) = Cpa
-<<<<<<< HEAD
 % in_circ_normal_v2 --> turn off
-=======
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
+
 C(iRA) = C(iLA)

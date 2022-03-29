@@ -1,12 +1,9 @@
 %filename: in_circ.m  (initialization for circ)
 %T =0.0125    %Duration of heartbeat (minutes)
-<<<<<<< HEAD
 T = 1 / HR_set;
 %T = 0.0125
-=======
 %T = 1 / HR_set;
 T = 0.0125
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 tau1 = 0.269*T; % time scale of contraction (minutes)
 tau2 = 0.452*T; % duration of systole (minutes)
 
@@ -29,10 +26,7 @@ g2T=(T/tau2)^m2;
 num1=g1./(1+g1);
 num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2);
-<<<<<<< HEAD
 
-=======
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 % LA & RA
 g1A=(tt/tau1A).^m1A;
 g2A=(tt/tau2A).^m2A;
@@ -47,17 +41,15 @@ EmaxLV = 3.00*1000; % (mmHg/L)
 EminRV = 0.04*1000; % (mmHg/L)
 EmaxRV = 0.60*1000; % (mmHg/L)
 
-<<<<<<< HEAD
 EminLA = 0.15 * 1000; % (mmHg/L) 
 EmaxLA = 0.4 * 1000; % (mmHg/L) 
 EminRA = 0.12 * 1000; % (mmHg/L)
 EmaxRA = 0.4 * 1000; % (mmHg/L)
-=======
+
 EmaxLA = 0.4 * 1000; % (mmHg/L) 
 EminLA = 0.15 * 1000; % (mmHg/L) 
 EmaxRA = 0.4 * 1000; % (mmHg/L)
 EminRA = 0.12 * 1000; % (mmHg/L)
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 
 tmax=10*T;
 clockmax =3000;
@@ -70,18 +62,16 @@ for clock=1:clockmax
   ERA(clock)=elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
   tsave(clock) = t;
 end
-<<<<<<< HEAD
 
 % subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
 % title('Elastance: rest','FontWeight','Normal')
 % ylim([0 3000])
 % subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
 % ylim([0 3000])
-=======
+
 figure(1)
 subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
 subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 
 
 %TS=0.005     %Duration of systole   (minutes)
@@ -107,13 +97,10 @@ RAo=0.1;   %aortic valve resistance (mmHg/(liter/minute))
 RTr=0.1;   %tricuspid valve resistance (mmHg/(liter/minute))
 RPu=0.1;   %pulmonic valve  resistance (mmHg/(liter/minute))
 
-<<<<<<< HEAD
 ReRA = 0.1; % entry to RA 0.01
 ReLA = 0.1; % entry to LA 0.01 
-=======
 ReRA = 0.1 % entry to RA 0.01
 ReLA = 0.1 % entry to LA 0.01 
->>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
@@ -149,7 +136,7 @@ VRVd= VLVd;
 
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(20*T/dt); %T/dt %Total number of timesteps 
+klokmax=floor(500*T/dt); %T/dt %Total number of timesteps 
 
 %This choice implies simulation of 15 cardiac cycles.
 
