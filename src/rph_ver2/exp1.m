@@ -103,7 +103,7 @@ disease_state_pre = false;
 Rp_state = false
 
 if (disease_state == true)
-    int_vec = (0 : 0.1 : 1) / 100
+    int_vec = 0%(0 : 0.1 : 1) / 100
     qs_d_vecD = zeros(1,ncase_dm);
     ppa_d_vecD = zeros(1,ncase_dm);
     ppv_d_vecD = zeros(1,ncase_dm);

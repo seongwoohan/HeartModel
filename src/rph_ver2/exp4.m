@@ -207,8 +207,17 @@ xlim([0.085 0.125])
 legend({'LA','RA'},'Location', 'best') 
 legend boxoff
 xlabel('Time (min)') 
+<<<<<<< HEAD
 ylabel('Elastance (mmHg/L)')
 set(gca,'FontSize',17)
+=======
+ylabel('Blood Flow (L/min)')
+set(gca,'FontSize',18)
+xlim([6.188 6.25])
+ylim([-3 3])
+grid on
+
+>>>>>>> 1ceb2fd9229b3cfd925e0d4f2ea2cc251f22dd0f
 
 figure(100)
 plot(tsave,ELV,tsave,ERV,tsave,ELA,tsave,ERA,'linewidth', 1.5)
