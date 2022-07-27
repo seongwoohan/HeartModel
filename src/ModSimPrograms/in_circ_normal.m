@@ -1,19 +1,14 @@
 %filename: in_circ.m  (initialization for circ)
-%T =0.0125    %Duration of heartbeat (minutes)
-T = 1 / HR_set;
+T = 0.0125    %Duration of heartbeat (minutes)
+%elastic function parameters
 tau1 = 0.269*T; % time scale of contraction (minutes)
 tau2 = 0.452*T; % duration of systole (minutes)
-
-%elastic function parameters
 tau1A = 0.110*T;
 tau2A = 0.180*T;
-
 m1 = 1.32;
 m2 = 27.4;
-
 m1A = 1.32;
 m2A = 13.1;
-
 t_atrial_delay = 0.85 * T;
 
 %initialization of maxnum (same for both ventricles):
@@ -25,7 +20,7 @@ num1=g1./(1+g1);
 num2=(1./(1+g2)) - (1/(1+g2T));
 maxnum = max(num1.*num2);
 
-% LA & RA
+% initialization of maxnum (same for both atrium):
 g1A=(tt/tau1A).^m1A;
 g2A=(tt/tau2A).^m2A;
 g2TA=(T/tau2A)^m2A;
@@ -39,6 +34,7 @@ EmaxLV = 3.00*1000; % (mmHg/L)
 EminRV = 0.04*1000; % (mmHg/L)
 EmaxRV = 0.60*1000; % (mmHg/L)
 
+%parameters specific to each atrium:
 EminLA = 0.15 * 1000; % (mmHg/L) 
 EmaxLA = 0.4 * 1000; % (mmHg/L) 
 EminRA = 0.12 * 1000; % (mmHg/L)
@@ -56,26 +52,11 @@ for clock=1:clockmax
   tsave(clock) = t;
 end
 
-
 %figure(1)
 %subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
 %subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
 
-
-%TS=0.005     %Duration of systole   (minutes)
-%tauS=0.0025  %CLV time constant during systole (minutes)
-%tauD=0.0075  %CLV time constant during diastole (minutes)
-
-% different compliance function
-% tauS, tauD
-
-%Rs=17.5 %Systemic resistance
-Rs = Rs_set;
-% ( 10.8 mmHg / ((liter/minute)/m2)))/ 0.44 m2
-% SVR = 10.8 Wood U x m2
-% Du Bois commonly used ==> 0.44 m2
-% Rp=(18.6/0.44)
-%Rp=1.5*Rs
+Rs=17.5 %Systemic resistance
 Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
@@ -84,7 +65,6 @@ RMi=0.01;   %mitral valve resistance (mmHg/(liter/minute))
 RAo=0.1;   %aortic valve resistance (mmHg/(liter/minute))
 RTr=0.01;   %tricuspid valve resistance (mmHg/(liter/minute))
 RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
-
 ReRA = 0.01; % entry to RA 0.01
 ReLA = 0.01; % entry to LA 0.01 
 ReRA = 0.01 % entry to RA 0.01
@@ -96,47 +76,32 @@ Rvisc = 0.01;
 %blood pressure be roughly 120/80 mmHg
 %and to make the pulmonary 
 %blood pressure be roughly 25/8 mmHg.
-Csa=0.00175 * 0.7;   %Systemic  arterial compliance (liters/mmHg)
-Cpa=0.0042;  %Pulmonary arterial compliance (liters/mmHg)
-Csv=0.09;     %Systemic  venous compliance (liters/mmHg)
-Cpv=0.01;    %Pulmonary venous compliance (liters/mmHg)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% these compliance values are NOT used
+Csa=0.00175;   %Systemic  arterial compliance (liters/mmHg)
+Cpa=0.00412;  %Pulmonary arterial compliance (liters/mmHg)
+Csv=1.75;     %Systemic  venous compliance (liters/mmHg)
+Cpv=0.08;    %Pulmonary venous compliance (liters/mmHg)
 CLVS=0.00003;  %Min (systolic)  value of CLV (liters/mmHg)
 CLVD=0.0146;   %Max (diastolic) value of CLV (liters/mmHg)
-%Make the compliance the same
-CRVS=CLVS;
-CRVD=CLVD;
-%CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
-%CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+CRVS=0.0002  %Min (systolic)  value of CRV (liters/mmHg)
+CRVD=0.0365  %Max (diastolic) value of CRV (liters/mmHg)
 
 Vsad=0.825;   %Systemic arterial volume at P=0 (liters)
-Vpad=0.1135;  %Pulmonary arterial volume at P=0 (liters)
-Vsvd_normal = 3.5 - 0.4;    %Systemic venous volume at P=0 (liters) 
-Vsvd = Vsvd_normal * (80 / HR_set)^(0.1);
-Vpvd=0.18;       %Pulmonary venous volume at P=0 (liters)
-VLVd=0.010;
-%VRVd= VLVd;
-VRVd=0.055;
-%0.027   %Left ventricular volume at P=0 (liters)
-%VRVd=0.027   %Right vejfntricular volume at P=0 (liters)
-
+Vpad=0.0382;  %Pulmonary arterial volume at P=0 (liters)
+Vsvd=0;    %Systemic venous volume at P=0 (liters) 
+Vpvd=0;       %Pulmonary venous volume at P=0 (liters)
+VLVd=0.027   %Left ventricular volume at P=0 (liters)
+VRVd=0.027   %Right vejfntricular volume at P=0 (liters)
 dt=0.01*T;    %Time step duration (minutes)
 %This choice implies 100 timesteps per cardiac cycle.
-klokmax=floor(500*T/dt); %T/dt %Total number of timesteps 
-
+klokmax=floor(15*T/dt); %T/dt %Total number of timesteps 
 %This choice implies simulation of 15 cardiac cycles.
-
-ifpmax = 10;  %10 
+ifpmax = 10;  
 %the trouble comes from the fact that we set the conductance of the shunt based on 
 %its flow in the previous time step.  It would be better to use the flow in 
 %the present time step, but this is unknown.  To find it, we could try fixed-point iteration, 
 %which simply means that we repeat each time step some number of times, 
 %always adjusting the conductance according to the flow that we found on 
 %the latest pass through the time step.
-
 %Assign an index to each compliance vessel 
 %of the model circulation:
 iLV=1;
@@ -145,7 +110,6 @@ isv=3;
 iRV=4;
 ipa=5;
 ipv=6;
-
 iRA=7;
 iLA=8;
 N=8;
@@ -156,20 +120,14 @@ N=8;
 %Compliance vector:
 C=zeros(N,1);  
 %This makes C a column vector of length N.
-%C(iLV)=CV_now(0,CLVS,CLVD); % CLVS,CLVD  %initial value
 C(iLV)=1/elastance(0,T,0,tau1,tau2,m1,m2,EminLV,EmaxLV,maxnum);
 C(isa)=Csa;
 C(isv)=Csv;
-
-
 C(iRA) = 1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
-%0.0083
-%C(iRV)=CV_now(0,CRVS,CRVD); % CRVS, CRVD %initial value
 C(iRV)=1/elastance(0,T,0,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
-C(ipa)=Cpa;  %Cpa
+C(ipa)=Cpa;  
 C(ipv)=Cpv;
 C(iLA) = 1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminLA,EmaxLA,maxnumA);
-%0.0067
 C;  %This writes the result on the screen.
 
 %Pressure vector (initial values) at end of diastole:
@@ -177,7 +135,7 @@ P=zeros(N,1);
 %This makes P a column vector of length N.
 P(iLV)= 5;
 P(isa)=80;
-P(isv)= 6.3 + (Vsvd_normal - Vsvd)/Csv;
+P(isv)= 2;
 P(iRV)= 2;
 P(ipa)= 8; 
 P(ipv)= 5;
@@ -194,15 +152,11 @@ Vd=zeros(N,1);
 Vd(iLV)=VLVd;
 Vd(isa)=Vsad;
 Vd(isv)=Vsvd;
-
-Vd(iRA) = 0.01
-
+Vd(iRA)=0.01; %right atrium
 Vd(iRV)=VRVd;
 Vd(ipa)=Vpad;
-
 Vd(ipv)=Vpvd;
-Vd(iLA) = 0.01
-
+Vd(iLA)=0.01; %left atrium
 Vd;  
 %This writes the results on the screen.
 %Conductance matrix:
@@ -215,25 +169,16 @@ G=zeros(N,N);
 G(iLV,isa)=1/RAo;  %But G(isa,iLV)=0 (no leak)
 G(isa,isv)=1/Rs;   %no valve
 G(isv,isa)=1/Rs;   %no valve
-
-%G(isv,iRV)=1/RTr;  %But G(iRV,isv)=0; (no leak)
-G(iRA,iRV)=1/RTr;
-
+G(iRA,iRV)=1/RTr;   %But G(iRV,isv)=0; (no leak)
 G(iRV,ipa)=1/RPu;  %But G(ipa,iRV)=0; (no leak)
 G(ipa,ipv)=1/Rp;   %no valve
 G(ipv,ipa)=1/Rp;   %no valve
-
-%G(ipv,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
-G(iLA,iLV)=1/RMi
-
+G(iLA,iLV)=1/RMi;  %But G(iLV,ipv)=0; (no leak)
 % new G
 G(isv, iRA) = 1/ReRA
 G(iRA, isv) = 1/ReRA
 G(ipv, iLA) = 1/ReLA
 G(iLA, ipv) = 1/ReLA
-
-%New varaiable
-% asd = 1,10,100 // vsd =1,10,100...  // d = 1,10,100...
 G;  %This writes the result on the screen.
 
 %Matrix of initial valve states:
@@ -248,9 +193,7 @@ t_plot=zeros(1,klokmax);
 C_plot=zeros(N,klokmax);
 P_plot=zeros(N,klokmax);
 
-% V_diff arrary
 V_diff=zeros(N,klokmax);
-
 O2_plot=zeros(N,klokmax);
 O2_amt_plot=zeros(N,klokmax);
 total_oxy_amt_plot=zeros(klokmax,1);
@@ -271,89 +214,30 @@ jTr=3;
 jPu=4;
 jp =5; % except this one
 jMi=6;
-
-jsva=10; % system vein & atrium
-jpva=11; % pulmonary vein & atrium
-
-%add three more flows(atria, ventricle ,artery)
-
-Nflows=11; %9
+jsva=7; % system vein & atrium
+jpva=8; % pulmonary vein & atrium
+Nflows=8;
 
 %note index of upstream and downstream chamber 
 %for each flow:
 iU=zeros(Nflows,1);
 iD=zeros(Nflows,1);
-
 iU(jAo)=iLV;
 iD(jAo)=isa;
-
 iU(js )=isa;
 iD(js )=isv;
-
-%iU(jTr)=isv;
 iU(jTr)=iRA;
 iD(jTr)=iRV;
-
 iU(jPu)=iRV;
 iD(jPu)=ipa;
-
 iU(jp )=ipa;
 iD(jp )=ipv;
-
-%iU(jMi)=ipv;
 iU(jMi)=iLA;
 iD(jMi)=iLV;
-
 iU(jsva)=isv;
 iD(jsva)=iRA;
-
 iU(jpva)=ipv;
 iD(jpva)=iLA;
-
-%NEW three connections between the flow
-iU(jasd)=iRA %isv;
-iD(jasd)=iLA %ipv;
-
-iU(jvsd)=iRV;
-iD(jvsd)=iLV;
-iU(jd)=ipa;
-iD(jd)=isa;
-
-%Ashunt
-%pause
-
-if (Ashunt > 0) 
-    
-  G(iU(j_shunt),iD(j_shunt)) = 1 / Rvisc;
-  G(iD(j_shunt),iU(j_shunt)) = 1 / Rvisc;
-
-end
-
-% oxy concentration mmol/L
-% metabolism = mmol/min
-
-% O2 concentration
-% 8.2/ 64868 * 1000 = 1.272
-% 4*[Hb]=4 * 1.272 = 5.088  (mmol/liter)
-
-% initial O2 concentration (wrong)
-% woman hb = 12 gm/dl
-% (10 * (8.2/12)) = 6.83
-
-% mb = -((160 / 22.4) * 0.44)= -3.14285 (pi)
-% 1 mmol occupies 22.4 mL and 0.44 is du-bois
-
-% O2 concentration M ==> mol/L
-% hemoglobin molecule has four binding sites for oxygen molecules
-% 4*[Hb] = 4 * 2.5(mmol/L) = 10 mmol/L
-oxy_vec = ones(N, 1) .* 10;   % 5.088
-
-%metabolism amount
-%10 * 0.3*5.6=16.8 (mmol/min)
-
-metabolism = zeros(size(G));
-metabolism(isa, isv) = -m_set; %16.8;
-
 %extract the conductances from the matrix G:
 Gf=zeros(Nflows,1);
 Gr=zeros(Nflows,1);

@@ -60,7 +60,7 @@ for klok=1:klokmax
   % fixed-point iteration
   for ifp=1:ifpmax
 
-    % this is very important... to make sure we are using the conductances at the correct time!
+    %this is important to make sure we are using the conductances at the correct time!
     G_prev = G;
 
     set_valves
