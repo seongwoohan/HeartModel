@@ -34,9 +34,7 @@ for klok=1:klokmax
     t_plot(klok)=t;
     C_plot(:,klok)=C;
     P_plot(:,klok)=P;
-    V_plot(:,klok)=Vd+C.*P;
-    V = Vd+C.*P;
-    
+    V_plot(:,klok)=Vd+C.*P;    
     Pdiff=P(iU)-P(iD); %pressure differences 
                         %for flows of interest:
     Q_plot(:,klok)=(Gf.*(Pdiff>0)+Gr.*(Pdiff<0)).*Pdiff;

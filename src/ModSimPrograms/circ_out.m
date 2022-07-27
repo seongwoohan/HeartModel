@@ -59,3 +59,6 @@ title('Right Ventricular Pressure-Volume Loops')
 xlabel('Volume') 
 ylabel('Pressure')
 
+Vtot = sum(V_plot, 1);      
+fprintf('\n%s %f %s\n','Total blood volume is ', Vtot(end), ' liters');
+
