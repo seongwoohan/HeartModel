@@ -128,6 +128,16 @@ if (disease_state == true)
         end
     end
 end 
+Vtot = sum(V_plot, 1)
+
+figure(1)
+plot(t_plot, round(sum(V_plot,1),3), 'linewidth', 3)
+title('Blood Volume','FontWeight','Normal')
+xlim([0 6.25])
+xlabel('Time (min)') 
+ylabel('Blood Volume (L)')
+set(gca,'FontSize',20)
+
 %, int_vec*100, qs_vsd_vecV, int_vec*100, qs_d_vecD
 
 if (length(int_vec) > 0)
@@ -149,14 +159,50 @@ if (length(int_vec) > 0)
  
 
 
-f(400) = figure  
-subplot(2,1,1),plot(tsave,ELV,tsave,ERV)
-subplot(2,1,2),plot(tsave,ELA,tsave,ERA)
-title('Elastance: rph','FontWeight','Normal')
-ylim([0 3000])      
+
+f(300) = figure
+plot(int_vec*100, ppa_asd_vecA, '-bs','linewidth', 2.5,'MarkerSize',10)
+hold on
+plot(int_vec*100, psa_asd_vecA, '-rs','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor','r')
+title('Atrial Septal Defect','FontWeight','Normal')
+legend({'Pulmonary Artery','Systemic Artery'},'Location', 'best','FontSize',18) 
+legend boxoff                  
+xlabel('Shunt Area (cm^2)') 
+ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
+grid on
+
+f(301) = figure
+plot(int_vec*100, ppa_vsd_vecV, '-b^','linewidth', 2.5,'MarkerSize',10)
+hold on
+plot(int_vec*100, psa_vsd_vecV, '-r^','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor','r')
+title('Ventricular Septal Defect','FontWeight','Normal')
+legend({'Pulmonary Artery','Systemic Artery'},'Location', 'best','FontSize',18) 
+legend boxoff                  
+xlabel('Shunt Area (cm^2)') 
+ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
+grid on
+
+f(302) = figure
+plot(int_vec*100, ppa_d_vecD, '-bv','linewidth', 2.5,'MarkerSize',10) 
+hold on
+plot(int_vec*100, psa_d_vecD, '-rv','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor','r')
+title('Potts Shunt','FontWeight','Normal')
+legend({'Pulmonary Artery','Systemic Artery'},'Location', 'best','FontSize',18) 
+legend boxoff                  
+xlabel('Shunt Area (cm^2)') 
+ylabel('Pressure (mmHg)')
+set(gca,'FontSize',20)
+grid on
+
 
 f(500) = figure
-plot(int_vec*100, ppa_asd_vecA, '-o', int_vec*100, ppa_vsd_vecV, '-ko', int_vec*100, ppa_d_vecD, '-bo','linewidth', 3)
+plot(int_vec*100, ppa_asd_vecA, '-s','linewidth', 2.5,'MarkerSize',10)
+hold on
+plot(int_vec*100, ppa_vsd_vecV, '-k^','linewidth', 2.5,'MarkerSize',10)
+hold on
+plot(int_vec*100, ppa_d_vecD, '-bv','linewidth', 2.5,'MarkerSize',10)
 newcolors = {'#D95319'}
 colororder(newcolors)
 %set(gca,'FontSize',25)
@@ -169,7 +215,11 @@ set(gca,'FontSize',20)
 grid on
 
 f(501) = figure
-plot(int_vec*100, psa_asd_vecA, '-o', int_vec*100, psa_vsd_vecV, '-ko', int_vec*100, psa_d_vecD, '-bo','linewidth', 3)
+plot(int_vec*100, psa_asd_vecA, '-s','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor', '#D95319')
+hold on
+plot(int_vec*100, psa_vsd_vecV, '-k^','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor','k')
+hold on
+plot(int_vec*100, psa_d_vecD, '-bv','linewidth', 2.5,'MarkerSize',10,'MarkerFaceColor','b')
 newcolors = {'#D95319'}
 colororder(newcolors)
 %set(gca,'FontSize',25)
@@ -195,7 +245,7 @@ set(gca,'FontSize',20)
 grid on
 
 f(503) = figure
-plot(int_vec*100, qs_asd_vecA, '-o', int_vec*100, qs_vsd_vecV, '-ko', int_vec*100, qs_d_vecD, '-bo','linewidth', 3)
+plot(int_vec*100, qs_asd_vecA, '->', int_vec*100, qs_vsd_vecV, '-kd', int_vec*100, qs_d_vecD, '-bo','linewidth', 2.4,'MarkerSize',10)
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Systemic Flow','FontWeight','Normal')
@@ -206,7 +256,7 @@ set(gca,'FontSize',20)
 grid on
 
 f(504) = figure
-plot(int_vec*100, 10.*oxy_sa_asd_vecA, '-o', int_vec*100, 10.*oxy_sa_vsd_vecV, '-ko', int_vec*100, 10.*oxy_sa_d_vecD,'-bo','linewidth', 3)
+plot(int_vec*100, 10.*oxy_sa_asd_vecA, '->', int_vec*100, 10.*oxy_sa_vsd_vecV, '-kd', int_vec*100, 10.*oxy_sa_d_vecD,'-bo','linewidth', 2.4,'MarkerSize',10)
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Oxygen Saturation','FontWeight','Normal')
@@ -217,14 +267,14 @@ set(gca,'FontSize',20)
 grid on
 
 f(505) = figure
-plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '-o', int_vec*100, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-ko',int_vec*100, qs_d_vecD.*oxy_sa_d_vecD,'-bo','linewidth', 3)
+plot(int_vec*100, qs_asd_vecA.*oxy_sa_asd_vecA, '->', int_vec*100, qs_vsd_vecV.*oxy_sa_vsd_vecV, '-kd',int_vec*100, qs_d_vecD.*oxy_sa_d_vecD,'-bo','linewidth', 2.4,'MarkerSize',10)
 newcolors = {'#D95319'}
 colororder(newcolors)
 title('Oxygen Delivery','FontWeight','Normal')
 legend({'ASD','VSD','PS'},'Location', 'best', 'Box','off') 
 xlabel('Shunt Area (cm^2)') 
 ylabel('Oxygen Delivery (mmol/min)')
-ylim([37 38.8])
+%ylim([37 38.8])
 set(gca,'FontSize',20)
 grid on
 

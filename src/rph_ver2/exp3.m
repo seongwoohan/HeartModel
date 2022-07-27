@@ -175,14 +175,14 @@ toc
 
 
 %% Oxygen Saturation 
-f(1) = figure;
-plot(22.75, 17.74,'-ro', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-ko', Rp_vec, 10*oxy_sa_potts_shunt_one, '-.bo', Rp_vec, 10*oxy_sa_vsd_one,'-.ko', 'linewidth', 1.8,'MarkerSize', 8)
+figure(1);
+plot(22.75, 17.74,'-r*', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-kd', Rp_vec, 10*oxy_sa_potts_shunt_one, '-.bo', Rp_vec, 10*oxy_sa_vsd_one,'-.kd', 'linewidth', 1.8,'MarkerSize', 8)
 yline(0, '--b','linewidth', 1.2) %-4.35
 %yline(54.19, '-r','linewidth', 1.2)
 yline(17.74, '-r','linewidth', 1.2)
 set(gca,'FontSize',20)
-%title('Oxygen Saturation (rest)','FontWeight','Normal')
 title('Oxygen Saturation (exercise)','FontWeight','Normal')
+%title('Oxygen Saturation (rest)','FontWeight','Normal')
 legend({'pre-intervention','PS 0.3cm^2', 'VSD 0.3cm^2'},'Location', 'east','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
@@ -195,7 +195,7 @@ saveas(f(1),"exp3_os_16.8",'epsc')
 figure(1000)
 plot(Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-ko')
 
-figure(3)
+figure(3) 
 plot(Rp_vec, 10*oxy_sa_pre_intervention_rph, '-ro', Rp_vec, 10*oxy_sa_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sa_vsd_one,'-ko', Rp_vec, 10*oxy_sv_pre_intervention_rph,'-ro', Rp_vec, 10*oxy_sv_potts_shunt_one, '-bo', Rp_vec, 10*oxy_sv_vsd_one,'-ko', 'linewidth', 1.5,'MarkerSize', 8)
 yline(0, '--b','linewidth', 1.2)
 %yline(-13.54, '-r','linewidth', 1.2)
@@ -212,13 +212,13 @@ grid on
 
 %% Systemic Flow
 f(4) = figure;
-plot(22.75, 4.054, '-ro', Rp_vec, qs_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one,'-ko', 'linewidth', 1.8,'MarkerSize', 8)
+plot(22.75, 4.054, '-r*', Rp_vec, qs_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one,'-kd', 'linewidth', 1.8,'MarkerSize', 8)
 %yline(0, '--b','linewidth', 2)
 yline(4.054, '-r','linewidth', 1.2)
 %yline(3.661, '-r','linewidth', 1.2)
 set(gca,'FontSize',20)
-%title('Systemic Flow (rest)','FontWeight','Normal')
 title('Systemic Flow (exercise)','FontWeight','Normal')
+%title('Systemic Flow (rest)','FontWeight','Normal')
 legend({'pre-intervention','PS 0.3cm^2', 'VSD 0.3cm^2'},'Location', 'northeast','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')
@@ -232,13 +232,13 @@ saveas(f(4),"exp3_sf_16.8",'epsc')
 
 %% Oxgyen Delivery
 f(5) = figure;
-plot(22.75, 7.191, '-ro', Rp_vec, qs_potts_shunt_one.*oxy_sv_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sv_vsd_one,'-ko', Rp_vec, qs_potts_shunt_one.*oxy_sa_potts_shunt_one, '-.bo', Rp_vec, qs_vsd_one.*oxy_sa_vsd_one,'-.ko', 'linewidth', 1.8,'MarkerSize', 8)
+plot(22.75, 7.191, '-r*', Rp_vec, qs_potts_shunt_one.*oxy_sv_potts_shunt_one, '-bo', Rp_vec, qs_vsd_one.*oxy_sv_vsd_one,'-kd', Rp_vec, qs_potts_shunt_one.*oxy_sa_potts_shunt_one, '-.bo', Rp_vec, qs_vsd_one.*oxy_sa_vsd_one,'-.kd', 'linewidth', 1.8,'MarkerSize', 8)
 yline(0, '--b','linewidth', 1.2) %-2.03
 %yline(19.84, '-r','linewidth', 1.2)
 yline(7.191, '-r','linewidth', 1.2)
 set(gca,'FontSize',20)
-%title('Oxygen Delivery (rest)','FontWeight','Normal')
 title('Oxygen Delivery (exercise)','FontWeight','Normal')
+%title('Oxygen Delivery (rest)','FontWeight','Normal')
 legend({'pre-intervention','PS 0.3cm^2', 'VSD 0.3cm^2'},'Location', 'east','FontSize',15)
 legend boxoff
 xlabel('Pulmonary resistance (mmHg/(liter/minute))')

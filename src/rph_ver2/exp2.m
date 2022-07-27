@@ -179,10 +179,10 @@ toc
 %%
 
 figure(999)
-plot(m_vec, qs_normal, '-o', m_vec, qs_pre_intervention_rph, '-ro', m_vec, qs_potts_shunt, '-bo', m_vec, qs_vsd,'-ko', 'linewidth', 1.8,'MarkerSize', 8)
+plot(m_vec, qs_normal, '-<', m_vec, qs_pre_intervention_rph, '-r*', m_vec, qs_potts_shunt, '-bo', m_vec, qs_vsd,'-kd', 'linewidth', 1.8,'MarkerSize', 8)
 %yline(0, '--b','linewidth', 2)
 set(gca,'FontSize',20)
-title('Exercise Torelance','FontWeight','Normal')
+title('Systemic Flow in Exercise','FontWeight','Normal')
 legend({'normal (Rp: 1.79)','pre-intervention (Rp: 22.75)','PS 0.3cm^2 (Rp: 22.75)', 'VSD  0.3cm^2 (Rp: 22.75)'},'Location', 'best','FontSize',15)
 legend boxoff
 xlabel('Oxgyen consumption (mmol/min)')
@@ -192,10 +192,10 @@ xlim([16.8 100])
 grid on
 
 figure(1000)
-plot(m_vec, 10*oxy_sv_normal, '-o', m_vec, 10*oxy_sv_pre_intervention_rph, '-ro', m_vec, 10*oxy_sv_potts_shunt, '-bo', m_vec, 10*oxy_sv_vsd,'-ko', m_vec, 10*oxy_sa_normal, '-.o',  m_vec, 10*oxy_sa_pre_intervention_rph, '-.ro', m_vec, 10*oxy_sa_potts_shunt, '-.bo', m_vec, 10*oxy_sa_vsd,'-.ko','linewidth', 1.8,'MarkerSize', 8)
+plot(m_vec, 10*oxy_sv_normal, '-<', m_vec, 10*oxy_sv_pre_intervention_rph, '-r*', m_vec, 10*oxy_sv_potts_shunt, '-bo', m_vec, 10*oxy_sv_vsd,'-kd', m_vec, 10*oxy_sa_normal, '-.<',  m_vec, 10*oxy_sa_pre_intervention_rph, '-.r*', m_vec, 10*oxy_sa_potts_shunt, '-.bo', m_vec, 10*oxy_sa_vsd,'-.kd','linewidth', 1.8,'MarkerSize', 8)
 yline(0, '--b','linewidth', 2)
 set(gca,'FontSize',20)
-title('Exercise Torelance','FontWeight','Normal')
+title('Oxygen Saturation in Exercise','FontWeight','Normal')
 legend({'normal (Rp: 1.79)','pre-intervention (Rp: 22.75)','PS 0.3cm^2 (Rp: 22.75)', 'VSD  0.3cm^2 (Rp: 22.75)'},'Location', 'best','FontSize',15)
 legend boxoff
 xlabel('Oxgyen consumption (mmol/min)')
@@ -206,12 +206,12 @@ grid on
 
 
 figure(1001)
-plot(m_vec, qs_normal.*oxy_sv_normal, '-o', m_vec, qs_pre_intervention_rph.*oxy_sv_pre_intervention_rph, '-ro', m_vec, qs_potts_shunt.*oxy_sv_potts_shunt, '-bo', m_vec, qs_vsd.*oxy_sv_vsd,'-ko', m_vec, qs_normal.*oxy_sa_normal, '-.o',  m_vec, qs_pre_intervention_rph.*oxy_sa_pre_intervention_rph, '-.ro', m_vec, qs_potts_shunt.*oxy_sa_potts_shunt, '-.bo', m_vec, qs_vsd.*oxy_sa_vsd,'-.ko','linewidth', 1.8,'MarkerSize', 8)
+plot(m_vec, qs_normal.*oxy_sv_normal, '-<', m_vec, qs_pre_intervention_rph.*oxy_sv_pre_intervention_rph, '-r*', m_vec, qs_potts_shunt.*oxy_sv_potts_shunt, '-bo', m_vec, qs_vsd.*oxy_sv_vsd,'-kd', m_vec, qs_normal.*oxy_sa_normal, '-.<',  m_vec, qs_pre_intervention_rph.*oxy_sa_pre_intervention_rph, '-.r*', m_vec, qs_potts_shunt.*oxy_sa_potts_shunt, '-.bo', m_vec, qs_vsd.*oxy_sa_vsd,'-.kd','linewidth', 1.8,'MarkerSize', 8)
 newcolors = {'#0072BD','#0072BD'}
 colororder(newcolors)
 yline(0, '--b','linewidth', 2)
 set(gca,'FontSize',20)
-title('Exercise Torelance','FontWeight','Normal')
+title('Oxygen Delivery in Exercise','FontWeight','Normal')
 legend({'normal (Rp: 1.79)','pre-intervention (Rp: 22.75)','PS 0.3cm^2 (Rp: 22.75)', 'VSD  0.3cm^2 (Rp: 22.75)'},'Location', 'best','FontSize',15)
 legend boxoff
 xlabel('Oxgyen consumption (mmol/min)')

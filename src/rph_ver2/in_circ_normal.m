@@ -3,12 +3,11 @@
 T = 1 / HR_set;
 %T = 0.0125
 %T = 1 / HR_set;
-T = 0.0125
 tau1 = 0.269*T; % time scale of contraction (minutes)
 tau2 = 0.452*T; % duration of systole (minutes)
 
 tau1A = 0.110*T;
-tau2A = 0.110*T;
+tau2A = 0.180*T; %0.110*T;
 
 m1 = 1.32;
 m2 = 27.4;
@@ -45,11 +44,11 @@ EminLA = 0.15 * 1000; % (mmHg/L)
 EmaxLA = 0.4 * 1000; % (mmHg/L) 
 EminRA = 0.12 * 1000; % (mmHg/L)
 EmaxRA = 0.4 * 1000; % (mmHg/L)
-
-EmaxLA = 0.4 * 1000; % (mmHg/L) 
-EminLA = 0.15 * 1000; % (mmHg/L) 
-EmaxRA = 0.4 * 1000; % (mmHg/L)
-EminRA = 0.12 * 1000; % (mmHg/L)
+% 
+% EmaxLA = 0.4 * 1000; % (mmHg/L) 
+% EminLA = 0.15 * 1000; % (mmHg/L) 
+% EmaxRA = 0.4 * 1000; % (mmHg/L)
+% EminRA = 0.12 * 1000; % (mmHg/L)
 
 tmax=10*T;
 clockmax =3000;
@@ -88,19 +87,19 @@ Rs = Rs_set;
 % Du Bois commonly used ==> 0.44 m2
 % Rp=(18.6/0.44)
 %Rp=1.5*Rs
-Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
+%Rp= 1.79;     %Pulmonary resistance (mmHg/(liter/minute))
 
 %Unrealistic valve resistances,
 %Chosen small enough to be negligible.
-RMi=0.1;   %mitral valve resistance (mmHg/(liter/minute))
+RMi=0.01;   %mitral valve resistance (mmHg/(liter/minute))
 RAo=0.1;   %aortic valve resistance (mmHg/(liter/minute))
-RTr=0.1;   %tricuspid valve resistance (mmHg/(liter/minute))
-RPu=0.1;   %pulmonic valve  resistance (mmHg/(liter/minute))
+RTr=0.01;   %tricuspid valve resistance (mmHg/(liter/minute))
+RPu=0.01;   %pulmonic valve  resistance (mmHg/(liter/minute))
 
-ReRA = 0.1; % entry to RA 0.01
-ReLA = 0.1; % entry to LA 0.01 
-ReRA = 0.1 % entry to RA 0.01
-ReLA = 0.1 % entry to LA 0.01 
+ReRA = 0.01; % entry to RA 0.01
+ReLA = 0.01; % entry to LA 0.01 
+ReRA = 0.01 % entry to RA 0.01
+ReLA = 0.01 % entry to LA 0.01 
 Rvisc = 0.01;
 
 %The following values of Csa and Cpa are approximate.
@@ -130,7 +129,8 @@ Vsvd_normal = 3.5 - 0.4;    %Systemic venous volume at P=0 (liters)
 Vsvd = Vsvd_normal * (80 / HR_set)^(0.1);
 Vpvd=0.18;       %Pulmonary venous volume at P=0 (liters)
 VLVd=0.010;
-VRVd= VLVd;
+%VRVd= VLVd;
+VRVd=0.055;
 %0.027   %Left ventricular volume at P=0 (liters)
 %VRVd=0.027   %Right vejfntricular volume at P=0 (liters)
 

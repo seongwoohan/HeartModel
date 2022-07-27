@@ -8,6 +8,7 @@ EmaxRV = EmaxLV;         % (mmHg/L)
 C(iRV)=1/elastance(0,T,0,tau1,tau2,m1,m2,EminRV,EmaxRV,maxnum);
 
 EminRA = EminLA;
+EmaxLA = EmaxRA;
 C(iRA) = 1/elastance(t,T,t_atrial_delay,tau1A,tau2A,m1A,m2A,EminRA,EmaxRA,maxnumA);
  
 % in_circ_normal_v2

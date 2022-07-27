@@ -167,7 +167,7 @@ if (Rp_state == true)
 end 
 
 figure(1)
-plot(Rp_vec, q_d_mean_vecD_one, '-.b^', Rp_vec, q_vsd_mean_vecV_one,'-.k^','linewidth', 1.8,'MarkerSize', 8) 
+plot(Rp_vec, q_d_mean_vecD_one, '-.bo', Rp_vec, q_vsd_mean_vecV_one,'-.kd','linewidth', 1.8,'MarkerSize', 8) 
 hold on
 plot(16, 0.35, 'bp', 16, 0.1 ,'kp','linewidth', 1.8, 'MarkerSize',9)
 yline(0, '--b','linewidth', 1.2)
@@ -182,7 +182,7 @@ grid on
 set(gca,'FontSize',18)
 
 figure(2)
-plot(Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-ko','linewidth', 1.8,'MarkerSize', 8) 
+plot(Rp_vec, q_d_mean_vecD, '-bo', Rp_vec, q_vsd_mean_vecV,'-kd','linewidth', 1.8,'MarkerSize', 8) 
 hold on
 plot(16, -0.53, 'kp', 16, -0.3 ,'bp','linewidth', 1.8, 'MarkerSize',9)
 yline(0, '--b','linewidth', 1.2)
