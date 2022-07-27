@@ -25,6 +25,6 @@ There is a new python version for the model. Run the below files as well to see 
 
 # Refractory Pulmonary Hypertension
 
-Code and computer models for "Computer models for studying interventions used in treating refractory pulmonary hypertension". Paper at: https://arxiv.org/abs/2101.12191
+Code and computer models for "Computer simulation of surgical interventions for the treatment of refractory pulmonary hypertension" appeard at Mathematical Medicine and Biology, 2022. Paper at: https://arxiv.org/abs/2101.12191
 
 See the READMEs in subdirectories for directions on running the code.
